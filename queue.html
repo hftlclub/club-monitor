@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
@@ -9,7 +9,7 @@
 <body>
 
 <div id="colleft">
-	<div class="songrow">
+    <div class="songrow">
 		<div class="song">Klangkarussell - Sonnentanz</div>
 		<div class="singer">Tilmann, Ferdi</div>
 	</div>
@@ -18,7 +18,7 @@
 		<div class="song">Miley Cyrus - Wrecking Ball</div>
 		<div class="singer">Danny, Mario</div>
 	</div>
-</div>
+    </div>
 
 <div id="colmiddle">
 	<ul>

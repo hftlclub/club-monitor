@@ -30,7 +30,7 @@ if(empty($singer)){
 //do something if error occured
 if($error){
 	//DO ERROR STUFF
-	echo "Please give valid information."
+	echo "Please give valid information.";
 	
 	exit();
 }

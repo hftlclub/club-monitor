@@ -1,7 +1,5 @@
 <?php
 
-echo $_POST['inputSongId']; exit;
-
 
 require("mysql_connect.php");
 
@@ -42,7 +40,7 @@ $sql = "INSERT INTO queue (id, songid, singer, timestamp, played) VALUES ('".uni
 mysql_query($sql);
 
 //forward to overview page
-//header("Location: blabla.php");
+header("Location: index.html");
 
 
 

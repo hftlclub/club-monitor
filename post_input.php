@@ -1,4 +1,8 @@
 <?php
+
+print_r($_POST); exit;
+
+
 require("mysql_connect.php");
 
 //check for post method

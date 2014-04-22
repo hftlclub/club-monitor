@@ -43,6 +43,7 @@
           </div>
           <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
+                  <input type="hidden" id="inputSongId" name="inputSongId" value="" />
                   <button type="submit" class="btn btn-default">Eintragen</button>
               </div>
           </div>
@@ -58,7 +59,7 @@
 
         // constructs the suggestion engine
         var songs = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('vLUE'),
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: './songlist_json.php'
         });
@@ -86,6 +87,8 @@
                        ].join('\n'),
                 suggestion: Handlebars.compile('<p><strong>{{value}}</strong> – {{id}}</p>')
             }
+        }).on('typeahead:selected', function (object, song) {
+            $('input[name=inputSongId]').val(song.id);
         });
     </script>
   </body>

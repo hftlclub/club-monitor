@@ -34,7 +34,7 @@ if($error){
 ////////////////////////////
 
 
-$sql = "INSERT INTO queue (id, songid, singer, timestamp) VALUES ('".uniqid("")."', '".$songid."', '".$singer."', UNIX_TIMESTAMP());";
+$sql = "INSERT INTO queue (id, songid, singer, timestamp, played) VALUES ('".uniqid("")."', '".$songid."', '".$singer."', UNIX_TIMESTAMP(), 0);";
 mysql_query($sql);
 
 //forward to overview page

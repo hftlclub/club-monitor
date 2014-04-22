@@ -8,8 +8,15 @@ $sql = mysql_query("SELECT id, interpret, title FROM songlist ORDER BY interpret
 while($row = mysql_fetch_assoc($sql)){
 	echo "{ \"id\" : \"".$row['id']."\", \"value\" : \"".$row['interpret']." - ".$row['title']."\", \"tokens\" : [";
 	$tokens = array_merge(explode(" ", $row['interpret']), explode(" ", $row['title']));
-	foreach($tokens AS $token){
-		echo "	\"".$token."\",\n";
+	for($i = 0; $i < count($tokens); $i++){
+		$token = $tokens[$i];
+		echo "	\"".$token."\"";
+		
+		//don't show comma after last entry
+		if($i < (count($tokens) - 1)){
+			echo ",";
+		}
+		echo "\n";
 	}
 	echo "] },\n";	
 }

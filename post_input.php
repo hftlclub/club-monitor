@@ -1,6 +1,6 @@
 <?php
 
-print_r($_POST); exit;
+echo $_POST['inputSongId']; exit;
 
 
 require("mysql_connect.php");

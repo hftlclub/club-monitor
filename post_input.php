@@ -1,5 +1,7 @@
 <?php
 
+print_f($_POST);
+
 
 require("mysql_connect.php");
 

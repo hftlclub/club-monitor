@@ -74,8 +74,8 @@
             minLength: 1
         },
         {
-            name: 'value',
-            displayKey: 'value',
+            name: 'song',
+            displayKey: 'song',
             // `ttAdapter` wraps the suggestion engine in an adapter that
             // is compatible with the typeahead jQuery plugin
             source: songs.ttAdapter(),
@@ -84,7 +84,7 @@
                         'leider können wir kein Lied mit deinen Angaben finden.... probiere doch was anderes!',
                         '</div>'
                        ].join('\n'),
-                suggestion: Handlebars.compile('<p><strong>{{value}}</strong> – {{id}}</p>')
+                suggestion: Handlebars.compile('<p><strong>{{song}}</strong> – {{id}}</p>')
             }
         });
     </script>

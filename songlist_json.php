@@ -9,5 +9,5 @@ while($row = mysql_fetch_assoc($sql)){
 	echo "{ \"id\" : \"".$row['id']."\", \"value\" : \"".$row['interpret']." - ".$row['title']."\" },\n";	
 }
 ?>
-
+{ "id": "" , "value" : "" }
 ]

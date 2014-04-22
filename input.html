@@ -60,7 +60,7 @@
         var songs = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: 'songlist_json.php'
+            prefetch: './songlist_json.php'
         });
 
 
@@ -74,7 +74,7 @@
             minLength: 1
         },
         {
-            name: 'song',
+            name: 'value',
             displayKey: 'value',
             // `ttAdapter` wraps the suggestion engine in an adapter that
             // is compatible with the typeahead jQuery plugin

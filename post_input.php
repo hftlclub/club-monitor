@@ -1,4 +1,7 @@
 <?php
+require("mysql_connect.php");
+
+//check for post method
 if($_SERVER['REQUEST_METHOD'] != "POST"){
 	die("Please request with POST method.");
 }
@@ -20,7 +23,7 @@ if(empty($singer)){
 	$error++;
 }
 
-
+//do something if error occured
 if($error){
 	//DO ERROR STUFF
 	echo "Please give valid information."
@@ -32,7 +35,7 @@ if($error){
 
 
 $sql = "INSERT INTO queue (id, songid, singer, timestamp) VALUES ('".uniqid("")."', '".$songid."', '".$singer."', UNIX_TIMESTAMP());";
-
+mysql_query($sql);
 
 //forward to overview page
 //header("Location: blabla.php");

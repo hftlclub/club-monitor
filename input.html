@@ -60,7 +60,7 @@
         var songs = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: './songlist_json.php'
+            prefetch: './example.json'
         });
 
 
@@ -75,7 +75,7 @@
         },
         {
             name: 'song',
-            displayKey: 'song',
+            displayKey: 'value',
             // `ttAdapter` wraps the suggestion engine in an adapter that
             // is compatible with the typeahead jQuery plugin
             source: songs.ttAdapter(),
@@ -84,7 +84,7 @@
                         'leider können wir kein Lied mit deinen Angaben finden.... probiere doch was anderes!',
                         '</div>'
                        ].join('\n'),
-                suggestion: Handlebars.compile('<p><strong>{{song}}</strong> – {{id}}</p>')
+                suggestion: Handlebars.compile('<p><strong>{{value}}</strong> – {{year}}</p>')
             }
         });
     </script>

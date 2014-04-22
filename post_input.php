@@ -11,8 +11,6 @@ if($_SERVER['REQUEST_METHOD'] != "POST"){
 $songid = mysql_real_escape_string($_POST['inputSongId']);
 $singer = mysql_real_escape_string($_POST['inputSinger']);
 
-echo $songid." ".$singer;
-
 
 $error = 0;
 

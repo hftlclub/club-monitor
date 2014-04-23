@@ -38,7 +38,7 @@
       <div class="container-fluid">
           <div class="row">
               <div>
-                  <h1>Karaokemanager v0.0.1 beta unstable</h1>
+                  <h1>Karaokemanager v0.9 beta nearly stable</h1>
               </div>
           </div>
           <div class="row">
@@ -58,7 +58,7 @@ $i = 1;
 while($row = mysql_fetch_assoc($sql)):
 ?>
                       <tr>
-                          <td><?php echo $i ?></td>
+                          <td><?php echo $i++ ?></td>
                           <td><?php echo $row['interpret']." - ".$row['title'] ?></td>
                           <td><?php echo $row['singer'] ?></td>
                       </tr>

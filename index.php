@@ -48,16 +48,20 @@
                           <th>nächster Song</th>
                           <th>Sänger</th>
                       </tr>
+                      
+<?php
+require("mysql_connect.php");
+
+$sql = mysql_query("SELECT songlist.interpret, songlist.title, queue.singer, queue.id FROM songlist, queue WHERE queue.songid = songlist.id AND queue.played = 0 ORDER BY timestamp ASC;");
+$i = 1;
+while($row = mysql_fetch_assoc($sql)):
+?>
                       <tr>
-                          <td>1</td>
-                          <td>Klangkarussell - Sonnentanz</td>
-                          <td>Tilmann, Ferdi</td>
+                          <td><?php echo $i ?></td>
+                          <td><?php echo $row['interpret']." - ".$row['title'] ?></td>
+                          <td><?php echo $row['singer'] ?></td>
                       </tr>
-                      <tr>
-                          <td>2</td>
-                          <td>Miley Cyrus - Wrecking Ball</td>
-                          <td>Danny & Co. KG</td>
-                      </tr>
+<?php endwhile; ?>
                   </table>
               </div>
               <div class="col-xs-6 col-md-4">

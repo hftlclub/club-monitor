@@ -5,7 +5,7 @@ body{
 	margin: 0;
 }
 
-.list-group-item-success, a.list-group-item-success:hover, a.list-group-item-success:focus{
+.list-group-item-success, a.list-group-item-success:hover, a.list-group-item-success:active, a.list-group-item-success:focus{
 	color: red;
 	background-color: #ffa1a1;
 }

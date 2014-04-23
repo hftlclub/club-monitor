@@ -1,15 +1,20 @@
 <?php
 require("mysql_connect.php");
 
-$limit = 5;
-$search = explode(" ", $_GET['search']);
+//max number of entries
+$limit = 7;
 
 
 
 
 
 if($search){
+	$search = explode(" ", $_GET['search']);
+
+	
 	$sql = "SELECT id, interpret, title FROM songlist WHERE ";
+	
+	//go through search words and generate WHERE clauses
 	for($i = 0; $i < count($search); $i++){
 		$sql .= "interpret LIKE '%".$search[$i]."%' OR title LIKE '%".$search[$i]."%'";
 		
@@ -18,20 +23,22 @@ if($search){
 		}
 	}
 	
-	
 	$sql .= " ORDER BY interpret, title ASC LIMIT ".$limit.";";
 	
-	die($sql);
+	//die($sql);
+	
 	
 	$query = mysql_query($sql);
 	$num = mysql_num_rows($query);
 
-
+	//only proceed if there are results
 	if($num > 0){
 
 		$i = 1;
 		while($row = mysql_fetch_assoc($query)){
 			$out .= "{ \"id\" : \"".$row['id']."\", \"value\" : \"".$row['interpret']." - ".$row['title']."\" }";
+			
+			//only show comma if this is not the last entry
 			if($i != $num){
 				$out .= ",";
 			}
@@ -42,6 +49,8 @@ if($search){
 		}
 	}
 }
+
+//show results
 echo "[\n";
 echo $out;
 echo "]\n";

@@ -18,11 +18,13 @@ $error = 0;
 $sql = mysql_query("SELECT * FROM songlist WHERE id = '".$songid."';");
 if(mysql_num_rows($sql) != 1){
 	$error++;
+	echo "ID invalid";
 }
 
 //check if singer given
 if(empty($singer)){
 	$error++;
+	echo "No singer given";
 }
 
 //do something if error occured

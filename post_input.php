@@ -22,7 +22,7 @@ if(mysql_num_rows($sql) != 1){
 }
 
 //check if singer given
-if(empty($singer)){
+if(!$singer){
 	$error++;
 	echo "No singer given";
 }

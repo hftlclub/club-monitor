@@ -9,6 +9,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/jsKeyboard.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,6 +24,14 @@
               background-color: #000;
               border: 1px #fff solid;
           }
+          
+        
+		.content 
+		{
+		    color:#3c556c;
+		}
+
+          
 
       </style>
   </head>
@@ -32,13 +41,13 @@
           <div class="form-group">
               <label for="inputSong" class="col-sm-2 control-label">Song</label>
               <div class="col-sm-9" id="song">
-                  <input type="text" class="form-control typeahead" id="inputSong" placeholder="99 Luftballons">
+                  <input type="text" class="form-control typeahead"  onfocus="jsKeyboard.focus(this);clean(this);" id="inputSong" placeholder="99 Luftballons">
               </div>
           </div>
           <div class="form-group">
               <label for="inputSinger" class="col-sm-2 control-label">Dein Name</label>
               <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputSinger" placeholder="Max Mustermann">
+                  <input type="text" class="form-control"  onfocus="jsKeyboard.focus(this);clean(this);" id="inputSinger" placeholder="Max Mustermann">
               </div>
           </div>
           <div class="form-group">
@@ -47,6 +56,13 @@
               </div>
           </div>
       </form>
+      
+      <!-- for Keyboard -->
+<!-- show keyboard  <div id="keyboardIcon" onclick="showKeyboard('txtContent');"></div> -->
+
+      <div id="virtualKeyboard"></div>
+
+      
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -88,5 +104,58 @@
             }
         });
     </script>
+    
+    
+    
+    <!-- Keyboard-->
+    <script type="text/javascript" src="js/jsKeyboard.js"></script>
+ 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+ 	
+    <script type="text/javascript">
+     $(function () {
+         jsKeyboard.init("virtualKeyboard");
+         $("#txtContent").val(initText);
+     });
+     
+     function focusIt(t) {
+        // define where the cursor is to write character clicked.
+         jsKeyboard.currentElement = $(t);
+         jsKeyboard.show();
+     }
+
+     function showKeyboard(id) {
+         clean($("#" + id));
+         jsKeyboard.currentElement = $("#"+id);
+         jsKeyboard.show();
+     }
+     var isCleaned = false;
+     function clean(t) {
+         if (!isCleaned) {
+             $(t).text("");
+             isCleaned = true;
+         }
+     }
+     var initText = "click to here to start writing...";
+     function send() {
+         if ( $("#txtContent").val() != initText && $("#txtContent").val().length > 0) {
+             $("#requestForm").css("display", "none");
+             window.setTimeout('$("#feedback").html("Your request has been processing. Please wait...").css("display","block");', 100);
+             window.setTimeout('$("#feedback").html("Your request has been sent. You will see request form in 5 seconds").css("display","block");', 2000);
+             window.setTimeout('showRequestForm()', 7000);
+         }
+         else {
+             $("#feedback").html("Please write your request...").css("display","block");
+         }
+     }
+
+     function showRequestForm() {
+         $("#requestForm").css("display", "block");
+         $("#feedback").css("display", "none");
+         $("#feedback").html("");
+     }
+ </script>
+ 
+ 
+ 
   </body>
 </html>

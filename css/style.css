@@ -5,40 +5,7 @@ body{
 	margin: 0;
 }
 
-#colleft{
-	float: left;
-	width: 33%;
-}
-
-#colmiddle{
-	float: left;
-	width: 33%;
-}
-
-#colright{
-	float: right;
-	width: 33%;
-}
-
-
-div.songrow{
-	height: 30px;
-	padding: 7px;
-}
-
-div.songrow:nth-child(2n){
-	background-color: #888888;
-}
-
-div.songrow:nth-child(2n+1){
-	background-color: #BBBBBB;
-}
-
-div.songrow .song{
-	float: left;
-}
-
-div.songrow .singer{
-	float: right;
-	font-size: 10pt;
+#inputSinger, #inputSong{
+	font-size: 25px !important;
+	height: 40px !important;
 }

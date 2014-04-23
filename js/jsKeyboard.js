@@ -130,7 +130,7 @@ var jsKeyboard = {
         capitalLetter:
             [
         // 1st row
-               { value: 81 },{ value: 87 },{ value: 69 },{ value: 82 },{ value: 84 },{ value: 89 },
+               { value: 81 },{ value: 87 },{ value: 69 },{ value: 82 },{ value: 84 },{ value: 90 },
                { value: 85 },{ value: 73 },{ value: 79 },{ value: 80 },
                { value: "del", isChar: "false", onclick: "jsKeyboard.del()", buttonClass: "button button_del", keyClass: "key key_del" },
         // 2nd row
@@ -139,7 +139,7 @@ var jsKeyboard = {
                { value: "Enter", isChar: "false", buttonClass: "button button_enter", onclick: "jsKeyboard.enter();", keyClass: "key key_enter" },
         // 3rd row
                { value: "abc", isChar: "false", buttonClass: "button button_smallletter", onclick: "jsKeyboard.changeToSmallLetter();", keyClass: "key key_smallletter" },
-               { value: 90 },{ value: 88 },{ value: 67 },{ value: 86 },{ value: 66 },{ value: 78 },
+               { value: 89 },{ value: 88 },{ value: 67 },{ value: 86 },{ value: 66 },{ value: 78 },
                { value: 77 },{ value: 44 },{ value: 46 },{ value: 39 },
         // 4th row
                { value: "123", isChar: "false", buttonClass: "button button_numberleft", onclick: "jsKeyboard.changeToNumber();", keyClass: "key key_number" },
@@ -149,7 +149,7 @@ var jsKeyboard = {
         smallLetter: [
         // 1st row
                 { value: 113 },{ value: 119 },{ value: 101 },{ value: 114 },{ value: 116 },
-                { value: 121 },{ value: 117 },{ value: 105 },{ value: 111 },{ value: 112 },
+                { value: 122 },{ value: 117 },{ value: 105 },{ value: 111 },{ value: 112 },
                 { value: "del", isChar: "false", onclick: "jsKeyboard.del()", buttonClass: "button button_del", keyClass: "key key_del" },
         // 2nd row
                 { value: 97, buttonClass: "button button_a" },{ value: 115 },{ value: 100 },{ value: 102 },
@@ -157,7 +157,7 @@ var jsKeyboard = {
                 { value: "Enter", isChar: "false", buttonClass: "button button_enter", onclick: "jsKeyboard.enter();", keyClass: "key key_enter" },
         // 3rd row
                 { value: "ABC", isChar: "false", buttonClass: "button button_capitalletterleft", onclick: "jsKeyboard.changeToCapitalLetter();", keyClass: "key key_capitalletterleft" },
-                { value: 122 },{ value: 120 },{ value: 99 },{ value: 118 },{ value: 98 },
+                { value: 121 },{ value: 120 },{ value: 99 },{ value: 118 },{ value: 98 },
                 { value: 110 },{ value: 109 },{ value: 44 },{ value: 46 },{ value: 39 },
         // 4th row
                 { value: "123", isChar: "false", buttonClass: "button button_numberleft", onclick: "jsKeyboard.changeToNumber();", keyClass: "key key_number" },

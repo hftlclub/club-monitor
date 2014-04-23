@@ -6,10 +6,10 @@ $limit = 7;
 
 header("Content-Type: application/json");
 
+$getsearch = mysql_real_escape_string($_GET['search']);
 
-
-if($search){
-	$search = explode(" ", mysql_real_escape_string($_GET['search']));
+if($getsearch){
+	$search = explode(" ", $getsearch);
 
 	
 	$sql = "SELECT id, interpret, title FROM songlist WHERE ";

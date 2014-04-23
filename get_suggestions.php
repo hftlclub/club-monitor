@@ -4,12 +4,12 @@ require("mysql_connect.php");
 //max number of entries
 $limit = 7;
 
-
+header("Content-Type: application/json");
 
 
 
 if($search){
-	$search = explode(" ", $_GET['search']);
+	$search = explode(" ", mysql_real_escape_string($_GET['search']));
 
 	
 	$sql = "SELECT id, interpret, title FROM songlist WHERE ";
@@ -18,6 +18,7 @@ if($search){
 	for($i = 0; $i < count($search); $i++){
 		$sql .= "interpret LIKE '%".$search[$i]."%' OR title LIKE '%".$search[$i]."%'";
 		
+		//append "OR" if not the last entry
 		if($i < (count($search) - 1)){
 			$sql .= " OR ";
 		}
@@ -25,7 +26,6 @@ if($search){
 	
 	$sql .= " ORDER BY interpret, title ASC LIMIT ".$limit.";";
 	
-	//die($sql);
 	
 	
 	$query = mysql_query($sql);
@@ -35,6 +35,7 @@ if($search){
 	if($num > 0){
 
 		$i = 1;
+		//build JSON from datasets
 		while($row = mysql_fetch_assoc($query)){
 			$out .= "{ \"id\" : \"".$row['id']."\", \"value\" : \"".$row['interpret']." - ".$row['title']."\" }";
 			

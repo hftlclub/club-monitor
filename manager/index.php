@@ -20,10 +20,13 @@ if($mode == "unregister" && !empty($id)){
 <html>
 <head>
 <title>Karaoke Manager</title>
+<meta http-equiv="refresh" content="3; URL=<?php echo $_SERVER['REQUEST_URI'] ?>">
 </head>
 <body>
 
-<table>
+<h1>Karaoke Manager</h1>
+
+<table cellpadding="5" border="1">
 	<tr>
 		<th>Interpret</th>
 		<th>Titel</th>
@@ -33,13 +36,15 @@ if($mode == "unregister" && !empty($id)){
 
 <?php
 
-$sql = mysql_query("SELECT songlist.interpret, songlist.title, queue.singer, queue.id WHERE songlist.id = queue.songid AND queue.played = 0;");
+$sql = mysql_query("SELECT songlist.interpret, songlist.title, queue.singer, queue.id FROM songlist, queue WHERE queue.songid = songlist.id AND queue.played = 0 ORDER BY timestamp ASC;");
 while($row = mysql_fetch_assoc($sql)){
 	echo "	<tr>\n";
 	echo "		<td>".$row['interpret']."</td>\n";
 	echo "		<td>".$row['title']."</td>\n";
 	echo "		<td>".$row['singer']."</td>\n";
-	echo "		<td><a href=\"index.php?mode=unregister&id=".$row['id']."\"</td>\n";
+	echo "		<td><a href=\"index.php?mode=unregister&id=".$row['id']."\">Entfernen</a></td>\n";
+	echo "	</tr>\n";
 }
 
 ?>
+</table>

@@ -1,4 +1,5 @@
 <?php
+
 require("mysql_connect.php");
 
 //check for post method
@@ -7,8 +8,9 @@ if($_SERVER['REQUEST_METHOD'] != "POST"){
 }
 
 //get post data
-$songid = mysql_real_escape_string($_POST['songid']);
-$singer = mysql_real_escape_string($_POST['singer']);
+$songid = mysql_real_escape_string($_POST['inputSongId']);
+$singer = mysql_real_escape_string($_POST['inputSinger']);
+
 
 $error = 0;
 
@@ -16,17 +18,19 @@ $error = 0;
 $sql = mysql_query("SELECT * FROM songlist WHERE id = '".$songid."';");
 if(mysql_num_rows($sql) != 1){
 	$error++;
+	echo "ID invalid";
 }
 
 //check if singer given
-if(empty($singer)){
+if(!$singer){
 	$error++;
+	echo "No singer given";
 }
 
 //do something if error occured
 if($error){
 	//DO ERROR STUFF
-	echo "Please give valid information."
+	echo "Please give valid information.";
 	
 	exit();
 }
@@ -38,7 +42,7 @@ $sql = "INSERT INTO queue (id, songid, singer, timestamp, played) VALUES ('".uni
 mysql_query($sql);
 
 //forward to overview page
-//header("Location: blabla.php");
+header("Location: index.html");
 
 
 

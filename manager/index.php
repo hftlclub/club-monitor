@@ -20,10 +20,13 @@ if($mode == "unregister" && !empty($id)){
 <html>
 <head>
 <title>Karaoke Manager</title>
+<meta http-equiv="refresh" content="3; URL=<?php echo $_SERVER['REQUEST_URI'] ?>">
 </head>
 <body>
 
-<table>
+<h1>Karaoke Manager</h1>
+
+<table cellpadding="5" border="1">
 	<tr>
 		<th>Interpret</th>
 		<th>Titel</th>

@@ -33,13 +33,14 @@ if($mode == "unregister" && !empty($id)){
 
 <?php
 
-$sql = mysql_query("SELECT songlist.interpret, songlist.title, queue.singer, queue.id WHERE songlist.id = queue.songid AND queue.played = 0;");
+$sql = mysql_query("SELECT songlist.interpret, songlist.title, queue.singer, queue.id WHERE queue.songid = songlist.id AND queue.played = 0;");
 while($row = mysql_fetch_assoc($sql)){
 	echo "	<tr>\n";
 	echo "		<td>".$row['interpret']."</td>\n";
 	echo "		<td>".$row['title']."</td>\n";
 	echo "		<td>".$row['singer']."</td>\n";
 	echo "		<td><a href=\"index.php?mode=unregister&id=".$row['id']."\"</td>\n";
+	echo "	</tr>\n";
 }
 
 ?>

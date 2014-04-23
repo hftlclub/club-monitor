@@ -170,22 +170,26 @@
      });
 
      function triggerGetResults(query) {
-         // hier muss ferdi das zeug laden und dannach showResults() rufen
+         var jqxhr = $.get( "get_suggestions.php?search=" + query, function() {}).done(function(data){
+			 showResults(JSON.parse(data));
+		 });
+		 
          
+         
+         /*var exampleData = [];
+         var song = {Id:"827134", Value:"Nena - 99 Luftballons"};
          var exampleData = [];
          var song = { Id: "827134", Value: "Nena - 99 Luftballons" };
          var song2 = { Id: "827135", Value: "Nena - 1001 Nacht" };
          exampleData.push(song);
          exampleData.push(song2);
-
-         // results nun anzeigen
-         showResults(exampleData);
+         showResults(exampleData);*/
      }
      function showResults(data) {
          // data is a javascript object with songs, each with "Id" and "Value"
          var html = $('<div id="search-results" class="list-group"></div>');
          for (var i in data) {
-             var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].Id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].Value + "</a>");
+             var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].value + "</a>");
              html.append(li);
              li.click(function () {
                  //remove all active elements

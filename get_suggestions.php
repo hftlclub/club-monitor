@@ -11,7 +11,7 @@ if($search){
 	$num = mysql_num_rows($sql);
 
 
-	if($num < 1){
+	if($num > 0){
 
 		$i = 1;
 		while($row = mysql_fetch_assoc($sql)){

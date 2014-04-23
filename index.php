@@ -38,7 +38,7 @@
       <div class="container-fluid">
           <div class="row">
               <div>
-                  <h1>Karaokemanager v0.9 beta nearly stable</h1>
+                  <h1>Karaoke-Playlist</h1>
               </div>
           </div>
           <div class="row">

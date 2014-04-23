@@ -29,9 +29,50 @@
           .twitter-typeahead {
               width: 100%;
           }
+
+          span.largeicon {
+              font-size: 2em;
+          }
       </style>
   </head>
   <body>
+      <div class="container-fluid">
+          <form class="form-horizontal" role="form" action="./post_input.php" method="post">
+                <div class="row">
+                    <div>
+                        <h1>Song reservieren</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 col-md-5">
+                        <div class="form-group">
+              <label for="inputSinger" class="col-md-2 control-label"><h4>Dein Name</h4></label>
+              <div class="col-md-8">
+                  <input type="text" class="form-control" id="Text1" name="inputSinger" placeholder="z.B. Max Mustermann"  onfocus="jsKeyboard.focus(this);clean(this);" autocomplete="off">
+                  <!-- onFocus: jsKeyboard.focus(this);clean(this); -->
+              </div>
+          </div>
+                        <div class="center-block" style="text-align:center;">
+                            <button type="button" class="btn btn-default btn-lg disabled">
+                                <span class="glyphicon glyphicon-play-circle largeicon"></span><br />Eintragen
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-xs-7 col-md-7">
+                  <div class="form-group">
+                      <label for="inputSong" class="col-sm-2 control-label"><h4>Song</h4></label>
+                      <div class="col-sm-9" id="Div1">
+                          <input type="text" class="form-control typeahead" id="Text2" name="inputSong" placeholder="z.B. 99 Luftballons" onfocus="jsKeyboard.focus(this);clean(this);">
+                          <div id="song-search">
+                            <div id="search-results" class="list-group"></div>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                </div>
+              </form>
+      </div>
+      <hr />
     <h1>Song reservieren</h1>
       <form class="form-horizontal" role="form" action="./post_input.php" method="post">
           <div class="form-group">
@@ -144,6 +185,38 @@
          $("#requestForm").css("display", "block");
          $("#feedback").css("display", "none");
          $("#feedback").html("");
+     }
+
+     $("#Text2").bind('keyup', function (e) {
+         triggerGetResults($("#Text2").val());
+     });
+
+     function triggerGetResults(query) {
+         // hier muss ferdi das zeug laden und dannach showResults() rufen
+         
+         var exampleData = [];
+         var song = {Id:"827134", Value:"Nena - 99 Luftballons"};
+         exampleData.push(song);
+
+         showResults(exampleData);
+     }
+     function showResults(data) {
+         // data is a javascript object with songs, each with "Id" and "Value"
+         var html = $('<div id="search-results" class="list-group"></div>');
+         for (var i in data) {
+             var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].Id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].Value + "</a>");
+             html.append(li);
+             li.click(function () {
+                 //remove all active elements
+                 $("#song-search").find("div#search-results").removeClass("list-group-item-success");
+                 //activate this
+                 $(this).addClass("list-group-item-success");
+                 return false;
+             })
+         }
+         $("#song-search").find("div#search-results").remove();
+         $("#song-search").append(html);
+
      }
  </script>
  

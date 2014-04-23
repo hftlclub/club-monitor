@@ -5,8 +5,8 @@ font-size:14px; font-family:Arial Unicode MS;font-weight:normal;
 overflow:hidden;
 }
 
-#keyboard{background-color:#7b8490;padding:10px; width:778px; height:288;display:block; border-top:3px solid #000; padding-left:25px; display:block; 
-          position:absolute; bottom:-350px; left:0px;}
+#keyboard{background-color:#7b8490;padding:10px; width:800px; height:288;display:block; border-top:3px solid #000; padding-left:25px; display:block; 
+          position:absolute; bottom:-350px; left:112px;}
 #keyboard:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
 
 #keyboardHeader {position:relative;}

@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Karaokemanager - Überblick</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/darktheme.css" rel="stylesheet">      
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      <style type="text/css">
+          #song .empty-message, .tt-dataset-song {
+              padding: 5px 10px;
+              text-align: center;
+              background-color: #000;
+              border: 1px #fff solid;
+          }
+          .twitter-typeahead {
+              width: 100%;
+          }
+
+          span.largeicon {
+              font-size: 2em;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container-fluid">
+          <div class="row">
+              <div>
+                  <h1>Karaokemanager v0.0.1 beta unstable</h1>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-xs-12 col-md-8">
+                  <table class="table table-striped">
+                      <tr>
+                          <th>#</th>
+                          <th>nächster Song</th>
+                          <th>Sänger</th>
+                      </tr>
+                      <tr>
+                          <td>1</td>
+                          <td>Klangkarussell - Sonnentanz</td>
+                          <td>Tilmann, Ferdi</td>
+                      </tr>
+                      <tr>
+                          <td>2</td>
+                          <td>Miley Cyrus - Wrecking Ball</td>
+                          <td>Danny & Co. KG</td>
+                      </tr>
+                  </table>
+              </div>
+              <div class="col-xs-6 col-md-4">
+                  <a href="./input.html">
+                      <div class="center-block" style="text-align:center;">
+                          <button type="button" class="btn btn-default btn-lg">
+                              <span class="glyphicon glyphicon-plus largeicon"></span>
+                          </button>
+                          <br />
+                          <h2>Song reservieren</h2>
+                      </div>
+                  </a>
+              </div>
+          </div>
+      </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

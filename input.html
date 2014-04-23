@@ -171,6 +171,7 @@
 
      function triggerGetResults(query) {
          var jqxhr = $.get( "get_suggestions.php?search=" + query, function() {}).done(function(data){
+			 alert(data);
 			 showResults(JSON.parse(data));
 		 });
 		 

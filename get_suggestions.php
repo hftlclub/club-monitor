@@ -26,7 +26,7 @@ if($getsearch){
 	
 	$sql .= " ORDER BY interpret, title ASC LIMIT ".$limit.";";
 	
-	die($sql);
+	//die($sql);
 	
 	$query = mysql_query($sql);
 	$num = mysql_num_rows($query);

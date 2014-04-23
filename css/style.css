@@ -4,8 +4,3 @@ body{
 	color: white;
 	margin: 0;
 }
-
-#inputSinger, #inputSong{
-	font-size: 25px !important;
-	height: 40px !important;
-}

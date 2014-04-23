@@ -16,11 +16,11 @@ if($getsearch){
 	
 	//go through search words and generate WHERE clauses
 	for($i = 0; $i < count($search); $i++){
-		$sql .= "interpret LIKE '%".$search[$i]."%' OR title LIKE '%".$search[$i]."%'";
+		$sql .= "(interpret LIKE '%".$search[$i]."%' OR title LIKE '%".$search[$i]."%')";
 		
 		//append "OR" if not the last entry
 		if($i < (count($search) - 1)){
-			$sql .= " OR ";
+			$sql .= " AND ";
 		}
 	}
 	

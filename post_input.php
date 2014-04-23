@@ -18,19 +18,19 @@ $error = 0;
 $sql = mysql_query("SELECT * FROM songlist WHERE id = '".$songid."';");
 if(mysql_num_rows($sql) != 1){
 	$error++;
-	echo "ID invalid";
+	//echo "ID invalid";
 }
 
 //check if singer given
 if(!$singer){
 	$error++;
-	echo "No singer given";
+	//echo "No singer given";
 }
 
 //do something if error occured
 if($error){
-	//DO ERROR STUFF
-	echo "Please give valid information.";
+	header("Location: index.php");
+	//echo "Please give valid information.";
 	
 	exit();
 }
@@ -42,7 +42,7 @@ $sql = "INSERT INTO queue (id, songid, singer, timestamp, played) VALUES ('".uni
 mysql_query($sql);
 
 //forward to overview page
-header("Location: index.html");
+header("Location: index.php");
 
 
 

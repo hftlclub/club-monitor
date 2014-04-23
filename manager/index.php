@@ -47,3 +47,4 @@ while($row = mysql_fetch_assoc($sql)){
 }
 
 ?>
+</table>

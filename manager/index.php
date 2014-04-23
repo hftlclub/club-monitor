@@ -39,7 +39,7 @@ while($row = mysql_fetch_assoc($sql)){
 	echo "		<td>".$row['interpret']."</td>\n";
 	echo "		<td>".$row['title']."</td>\n";
 	echo "		<td>".$row['singer']."</td>\n";
-	echo "		<td><a href=\"index.php?mode=unregister&id=".$row['id']."\"</td>\n";
+	echo "		<td><a href=\"index.php?mode=unregister&id=".$row['id']."\">Entfernen</a></td>\n";
 	echo "	</tr>\n";
 }
 

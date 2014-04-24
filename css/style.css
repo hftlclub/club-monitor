@@ -6,6 +6,6 @@ body{
 }
 
 .list-group-item-success, a.list-group-item-success:hover, a.list-group-item-success:active, a.list-group-item-success:focus{
-	color: red !important;
-	background-color: #ffa1a1;
+	color: white !important;
+	background-color: #22B10C;
 }

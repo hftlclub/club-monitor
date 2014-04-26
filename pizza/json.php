@@ -23,6 +23,8 @@ $service = "535c198491490"; //Bittus pizza
 
 
 if($mode == "all_pizzas" && $service){
+	unset($out);
+	
 	//check whether service ID exists
 	$query = "SELECT id FROM pizza_services WHERE id = '".$service."';";
 	$sql = mysql_query($query);
@@ -75,6 +77,54 @@ if($mode == "all_pizzas" && $service){
 	
 			$i++;
 	
+		}
+	}
+}
+
+
+
+
+###
+### Mode: all_orders
+###
+
+if($mode == "all_orders"){
+	unset($out);
+
+	//get all orders from DB
+	$query = "SELECT
+				pizza_orders.*,
+				pizza_pizzas.number AS pizza_number,
+				pizza_pizzas.name AS pizza_name
+		FROM pizza_orders
+		ORDER BY timestamp ASC
+	;";
+	
+	$sql = mysql_query($query);
+	$num = mysql_num_rows($sql);
+
+	//only proceed if there are results
+	if($num > 0){
+
+		$i = 1;
+		//build JSON from datasets
+		while($row = mysql_fetch_assoc($sql)){
+						
+			$out .= "{\n";
+			$out .= "    \"id\" : \"".$row['id']."\",\n";
+			$out .= "    \"name\" : \"".$row['name']."\",\n";
+			$out .= "    \"pizza_number\"   : \"".$row['pizza_number']."\",\n";
+			$out .= "    \"pizza_name\"   : \"".$row['pizza_name']."\",\n";
+			$out .= "    \"comment\"   : \"".$row['comment']."\"\n";
+			$out .= "}";
+			
+			//no comma for last entry
+			if($i != $num){
+				$out .= ",";
+			}
+			$out .= "\n";
+	
+			$i++;
 		}
 	}
 }

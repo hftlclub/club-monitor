@@ -9,8 +9,8 @@ define("DATABASE_PASSWORD",   "");
 define("DATABASE_NAME",       "club");
 
 
-
-
+//Pizza
+define("PIZZA_PRICE", 5);
 
 
 //connect to MySQLServer

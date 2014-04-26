@@ -97,6 +97,8 @@ if($mode == "all_orders"){
 				pizza_pizzas.number AS pizza_number,
 				pizza_pizzas.name AS pizza_name
 		FROM pizza_orders
+		WHERE
+			pizza.
 		ORDER BY timestamp ASC
 	;";
 	
@@ -115,7 +117,8 @@ if($mode == "all_orders"){
 			$out .= "    \"name\" : \"".$row['name']."\",\n";
 			$out .= "    \"pizza_number\"   : \"".$row['pizza_number']."\",\n";
 			$out .= "    \"pizza_name\"   : \"".$row['pizza_name']."\",\n";
-			$out .= "    \"comment\"   : \"".$row['comment']."\"\n";
+			$out .= "    \"comment\"   : \"".$row['comment']."\",\n";
+			$out .= "    \"paid\"   : ".$row['paid']."\n";
 			$out .= "}";
 			
 			//no comma for last entry

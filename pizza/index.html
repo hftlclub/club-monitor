@@ -50,19 +50,14 @@
 				<div class="panel panel-default panel-pizza">
 					<div class="panel-heading">Bestellung</div>
 					<div class="panel-body">
-						<form role="form" id="order">
+						<form role="form" id="cart-form">
 							<div class="form-group">
-								<label for="input-name">Name</label>
-								<input id="input-name" class="form-control" placeholder="Namen eingeben">
+								<label for="input-cart-name">Name</label>
+								<input id="input-cart-name" class="form-control" placeholder="Namen eingeben">
 							</div>
 							<div class="form-group">
 								<label>Ausgewählt</label>
-								<div class="list-group">
-									<a href="#" class="list-group-item">Cras justo odio</a>
-									<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-									<a href="#" class="list-group-item">Morbi leo risus <span class="badge">14</span></a>
-									<a href="#" class="list-group-item">Porta ac consectetur ac <span class="text-danger">*</span></a>
-									<a href="#" class="list-group-item">Vestibulum at eros</a>
+								<div class="list-group" id="cart-items">
 								</div>
 							</div>
 							<input type="submit" class="btn btn-success btn-lg btn-block" value="Jetzt zahlungspflichtig bestellen">
@@ -112,24 +107,23 @@
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 	<script type="application/javascript">
-		$(function postOrder(){
-			var url = "post_order.php";
 
-			return false;
-
-		});
-
-		$(function loadData(){
-			var url = "json.php?mode=all_pizzas&service=platzhalter";
+		$(function(){
+			var dataUrl = "json.php?mode=all_pizzas&service=platzhalter";
+			var orderUrl = "post_order.php";
+			var orders = [];
 			
 			$.ajax({
 				type: "get",
-				url: url,
+				url: dataUrl,
+                dataType: "json",
 				success: processData,
+                error: function(o,c,m) { alert(m); }
 			});
 
 			$('#order-modal').modal({ show: false });
 			$('#order-modal-form').submit(addOrderSubmit);
+			$('#cart-form').submit(submitOrder);
 
 			function processData(data) {
 				var $list = $("#pizza-selection");
@@ -173,7 +167,6 @@
 
 				$('#order-modal-form').data('item', item);
 
-
 			};
 
 			function addOrderSubmit() {
@@ -181,6 +174,46 @@
 				var comment = $('#order-modal-comment').val();
 
 				$('#order-modal').modal('hide');
+
+				addToCart(item, comment);
+
+				return false;
+
+			};
+
+			function addToCart(item, comment) {
+				orders.push({id: item.id, comment: comment});
+
+				var $entry = $("<a>");
+				$entry.addClass("list-group-item");
+				$entry.text(item.name);
+
+				if(comment) {
+					var $asterisk = $("<span>");
+					$asterisk.addClass("text-danger");
+					$asterisk.text('*');
+					$entry.append(" ");
+					$entry.append($asterisk);
+
+				}
+
+				$("#cart-items").append($entry);
+
+			};
+
+			function submitOrder() {
+				var data = {};
+				data.pizzas = orders;
+				data.name = $('#input-cart-name').val();
+
+				$.ajax({
+					type: "post",
+					url: orderUrl,
+					data: JSON.stringify(data),
+					contentType: "application/json",
+					success: function(){alert("yep")},
+					error: function(o,c,m) { alert(m); },
+				});
 
 				return false;
 

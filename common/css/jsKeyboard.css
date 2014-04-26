@@ -1,9 +1,10 @@
 
-body {margin:0px 0px; padding:0px; /* Need to set body margin and padding to get consistency between browsers. */
+/* body {margin:0px 0px; padding:0px; /* Need to set body margin and padding to get consistency between browsers. */
      /* text-align:center; /* Hack for IE5/Win */ 
-font-size:14px; font-family:Arial Unicode MS;font-weight:normal; 
+/*font-size:14px; font-family:Arial Unicode MS;font-weight:normal; 
 overflow:hidden;
 }
+*/
 
 #keyboard{background-color:#7b8490;padding:10px; width:800px; height:288;display:block; border-top:3px solid #000; padding-left:25px; display:block; 
           position:absolute; bottom:-350px; left:112px;}

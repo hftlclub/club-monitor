@@ -1,6 +1,6 @@
 <?php
 
-require("mysql_connect.php");
+require("../common/config.php");
 
 //check for post method
 if($_SERVER['REQUEST_METHOD'] != "POST"){

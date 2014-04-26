@@ -9,3 +9,32 @@ body{
 	color: white !important;
 	background-color: #22B10C;
 }
+
+ #song .empty-message, .tt-dataset-song {
+              padding: 5px 10px;
+              text-align: center;
+              background-color: #000;
+              border: 1px #fff solid;
+          }
+          .twitter-typeahead {
+              width: 100%;
+          }
+
+          span.largeicon {
+              font-size: 2em;
+          }
+          
+           #song .empty-message, .tt-dataset-song {
+            padding: 5px 10px;
+            text-align: center;
+            background-color: #000;
+            border: 1px #fff solid;
+        }
+
+        .twitter-typeahead {
+            width: 100%;
+        }
+
+        span.largeicon {
+            font-size: 2em;
+        }

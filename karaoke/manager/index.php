@@ -1,5 +1,5 @@
 <?php
-require("../mysql_connect.php");
+require("../../common/config.php");
 
 $mode = $_GET['mode'];
 $id   = $_GET['id'];

@@ -1,5 +1,5 @@
 <?php
-require("mysql_connect.php");
+require("../common/config.php");
 
 //max number of entries
 $limit = 7;

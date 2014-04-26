@@ -17,6 +17,11 @@ if(!$mode){
 ###
 
 $service = mysql_real_escape_string($_GET['service']);
+
+//SIMPLIFICATION, delete later!
+$service = "535c198491490"; //Bittus pizza
+
+
 if($mode == "all_pizzas" && $service){
 	//check whether service ID exists
 	$query = "SELECT id FROM pizza_services WHERE id = '".$service."';";

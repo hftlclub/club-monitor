@@ -177,7 +177,12 @@
 			};
 
 			function addOrderSubmit() {
-				console.log($('#order-modal-form').data('item'));
+				var item = $('#order-modal-form').data('item');
+				var comment = $('#order-modal-comment').val();
+
+				$('#order-modal').modal('hide');
+
+				return false;
 
 			};
 

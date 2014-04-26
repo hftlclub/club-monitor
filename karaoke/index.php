@@ -10,7 +10,7 @@
     <!-- Bootstrap -->
     <link href="../common/css/bootstrap.min.css" rel="stylesheet">
     <link href="../common/css/darktheme.css" rel="stylesheet">      
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../common/css/style.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,7 +36,7 @@
                       </tr>
                       
 <?php
-require("mysql_connect.php");
+require("../common/config.php");
 
 $sql = mysql_query("SELECT songlist.interpret, songlist.title, queue.singer, queue.id FROM songlist, queue WHERE queue.songid = songlist.id AND queue.played = 0 ORDER BY timestamp ASC;");
 $i = 1;

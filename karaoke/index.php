@@ -9,7 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="../common/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./common/css/bootstrap.cyborg.min.css" rel="stylesheet">
+    <link href="../common/css/bootstrap.cyborg.min.css" rel="stylesheet">
     <link href="../common/css/style.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -205,7 +205,16 @@
 				var data = {};
 				data.pizzas = orders;
 				data.name = $('#input-cart-name').val();
-				console.log(data);
+
+				$.ajax({
+					type: "post",
+					url: orderUrl,
+					data: JSON.stringify(data),
+					contentType: "application/json",
+					success: function(){alert("yep")},
+					error: function(o,c,m) { alert(m); },
+				});
+
 				return false;
 
 			};

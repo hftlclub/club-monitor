@@ -125,7 +125,9 @@
 			$.ajax({
 				type: "get",
 				url: url,
+                dataType: "json",
 				success: processData,
+                error: function(o,c,m) { alert(m); }
 			});
 
 			$('#order-modal').modal({ show: false });

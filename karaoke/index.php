@@ -20,9 +20,9 @@
     <![endif]-->
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div>
+            <div class="page-header">
                 <h1>Karaoke-Playlist</h1>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     <?php endwhile; ?>
                 </table>
             </div>
-            <div class="col-xs-6 col-md-4">
+            <div class="col-xs-12 col-md-4">
                 <div class="center-block" style="text-align:center;">
                     <button type="button" class="btn btn-default btn-lg" onclick="window.location.href='./input.html'">
                         <span class="glyphicon glyphicon-plus largeicon"></span><br />Song reservieren

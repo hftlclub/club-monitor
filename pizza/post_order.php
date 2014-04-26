@@ -7,10 +7,12 @@ if($_SERVER['REQUEST_METHOD'] != "POST"){
 	doerror();
 }
 
+//read from input stream
 $data = json_decode(file_get_contents("php://input"), true);
 
 //DEBUG
-print_r($data); exit;
+error_log("fjdsilfs");
+error_log(print_r($data, true)); exit;
 
 
 //check if name given
@@ -18,12 +20,18 @@ if(!$data['name']){
 	doerror();
 }
 
+
+
+
+$data['name'] = mysql_real_escape_string($data['name']);
+
 //go through ordered pizzas
 foreach($data['pizzas'] AS $pizza){
+	
 	//MySQL escapes
 	$pizza['id']      = mysql_real_escape_string($pizza['id']);
 	$pizza['comment'] = mysql_real_escape_string($pizza['comment']);
-	$data['name']     = mysql_real_escape_string($data['name']);
+	
 	
 	//check if pizza ID is valid
 	$sql = mysql_query("SELECT id FROM pizza_pizzas WHERE id = '".$pizza['id']."';");
@@ -40,7 +48,6 @@ foreach($data['pizzas'] AS $pizza){
 			'".$pizza['id']."',
 			'".$pizza['comment']."'
 		);\n";
-	
 }
 
 
@@ -52,6 +59,7 @@ if(!mysql_query($insertsql)){
 
 //SUCCESS!
 header("HTTP/1.1 200 OK");
+echo "{ \"message\" : \"Vielen Dank für Deine Bestellung, ".$data['name']."!\n Bitte bezahle ".count($pizzas) * PIZZA_PRICE." EUR an der Bar.\" }";
 exit();
 
 

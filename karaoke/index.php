@@ -51,19 +51,14 @@
                 </table>
             </div>
             <div class="col-xs-6 col-md-4">
-                <a href="./input.html">
-                    <div class="center-block" style="text-align:center;">
-                        <button type="button" class="btn btn-default btn-lg">
-                            <span class="glyphicon glyphicon-plus largeicon"></span>
-                        </button>
-                        <br />
-                        <h2>Song reservieren</h2>
-                    </div>
-                </a>
+                <div class="center-block" style="text-align:center;">
+                    <button type="button" class="btn btn-default btn-lg" onclick="window.location.href='./input.html'">
+                        <span class="glyphicon glyphicon-plus largeicon"></span><br />Song reservieren
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

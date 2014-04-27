@@ -43,7 +43,7 @@ if($mode == "all_pizzas" && $service){
 	//only proceed if there are results
 	if($num > 0){
 
-		echo "[";
+		$out .= "[";
 
 		$i = 1;
 		//build JSON from datasets
@@ -77,7 +77,7 @@ if($mode == "all_pizzas" && $service){
 			$i++;
 		}
 		
-		echo "]";
+		$out .= "]";
 	}
 }
 
@@ -108,7 +108,7 @@ if($mode == "all_orders"){
 
 	//only proceed if there are results
 	if($num > 0){
-		echo "[";
+		$out .= "[";
 
 		$i = 1;
 		//build JSON from datasets
@@ -130,7 +130,10 @@ if($mode == "all_orders"){
 	
 			$i++;
 		}
-		echo "]";
+		
+		$out .= "]";
+		
+	
 
 	}
 }

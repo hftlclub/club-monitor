@@ -18,14 +18,6 @@
     <![endif]-->
 
 	<style type="text/css">
-		.panel-pizza {
-			position: relative;
-		}
-
-		.panel-pizza > .list-group, .panel-pizza > .panel-body {
-			height: 600px;
-			overflow: auto;
-		}
 	</style>
 
   </head>
@@ -50,19 +42,14 @@
 				<div class="panel panel-default panel-pizza">
 					<div class="panel-heading">Bestellung</div>
 					<div class="panel-body">
-						<form role="form" id="order">
+						<form role="form" id="cart-form">
 							<div class="form-group">
-								<label for="input-name">Name</label>
-								<input id="input-name" class="form-control" placeholder="Namen eingeben">
+								<label for="input-cart-name">Name</label>
+								<input id="input-cart-name" class="form-control" placeholder="Namen eingeben">
 							</div>
 							<div class="form-group">
 								<label>Ausgewählt</label>
-								<div class="list-group">
-									<a href="#" class="list-group-item">Cras justo odio</a>
-									<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-									<a href="#" class="list-group-item">Morbi leo risus <span class="badge">14</span></a>
-									<a href="#" class="list-group-item">Porta ac consectetur ac <span class="text-danger">*</span></a>
-									<a href="#" class="list-group-item">Vestibulum at eros</a>
+								<div class="list-group" id="cart-items">
 								</div>
 							</div>
 							<input type="submit" class="btn btn-success btn-lg btn-block" value="Jetzt zahlungspflichtig bestellen">
@@ -78,21 +65,13 @@
 		<div class="modal-dialog">
 			<form role="form" id="order-modal-form">
 				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="order-modal-label">Pizza bestellen</h4>
-					</div>
 					<div class="modal-body">
+						<h3 id="order-modal-name" style="margin-top: 0;"></h3>
 						<div class="form-group">
-							<label class="control-label">Pizza</label>
-							<p id="order-modal-name"></p>
-						</div>
-						<div class="form-group">
-							<label class="control-label">Zutaten</label>
 							<p id="order-modal-ingredients"></p>
 						</div>
-						<div class="form-group">
-							<label class="control-label">Kommentar</label>
+						<div class="form-group" style="margin-top: 25px;">
+							<label class="control-label">Zusätzliche Angaben</label>
 							<textarea id="order-modal-comment" class="form-control"></textarea>
 						</div>
 					</div>
@@ -111,20 +90,23 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
+	<script src="../common/js/jquery.slimscroll.min.js"></script>
+
 	<script type="application/javascript">
-		$(function postOrder(){
-			var url = "post_order.php";
-
-			return false;
-
+		$(function fancyScroll() {
+			$('.panel-pizza > .list-group').slimScroll({
+		        height: '250px'
+		    });
 		});
 
-		$(function loadData(){
-			var url = "json.php?mode=all_pizzas&service=platzhalter";
+		$(function orderLogic(){
+			var dataUrl = "json.php?mode=all_pizzas&service=platzhalter";
+			var orderUrl = "post_order.php";
+			var orders = [];
 			
 			$.ajax({
 				type: "get",
-				url: url,
+				url: dataUrl,
                 dataType: "json",
 				success: processData,
                 error: function(o,c,m) { alert(m); }
@@ -132,6 +114,7 @@
 
 			$('#order-modal').modal({ show: false });
 			$('#order-modal-form').submit(addOrderSubmit);
+			$('#cart-form').submit(submitOrder);
 
 			function processData(data) {
 				var $list = $("#pizza-selection");
@@ -167,14 +150,13 @@
 			};
 
 			function addOrderDialog(item) {
-				$('#order-modal-name').text(item.name);
+				$('#order-modal-name').text("Pizza " + item.name);
 				$('#order-modal-ingredients').text(item.ingredients.join(", "));
 
 				$('#order-modal').modal('show');
 				$('#order-modal-comment').val("");
 
 				$('#order-modal-form').data('item', item);
-
 
 			};
 
@@ -183,6 +165,46 @@
 				var comment = $('#order-modal-comment').val();
 
 				$('#order-modal').modal('hide');
+
+				addToCart(item, comment);
+
+				return false;
+
+			};
+
+			function addToCart(item, comment) {
+				orders.push({id: item.id, comment: comment});
+
+				var $entry = $("<a>");
+				$entry.addClass("list-group-item");
+				$entry.text(item.name);
+
+				if(comment) {
+					var $asterisk = $("<span>");
+					$asterisk.addClass("text-danger");
+					$asterisk.text('*');
+					$entry.append(" ");
+					$entry.append($asterisk);
+
+				}
+
+				$("#cart-items").append($entry);
+
+			};
+
+			function submitOrder() {
+				var data = {};
+				data.pizzas = orders;
+				data.name = $('#input-cart-name').val();
+
+				$.ajax({
+					type: "post",
+					url: orderUrl,
+					data: JSON.stringify(data),
+					contentType: "application/json",
+					success: function(){alert("yep")},
+					error: function(o,c,m) { alert(m); },
+				});
 
 				return false;
 

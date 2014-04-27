@@ -98,7 +98,7 @@ if($mode == "all_orders"){
 				pizza_pizzas.name AS pizza_name
 		FROM pizza_orders
 		WHERE
-			pizza.
+			pizza_pizzas.id = pizza_orders.pizza
 		ORDER BY timestamp ASC
 	;";
 	

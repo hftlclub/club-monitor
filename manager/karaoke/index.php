@@ -73,7 +73,7 @@ if($mode == "unregister" && !empty($id)){
                         echo "
                         <td>".$row['singer']."</td>\n";
                         echo "
-                        <td><a href=\"index.php?mode =unregister&id =" . $row['id'] . " \">Entfernen</a></td>\n";
+                        <td><a href=\"index.php?mode=unregister&id=" . $row['id'] . " \">Entfernen</a></td>\n";
                         echo "
                     </tr>\n";
                     }

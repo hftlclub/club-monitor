@@ -65,7 +65,7 @@
                             			<span class="glyphicon glyphicon-refresh"></span>
                             		</button>
                             	</span>
-                            	<input type="text" class="form-control input-lg" id="Text2" name="inputSong" placeholder="z.B. 99 Luftballons" onfocus="jsKeyboard.focus(this);clean(this);placeholder=''" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''" autocomplete="off">
+                            	<input type="text" class="form-control input-lg" id="Text2" name="inputSong" onfocus="jsKeyboard.focus(this);clean(this);placeholder=''" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''" autocomplete="off">
 								<span class="input-group-btn">
                             		<button class="btn btn-default" type="button" onclick="$('#Text2').val('');">
                             			<span class="glyphicon glyphicon-remove"></span>
@@ -203,6 +203,19 @@
 				triggerGetResults(data[0].value);
 			};
 		}
+		
+		
+		//sets a random placeholder - and do this at startup
+		$(function randomPlaceholder() {
+			$.ajax({
+				url: "random_song.php?limit=1",
+				success: dataReceived
+			});
+
+			function dataReceived(data){
+				$("#Text2").attr("placeholder", "z.B. " + data[0].value);
+			};
+		});
 
 
         

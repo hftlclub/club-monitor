@@ -121,7 +121,7 @@ if($mode == "all_orders"){
 			
 			//no comma for last entry
 			if($i != $num){
-				$out .= ",n";
+				$out .= ", ";
 			}
 	
 			$i++;

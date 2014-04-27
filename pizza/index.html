@@ -213,7 +213,17 @@
 			};
 
 			function addOrderDialog(item) {
-				$('#order-modal-name').text("Pizza " + item.name);
+				var $num = $("<span>");
+				$num.addClass("label");
+				$num.addClass("label-default");
+				$num.text(item["number"]);
+				
+				var $name = $("<span>");
+				$name.text("Pizza " + item.name);
+				
+				$('#order-modal-name').append($num)
+				$('#order-modal-name').append($name);
+				
 				$('#order-modal-ingredients').text(item.ingredients.join(", "));
 
 				$('#order-modal').modal('show');

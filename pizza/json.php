@@ -45,37 +45,35 @@ if($mode == "all_pizzas" && $service){
 
 		$out .= "[";
 
-		$i = 1;
 		//build JSON from datasets
+		$parts = array();
 		while($row = mysql_fetch_assoc($sql)){
 			$ingr = explode("\n", $row['ingredients']);
 						
-			$out .= "{";
-			$out .= "\"id\" : \"".$row['id']."\", ";
-			$out .= "\"number\" : \"".$row['number']."\", ";
-			$out .= "\"name\" : \"".$row['name']."\", ";
-			$out .= "\"ingredients\" : [";
+			$new = "{";
+			$new .= "\"id\" : \"".$row['id']."\", ";
+			$new .= "\"number\" : \"".$row['number']."\", ";
+			$new .= "\"name\" : \"".$row['name']."\", ";
+			$new .= "\"ingredients\" : [";
 			
 			//go through newline-separated ingredients
 			for($j = 0; $j < count($ingr); $j++){
-				$out .= "\"".trim($ingr[$j])."\"";
+				$new .= "\"".trim($ingr[$j])."\"";
 				
 				//no comma for last entry
 				if($j < (count($ingr) - 1)){
-					$out .= ", ";
+					$new .= ", ";
 				}
 			}
 			
-			$out .= "]";
-			$out .= "}";
+			$new .= "]";
+			$new .= "}";
 			
-			//no comma for last entry
-			if($i != $num){
-				$out .= ",";
-			}
-	
-			$i++;
+			$parts[] = $new;
 		}
+		
+		//join JSON parts
+		$out .= implode(", ", $parts);
 		
 		$out .= "]";
 	}
@@ -114,29 +112,23 @@ if($mode == "all_orders"){
 		$out .= "{";
 		$out .= "\"orders\" : [";
 
-		$i = 1;
+		$parts = array();
 		//build JSON from datasets
 		while($row = mysql_fetch_assoc($sql)){
 			
 			//convert newlines to \n
 			$row['comment'] = str_replace("\n","\\n", $row['comment']);
 			
-					
-			$out .= "{";
-			$out .= "\"id\" : \"".$row['id']."\", ";
-			$out .= "\"name\" : \"".$row['name']."\", ";
-			$out .= "\"pizza_number\" : \"".$row['pizza_number']."\", ";
-			$out .= "\"pizza_name\" : \"".$row['pizza_name']."\", ";
-			$out .= "\"comment\" : \"".$row['comment']."\", ";
-			$out .= "\"paid\" : ".$row['paid'];
-			$out .= "}";
+			$new = "{";
+			$new .= "\"id\" : \"".$row['id']."\", ";
+			$new .= "\"name\" : \"".$row['name']."\", ";
+			$new .= "\"pizza_number\" : \"".$row['pizza_number']."\", ";
+			$new .= "\"pizza_name\" : \"".$row['pizza_name']."\", ";
+			$new .= "\"comment\" : \"".$row['comment']."\", ";
+			$new .= "\"paid\" : ".$row['paid'];
+			$new .= "}";
 			
-			//no comma for last entry
-			if($i != $num){
-				$out .= ", ";
-			}
-	
-			$i++;
+			$parts[] = $new;
 			
 			
 			/// DATA FOR SUMMARY
@@ -159,6 +151,9 @@ if($mode == "all_orders"){
 			
 		}
 		
+		//join JSON parts
+		$out .= implode(", ", $parts);
+		
 		$out .= "],";
 		
 		
@@ -166,24 +161,24 @@ if($mode == "all_orders"){
 		//Generate summary
 		$out .= "\"summary\" : [";
 		
+		$parts = array();
+		
 		foreach($summary AS $temp){
 			if(($temp['count'] - count($temp['comments'])) != 0){ //only show if there are some left without comment
-				$out .= "{\"number\" : \"".$temp['number']."\", \"count\" : ".($temp['count'] - count($temp['comments'])).", \"comment\" : \"\"}, ";
+				$parts[] = "{\"number\" : \"".$temp['number']."\", \"count\" : ".($temp['count'] - count($temp['comments'])).", \"comment\" : \"\"}";
 			}
 			
-			if(count($temp['comments'])){ //go through commented entries and show them each separately
+			//go through commented entries and show them each separately
+			if(count($temp['comments'])){
 				foreach($temp['comments'] AS $comm){
-					$out .= "{\"number\" : \"".$temp['number']."\", \"count\" : 1, \"comment\" : \"".$comm."\"}, ";
+					$parts[] = "{\"number\" : \"".$temp['number']."\", \"count\" : 1, \"comment\" : \"".$comm."\"}";
 				}
 			}
-			
-
 		}
 		
-		//VERY CRUDE! Rather make array and implode it --> TODO!
-		if(substr($out, -2, 2) == ", "){
-			$out = substr($out, 0, strlen($out) - 2);
-		}
+		//join JSON parts
+		$out .= implode(", ", $parts);
+		
 		
 		$out .= "]";
 		

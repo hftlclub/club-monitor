@@ -60,12 +60,19 @@
                         <div class="col-sm-9" id="Div1">
                         	<div class="input-group input-group-lg">
                         		<!-- class="form-control typeahead" -->
+                            	<span class="input-group-btn">
+                            		<button class="btn btn-default" type="button" onclick="newRandomSong();">
+                            			<span class="glyphicon glyphicon-refresh"></span>
+                            		</button>
+                            	</span>
                             	<input type="text" class="form-control input-lg" id="Text2" name="inputSong" placeholder="z.B. 99 Luftballons" onfocus="jsKeyboard.focus(this);clean(this);placeholder=''" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''" autocomplete="off">
 								<span class="input-group-btn">
                             		<button class="btn btn-default" type="button" onclick="$('#Text2').val('');">
                             			<span class="glyphicon glyphicon-remove"></span>
                             		</button>
-                            	</span>							
+                            	</span>	
+                            	
+                            								
                             </div>
                         </div>
                     </div>
@@ -158,13 +165,7 @@
             exampleData.push(song2);
             showResults(exampleData);*/
         }
-        
-        function newRandomSong() {
-            var jqxhr = $.get("get_suggestions.php", function () { }).done(function (data) {
-                
-            });
-        }
-        
+
 
         function showResults(data) {
             // data is a javascript object with songs, each with "Id" and "Value"
@@ -187,6 +188,31 @@
             $("#song-search").find("div#search-results").remove();
             $("#song-search").append(html);
         }
+        
+        
+        
+        
+        function newRandomSong() {
+
+			
+			var url = 'random_song.php?limit=1';
+
+			$.ajax({
+				url: url,
+				success: dataReceived
+			});
+
+			function dataReceived(data){
+				$("#Text2").val(data[0].value);
+				triggerGetResults(data[0].value);
+			};
+
+		}
+
+        
+        
+        
+        
     </script>
 </body>
 </html>

@@ -16,6 +16,12 @@ if($getsearch){
 	
 	//go through search words and generate WHERE clauses
 	for($i = 0; $i < count($search); $i++){
+		
+		//skip this step if search word is a dash
+		if($search[$i] == "-"){
+			continue;
+		}
+		
 		$sql .= "(interpret LIKE '%".$search[$i]."%' OR title LIKE '%".$search[$i]."%')";
 		
 		//append "OR" if not the last entry

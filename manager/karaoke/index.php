@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require("../../common/config.php");
 
 $mode = $_GET['mode'];
@@ -28,7 +28,7 @@ if($mode == "unregister" && !empty($id)){
 
     <!-- Bootstrap -->
     <link href="../../common/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../common/css/darktheme.css" rel="stylesheet">
+    <link href="../../common/css/bootstrap.cyborg.min.css" rel="stylesheet">
     <link href="../../common/css/style.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,9 +39,9 @@ if($mode == "unregister" && !empty($id)){
     <![endif]-->
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div>
+            <div class="page-header">
                 <h1>Karaoke Manager</h1>
             </div>
         </div>

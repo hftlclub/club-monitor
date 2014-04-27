@@ -152,19 +152,16 @@
             triggerGetResults($("#Text2").val());
         });
 
-        function triggerGetResults(query) {
-            var jqxhr = $.get("get_suggestions.php?search=" + query, function () { }).done(function (data) {
-                showResults(data);
-            });
-            /*var exampleData = [];
-            var song = {Id:"827134", Value:"Nena - 99 Luftballons"};
-            var exampleData = [];
-            var song = { Id: "827134", Value: "Nena - 99 Luftballons" };
-            var song2 = { Id: "827135", Value: "Nena - 1001 Nacht" };
-            exampleData.push(song);
-            exampleData.push(song2);
-            showResults(exampleData);*/
-        }
+        function triggerGetResults(search) {
+			$.ajax({
+				url: "get_suggestions.php?search=" + search,
+				success: dataReceived
+			});
+
+			function dataReceived(data) {
+				showResults(data);
+			};
+		}
 
 
         function showResults(data) {
@@ -193,12 +190,8 @@
         
         
         function newRandomSong() {
-
-			
-			var url = 'random_song.php?limit=1';
-
 			$.ajax({
-				url: url,
+				url: "random_song.php?limit=1",
 				success: dataReceived
 			});
 
@@ -206,12 +199,9 @@
 				$("#Text2").val(data[0].value);
 				triggerGetResults(data[0].value);
 			};
-
 		}
 
-        
-        
-        
+
         
     </script>
 </body>

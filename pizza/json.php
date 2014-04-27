@@ -95,7 +95,8 @@ if($mode == "all_orders"){
 	$query = "SELECT
 				pizza_orders.*,
 				pizza_pizzas.number AS pizza_number,
-				pizza_pizzas.name AS pizza_name
+				pizza_pizzas.name AS pizza_name,
+				pizza_pizzas.id AS pizza_id
 		FROM pizza_orders, pizza_pizzas
 		WHERE
 			pizza_pizzas.id = pizza_orders.pizza AND
@@ -133,11 +134,12 @@ if($mode == "all_orders"){
 	
 			$i++;
 			
-			//set summary
+			
+			/// DATA FOR SUMMARY
 			
 			//initialize array
-			if(!array_key_exists($row['id'], $summary)){
-				$summary[$row['id']] = array(
+			if(!array_key_exists($row['pizza_id'], $summary)){
+				$summary[$row['pizza_id']] = array(
 					"number" => $row['pizza_number'],
 					"count" => 0,
 					"comments" => array()
@@ -145,9 +147,9 @@ if($mode == "all_orders"){
 			}
 			
 			//sum up
-			$summary[$row['id']]['count']++;
+			$summary[$row['pizza_id']]['count']++;
 			if($row['comment']){
-				$summary[$row['id']]['comments'][] = $row['comment'];
+				$summary[$row['pizza_id']]['comments'][] = $row['comment'];
 			}
 			
 			
@@ -157,13 +159,15 @@ if($mode == "all_orders"){
 		
 		
 
-		
+		//Generate summary
 		$out .= "\"summary\" : [";
 		
 		foreach($summary AS $temp){
-			$out .= "{\"number\" : \"".$temp['number']."\", \"count\" : ".($temp['count'] - count($temp['comments'])).", \"comment\" : null}, ";
+			if(($temp['count'] - count($temp['comments'])) != 0){ //only show if there are some left without comment
+				$out .= "{\"number\" : \"".$temp['number']."\", \"count\" : ".($temp['count'] - count($temp['comments'])).", \"comment\" : \"\"}, ";
+			}
 			
-			if(count($temp['comments'])){
+			if(count($temp['comments'])){ //go through commented entries and show them each separately
 				foreach($temp['comments'] AS $comm){
 					$out .= "{\"number\" : \"".$temp['number']."\", \"count\" : 1, \"comment\" : \"".$comm."\"}, ";
 				}
@@ -172,7 +176,7 @@ if($mode == "all_orders"){
 
 		}
 		
-		//cut last two chars
+		//VERY CRUDE! Rather make array and implode it --> TODO!
 		if(substr($out, -2, 2) == ", "){
 			$out = substr($out, 0, strlen($out) - 2);
 		}

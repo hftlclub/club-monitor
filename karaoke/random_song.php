@@ -1,51 +1,28 @@
 <?php
 require("../common/config.php");
 
-//max number of entries
-$limit = 1;
-
+//This is JSON :)
 header("Content-Type: application/json");
 
-$getsearch = mysql_real_escape_string($_GET['search']);
+//limit from GET value or default
+$limit = ($_GET['limit']) ? intval($_GET['limit']) : 1;
 
-if($getsearch){
-	$search = explode(" ", $getsearch);
 
-	
-	$sql = "SELECT id, interpret, title FROM songlist ";
-	
-	//get A random entry
-	$sql .= " ORDER BY RAND() LIMIT ".$limit.";";
-	
-	//die($sql);
-	
-	$query = mysql_query($sql);
-	$num = mysql_num_rows($query);
+$query = "SELECT id, interpret, title FROM songlist ORDER BY RAND() LIMIT ".$limit.";";
+$sql = mysql_query($query);
+$num = mysql_num_rows($sql);
 
-	//only proceed if there are results
-	if($num > 0){
 
-		$i = 1;
-		//build JSON from datasets
-		while($row = mysql_fetch_assoc($query)){
-			$out .= "{ \"id\" : \"".$row['id']."\", \"value\" : \"".$row['interpret']." - ".$row['title']."\" }";
-			
-			//only show comma if this is not the last entry
-			if($i != $num){
-				$out .= ",";
-			}
-			$out .= "\n";
-	
-			$i++;
-	
-		}
-	}
+//build JSON from datasets
+$parts = array();
+while($row = mysql_fetch_assoc($sql)){
+	$parts[] = "{ \"id\" : \"".$row['id']."\", \"value\" : \"".$row['interpret']." - ".$row['title']."\" }";
 }
 
 //show results
-echo "[\n";
-echo $out;
-echo "]\n";
+echo "[";
+echo implode(", ", $parts);
+echo "]";
 
 
 ?>

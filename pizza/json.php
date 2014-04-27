@@ -57,14 +57,12 @@ if($mode == "all_pizzas" && $service){
 			$new .= "\"ingredients\" : [";
 			
 			//go through newline-separated ingredients
+			$partsing = array();
 			for($j = 0; $j < count($ingr); $j++){
-				$new .= "\"".trim($ingr[$j])."\"";
-				
-				//no comma for last entry
-				if($j < (count($ingr) - 1)){
-					$new .= ", ";
-				}
+				$partsing[] = "\"".trim($ingr[$j])."\"";
 			}
+			
+			$new .= implode(", ", $partsing);
 			
 			$new .= "]";
 			$new .= "}";

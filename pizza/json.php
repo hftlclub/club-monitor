@@ -117,7 +117,11 @@ if($mode == "all_orders"){
 		$i = 1;
 		//build JSON from datasets
 		while($row = mysql_fetch_assoc($sql)){
-						
+			
+			//convert newlines to \n
+			$row['comment'] = str_replace("\n","\\n", $row['comment']);
+			
+					
 			$out .= "{";
 			$out .= "\"id\" : \"".$row['id']."\", ";
 			$out .= "\"name\" : \"".$row['name']."\", ";

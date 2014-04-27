@@ -42,7 +42,9 @@ if($mode == "unregister" && !empty($id)){
     <div class="container">
         <div class="row">
             <div class="page-header">
-                <h1>Karaoke <small>Verwaltung</small></h1>
+                <h1><button type="button" class="btn btn-default"  onclick="window.location.href='../index.html'">
+						<span class="glyphicon glyphicon-arrow-left"></span>
+					</button> Karaoke <small>Verwaltung</small></h1>
             </div>
         </div>
         <div class="row">

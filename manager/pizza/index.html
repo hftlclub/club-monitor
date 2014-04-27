@@ -90,11 +90,27 @@
 
 					$row.append($("<td>").text(item.name));
 					$row.append($("<td>").text(item.pizza_name));
-					$row.append($("<td>").append($("<span>").addClass('label').
-							addClass('label-primary').css('display', 'block').
+					$row.append($("<td>").append($("<span>").addClass("label").
+							addClass("label-primary").css("display", "block").
 							text(item.pizza_number)));
 					$row.append($("<td>").text(item.comment));
-					$row.append($("<td>").text(item.paid));
+					
+					//Buttons paid / not paid
+					var $btn = $("<button>").addClass("btn");
+					var $btnspan = $("<span>").addClass("glyphicon");
+					//red Button with remove symbol if not paid
+					if (item.paid == 0) {
+						$btn.addClass("btn-danger");
+						$btnspan.addClass("glyphicon-remove");
+					} 
+					//green Button with ok symbol if paid
+					else {
+						$btn.addClass("btn-success");
+						$btnspan.addClass("glyphicon-ok");
+					}
+					$btn.append($btnspan);
+					$row.append($("<td>").append($btn));
+							
 
 					$("#orders tbody").append($row);
 

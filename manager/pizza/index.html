@@ -7,8 +7,8 @@
     <title>HfTL-Club - Pizzabestellung</title>
 
     <!-- Bootstrap -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../common/css/bootstrap.cyborg.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/css/bootstrap.cyborg.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,16 +17,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-	<style type="text/css">
-		.panel-pizza {
-			position: relative;
-		}
-
-		.panel-pizza > .list-group, .panel-pizza > .panel-body {
-			height: 500px;
-			overflow: auto;
-		}
-	</style>
+	
 
   </head>
   <body>
@@ -40,9 +31,6 @@
 
 		<div class="row">
 			<div class="col-sm-8">
-				<div class="panel panel-default panel-pizza">
-                    <div class="panel-heading">Bestellungen</div>
-						<div class="panel-body">
 							<table class="table table-striped">
 								<tr>
 									<th>Name</th>
@@ -77,14 +65,10 @@
 								</tr>
 								<!-- End Table Data -->
 							</table>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 			<div class="col-sm-4">
-				<div class="panel panel-default panel-pizza">
-					<div class="panel-heading">Zusammenfassung</div>
-					<div class="panel-body">
+				
 							<table class="table table-striped">
 								<tr>
 									<th>Bestell-Nr.</th>
@@ -110,9 +94,7 @@
 								</tr>
 								<!-- End Table Data -->
 							</table>
-						</div>
-				</div>
-			</div>
+				
 		</div>
 		
 	</div>
@@ -123,85 +105,8 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-	<script type="application/javascript">
-		$(function postOrder(){
-			var url = "post_order.php";
-
-			return false;
-
-		});
-
-		$(function loadData(){
-			var url = "json.php?mode=all_pizzas&service=platzhalter";
-			
-			$.ajax({
-				type: "get",
-				url: url,
-				success: processData,
-			});
-
-			$('#order-modal').modal({ show: false });
-			$('#order-modal-form').submit(addOrderSubmit);
-
-			function processData(data) {
-				var $list = $("#pizza-selection");
-
-				$.each(data, function(i, item){
-					var $num = $("<span>");
-					$num.addClass("badge");
-					$num.text(item["number"]);
-
-					var $name = $("<h4>");
-					$name.addClass("list-group-item-heading");
-					$name.text(item.name);
-
-					var $ingredients = $("<p>");
-					$ingredients.addClass("list-group-item-text");
-					$ingredients.text(item.ingredients.join(", "));
-
-					var $entry = $("<a>");
-					$entry.addClass("list-group-item");
-					$entry.attr("href", "#");
-					$entry.append($num);
-					$entry.append($name);
-					$entry.append($ingredients);
-
-					$list.append($entry);
-
-					$entry.click(function(){
-						addOrderDialog(item);
-					});
-
-				});
-
-			};
-
-			function addOrderDialog(item) {
-				$('#order-modal-name').text(item.name);
-				$('#order-modal-ingredients').text(item.ingredients.join(", "));
-
-				$('#order-modal').modal('show');
-				$('#order-modal-comment').val("");
-
-				$('#order-modal-form').data('item', item);
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 
-			};
-
-			function addOrderSubmit() {
-				var item = $('#order-modal-form').data('item');
-				var comment = $('#order-modal-comment').val();
-
-				$('#order-modal').modal('hide');
-
-				return false;
-
-			};
-
-		});
-
-	</script>
 
 </html>

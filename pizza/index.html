@@ -18,14 +18,6 @@
     <![endif]-->
 
 	<style type="text/css">
-		.panel-pizza {
-			position: relative;
-		}
-
-		.panel-pizza > .list-group, .panel-pizza > .panel-body {
-			height: 600px;
-			overflow: auto;
-		}
 	</style>
 
   </head>
@@ -98,9 +90,16 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-	<script type="application/javascript">
+	<script src="../common/js/jquery.slimscroll.min.js"></script>
 
-		$(function(){
+	<script type="application/javascript">
+		$(function fancyScroll() {
+			$('.panel-pizza > .list-group').slimScroll({
+		        height: '250px'
+		    });
+		});
+
+		$(function orderLogic(){
 			var dataUrl = "json.php?mode=all_pizzas&service=platzhalter";
 			var orderUrl = "post_order.php";
 			var orders = [];

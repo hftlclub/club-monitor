@@ -46,13 +46,13 @@ if($mode == "all_pizzas" && $service){
 		$i = 1;
 		//build JSON from datasets
 		while($row = mysql_fetch_assoc($sql)){
-			$ingr = explode("\n",$row['ingredients']);
+			$ingr = explode("",$row['ingredients']);
 						
-			$out .= "{\n";
-			$out .= "    \"id\" : \"".$row['id']."\",\n";
-			$out .= "    \"number\" : \"".$row['number']."\",\n";
-			$out .= "    \"name\"   : \"".$row['name']."\",\n";
-			$out .= "    \"ingredients\" : [\n";
+			$out .= "{";
+			$out .= "    \"id\" : \"".$row['id']."\",";
+			$out .= "    \"number\" : \"".$row['number']."\",";
+			$out .= "    \"name\"   : \"".$row['name']."\",";
+			$out .= "    \"ingredients\" : [";
 			
 			//go through newline-separated ingredients
 			for($j = 0; $j < count($ingr); $j++){
@@ -63,17 +63,17 @@ if($mode == "all_pizzas" && $service){
 					$out .= ",";
 				}
 				
-				$out .= "\n";
+				$out .= "";
 			}
 			
-			$out .= "    ]\n";
+			$out .= "    ]";
 			$out .= "}";
 			
 			//no comma for last entry
 			if($i != $num){
 				$out .= ",";
 			}
-			$out .= "\n";
+			$out .= "";
 	
 			$i++;
 	
@@ -112,20 +112,20 @@ if($mode == "all_orders"){
 		//build JSON from datasets
 		while($row = mysql_fetch_assoc($sql)){
 						
-			$out .= "{\n";
-			$out .= "    \"id\" : \"".$row['id']."\",\n";
-			$out .= "    \"name\" : \"".$row['name']."\",\n";
-			$out .= "    \"pizza_number\"   : \"".$row['pizza_number']."\",\n";
-			$out .= "    \"pizza_name\"   : \"".$row['pizza_name']."\",\n";
-			$out .= "    \"comment\"   : \"".$row['comment']."\",\n";
-			$out .= "    \"paid\"   : ".$row['paid']."\n";
+			$out .= "{";
+			$out .= "    \"id\" : \"".$row['id']."\",";
+			$out .= "    \"name\" : \"".$row['name']."\",";
+			$out .= "    \"pizza_number\"   : \"".$row['pizza_number']."\",";
+			$out .= "    \"pizza_name\"   : \"".$row['pizza_name']."\",";
+			$out .= "    \"comment\"   : \"".$row['comment']."\",";
+			$out .= "    \"paid\"   : ".$row['paid']."";
 			$out .= "}";
 			
 			//no comma for last entry
 			if($i != $num){
 				$out .= ",";
 			}
-			$out .= "\n";
+			$out .= "";
 	
 			$i++;
 		}
@@ -139,8 +139,8 @@ if($mode == "all_orders"){
 
 
 //show output
-echo "[\n";
+echo "[";
 echo $out;
-echo "]\n";
+echo "]";
 
 ?>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once("../common/config.php");
 
 //this is JSON!

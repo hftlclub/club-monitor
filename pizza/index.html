@@ -141,9 +141,25 @@
 
 	<script type="application/javascript">
 		$(function fancyScroll() {
-			$('.panel-pizza > .list-group').slimScroll({
-		        height: '250px'
-		    });
+
+			$('#pizza-selection').slimScroll();
+			$(window).resize(checkScrolling);
+			checkScrolling();
+
+			function checkScrolling() {
+				if ($(this).width() >= 768) {
+					var w = $(window).height() - 200;
+
+					$('#pizza-selection').css('height', w);
+					$('#pizza-selection').parent().css('height', w);
+
+				} else {
+					$('#pizza-selection').css('height', 'auto');
+					$('#pizza-selection').parent().css('height', 'auto');
+
+				}
+			};
+
 		});
 
 		$(function orderLogic(){

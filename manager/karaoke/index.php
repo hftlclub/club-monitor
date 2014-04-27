@@ -42,7 +42,7 @@ if($mode == "unregister" && !empty($id)){
     <div class="container">
         <div class="row">
             <div class="page-header">
-                <h1>Karaoke Manager</h1>
+                <h1>Karaoke <small>Verwaltung</small></h1>
             </div>
         </div>
         <div class="row">

@@ -124,7 +124,7 @@ var jsKeyboard = {
         $("#keyboard").animate({ "bottom": "0" }, "slow", function() { });
     },
     hide: function() {
-        $("#keyboard").animate({ "bottom": "-350px" }, "slow", function() { });
+        $("#keyboard").animate({ "bottom": "-380px" }, "slow", function() { });
     },
     defaultKeyboard: {
         capitalLetter:

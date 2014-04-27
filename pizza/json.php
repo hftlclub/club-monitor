@@ -108,7 +108,8 @@ if($mode == "all_orders"){
 
 	//only proceed if there are results
 	if($num > 0){
-		$out .= "[";
+		$out .= "{";
+		$out .= "\"orders\" : [";
 
 		$i = 1;
 		//build JSON from datasets
@@ -131,9 +132,21 @@ if($mode == "all_orders"){
 			$i++;
 		}
 		
+		$out .= "],";
+		
+		
+		//statistics
+		$query = "SELECT pizza_orders"; //in progress
+		
+		$out .= "\"summary\" : [";
+		$out .= "{\"number\" : \"9\", \"count\" : \"3\", \"comment\" : \"\"},";
+		$out .= "{\"number\" : \"9\", \"count\" : \"1\", \"comment\" : \"ohne Ananas\"},";
+		$out .= "{\"number\" : \"26\", \"count\" : \"4\", \"comment\" : \"\"}";
 		$out .= "]";
 		
-	
+		
+		$out .= "}";
+		
 
 	}
 }

@@ -140,7 +140,8 @@ var jsKeyboard = {
         // 3rd row
                { value: "abc", isChar: "false", buttonClass: "button button_smallletter", onclick: "jsKeyboard.changeToSmallLetter();", keyClass: "key key_smallletter" },
                { value: 89 },{ value: 88 },{ value: 67 },{ value: 86 },{ value: 66 },{ value: 78 },
-               { value: 77 },{ value: 44 },{ value: 46 },{ value: 39 },
+               { value: 77 },{ value: 196 },{ value: 214 },{ value: 220 },
+               // for , . ' { value: 44 },{ value: 46 },{ value: 39 },
         // 4th row
                { value: "123", isChar: "false", buttonClass: "button button_numberleft", onclick: "jsKeyboard.changeToNumber();", keyClass: "key key_number" },
                { value: 32, buttonClass: "button button_space" },
@@ -158,7 +159,8 @@ var jsKeyboard = {
         // 3rd row
                 { value: "ABC", isChar: "false", buttonClass: "button button_capitalletterleft", onclick: "jsKeyboard.changeToCapitalLetter();", keyClass: "key key_capitalletterleft" },
                 { value: 121 },{ value: 120 },{ value: 99 },{ value: 118 },{ value: 98 },
-                { value: 110 },{ value: 109 },{ value: 44 },{ value: 46 },{ value: 39 },
+                { value: 110 },{ value: 109 },{ value: 228 },{ value: 246 },{ value: 252 },
+                // for , . ' { value: 44 },{ value: 46 },{ value: 39 },
         // 4th row
                 { value: "123", isChar: "false", buttonClass: "button button_numberleft", onclick: "jsKeyboard.changeToNumber();", keyClass: "key key_number" },
                 { value: 32, buttonClass: "button button_space" },

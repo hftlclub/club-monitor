@@ -35,7 +35,7 @@ var jsKeyboard = {
         var s = "";
         s += "<div id=\"keyboard\">";
         s += "<div id=\"keyboardHeader\">";
-        //s += "<div onclick=\"jsKeyboard.hide();\"><span>" + jsKeyboard.settings.text.close + "</span><span class=\"closex\"> X</span></div>"
+        s += "<div onclick=\"jsKeyboard.hide();\"><span>" + jsKeyboard.settings.text.close + "</span><span class=\"closex\"> X</span></div>"
         s += "</div>";
 
         /*capital letter*/

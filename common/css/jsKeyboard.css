@@ -11,7 +11,7 @@ overflow:hidden;
 #keyboard:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
 
 #keyboardHeader {position:relative;}
-#keyboardHeader div {color:#fff; background-color:#7b8490;padding:3px; padding-left:15px; padding-right:15px; position:absolute; cursor:pointer; right:-10px; top:-40px;}
+#keyboardHeader div {color:#fff; background-color:#7b8490;padding:20px; padding-left:30px; padding-right:30px; position:absolute; cursor:pointer; right:-10px; top:-70px;}
 .closex {font-weight:bolder; color:#000;}
 
 #keyboardCapitalLetter {display:block;}

@@ -221,6 +221,7 @@
 				var $name = $("<span>");
 				$name.text("Pizza " + item.name);
 				
+				$('#order-modal-name').empty();
 				$('#order-modal-name').append($num)
 				$('#order-modal-name').append($name);
 				
@@ -284,10 +285,6 @@
 			};
 
 		});
-
-        $("#input-cart-name").focusout(function() {
-            jsKeyboard.hide();
-        })
 
 	</script>
 

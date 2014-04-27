@@ -108,6 +108,8 @@ if($mode == "all_orders"){
 
 	//only proceed if there are results
 	if($num > 0){
+		$summary = array();
+	
 		$out .= "{";
 		$out .= "\"orders\" : [";
 
@@ -130,18 +132,51 @@ if($mode == "all_orders"){
 			}
 	
 			$i++;
+			
+			//set summary
+			
+			//initialize array
+			if(!array_key_exists($row['id'], $summary)){
+				$summary[$row['id']] = array(
+					"number" => $row['pizza_number'],
+					"count" => 0,
+					"comments" => array()
+				);
+			}
+			
+			//sum up
+			$summary[$row['id']]['count']++;
+			if($row['comment']){
+				$summary[$row['id']]['comments'][] = $row['comment'];
+			}
+			
+			
 		}
 		
 		$out .= "],";
 		
 		
-		//statistics
-		$query = "SELECT pizza_orders"; //in progress
+
 		
 		$out .= "\"summary\" : [";
-		$out .= "{\"number\" : \"9\", \"count\" : \"3\", \"comment\" : \"\"},";
-		$out .= "{\"number\" : \"9\", \"count\" : \"1\", \"comment\" : \"ohne Ananas\"},";
-		$out .= "{\"number\" : \"26\", \"count\" : \"4\", \"comment\" : \"\"}";
+		
+		foreach($summary AS $temp){
+			$out .= "{\"number\" : \"".$temp['number']."\", \"count\" : ".($temp['count'] - count($temp['comments'])).", \"comment\" : null}, ";
+			
+			if(count($temp['comments'])){
+				foreach($temp['comments'] AS $comm){
+					$out .= "{\"number\" : \"".$temp['number']."\", \"count\" : 1, \"comment\" : \"".$comm."\"}, ";
+				}
+			}
+			
+
+		}
+		
+		//cut last two chars
+		if(substr($out, -2, 2) == ", "){
+			$out = substr($out, 0, strlen($out) - 2);
+		}
+		
 		$out .= "]";
 		
 		

@@ -184,21 +184,23 @@
 
 				$.each(data, function(i, item){
 					var $num = $("<span>");
-					$num.addClass("badge");
+					$num.addClass("label label-primary");
 					$num.text(item["number"]);
 
 					var $name = $("<h4>");
 					$name.addClass("list-group-item-heading");
-					$name.text(item.name);
+					$name.append($num);
+					$name.append(" ");
+					$name.append(item.name);
 
 					var $ingredients = $("<p>");
 					$ingredients.addClass("list-group-item-text");
+					$ingredients.css("margin-left", "30px");
 					$ingredients.text(item.ingredients.join(", "));
 
 					var $entry = $("<a>");
 					$entry.addClass("list-group-item");
 					$entry.attr("href", "#");
-					$entry.append($num);
 					$entry.append($name);
 					$entry.append($ingredients);
 

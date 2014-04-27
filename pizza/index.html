@@ -185,6 +185,8 @@
 				$.each(data, function(i, item){
 					var $num = $("<span>");
 					$num.addClass("label label-primary");
+					$num.css("width", '35px');
+					$num.css("display", 'inline-block');
 					$num.text(item["number"]);
 
 					var $name = $("<h4>");
@@ -195,7 +197,7 @@
 
 					var $ingredients = $("<p>");
 					$ingredients.addClass("list-group-item-text");
-					$ingredients.css("margin-left", "30px");
+					$ingredients.css("margin-left", "40px");
 					$ingredients.text(item.ingredients.join(", "));
 
 					var $entry = $("<a>");
@@ -217,7 +219,7 @@
 			function addOrderDialog(item) {
 				var $num = $("<span>");
 				$num.addClass("label");
-				$num.addClass("label-default");
+				$num.addClass("label-primary");
 				$num.text(item["number"]);
 				
 				var $name = $("<span>");
@@ -225,6 +227,7 @@
 				
 				$('#order-modal-name').empty();
 				$('#order-modal-name').append($num)
+				$('#order-modal-name').append(' ')
 				$('#order-modal-name').append($name);
 				
 				$('#order-modal-ingredients').text(item.ingredients.join(", "));

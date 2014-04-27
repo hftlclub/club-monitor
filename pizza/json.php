@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 require_once("../common/config.php");
 
 //this is JSON!
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=UTF8");
 
 $mode = mysql_real_escape_string($_GET['mode']);
 

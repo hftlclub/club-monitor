@@ -158,6 +158,13 @@
             exampleData.push(song2);
             showResults(exampleData);*/
         }
+        
+        function newRandomSong() {
+            var jqxhr = $.get("get_suggestions.php", function () { }).done(function (data) {
+                
+            });
+        }
+        
 
         function showResults(data) {
             // data is a javascript object with songs, each with "Id" and "Value"

@@ -7,8 +7,10 @@
     <title>HfTL-Club - Pizzabestellung</title>
 
     <!-- Bootstrap -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../common/css/bootstrap.cyborg.min.css">
+	<link href="../common/css/jsKeyboard.css" rel="stylesheet">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,7 +47,7 @@
 						<form role="form" id="cart-form">
 							<div class="form-group">
 								<label for="input-cart-name">Name</label>
-								<input id="input-cart-name" class="form-control" placeholder="Namen eingeben">
+								<input id="input-cart-name" class="form-control" placeholder="Namen eingeben"  onfocus="jsKeyboard.focus(this);clean(this);placeholder=''" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''">
 							</div>
 							<div class="form-group">
 								<label>Ausgewählt</label>
@@ -72,7 +74,7 @@
 						</div>
 						<div class="form-group" style="margin-top: 25px;">
 							<label class="control-label">Zusätzliche Angaben</label>
-							<textarea id="order-modal-comment" class="form-control"></textarea>
+							<textarea id="order-modal-comment" class="form-control"  onfocus="jsKeyboard.focus(this);clean(this);placeholder=''" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''"></textarea>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -83,20 +85,81 @@
 			</form>
 		</div>
 	</div>
+	
+	<!-- for Keyboard -->
+    <!-- Script zum erkennen mobiler Endgeräte -->
+	<script type="text/javascript">    
+  	  // User-Agent-String auslesen
+		var UserAgent = navigator.userAgent.toLowerCase();
+		// User-Agent auf gewisse Schlüsselwörter prüfen
+		if(UserAgent.search(/(iphone|ipod|opera mini|fennec|palm|blackberry|android|symbian|series60)/)>-1){
+	 	 // mobiles Endgerät
+			
+		}
+		else{
+ 	  		document.write("<div id=\"virtualKeyboard\"></div>");
+		}
+	</script>
+	
+	<!-- Keyboard -->
+    <script type="text/javascript" src="../common/js/jsKeyboard.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            jsKeyboard.init("virtualKeyboard");
+            $("#txtContent").val(initText);
+        });
+
+        function focusIt(t) {
+            // define where the cursor is to write character clicked.
+            jsKeyboard.currentElement = $(t);
+            jsKeyboard.show();
+        }
+
+        function showKeyboard(id) {
+            clean($("#" + id));
+            jsKeyboard.currentElement = $("#" + id);
+            jsKeyboard.show();
+        }
+        var isCleaned = false;
+        function clean(t) {
+            if (!isCleaned) {
+                $(t).text("");
+                isCleaned = true;
+            }
+        }
+        var initText = "";
+    </script>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 	<script src="../common/js/jquery.slimscroll.min.js"></script>
 
 	<script type="application/javascript">
 		$(function fancyScroll() {
-			$('.panel-pizza > .list-group').slimScroll({
-		        height: '250px'
-		    });
+
+			$('#pizza-selection').slimScroll();
+			$(window).resize(checkScrolling);
+			checkScrolling();
+
+			function checkScrolling() {
+				if ($(this).width() >= 768) {
+					var w = $(window).height() - 200;
+
+					$('#pizza-selection').css('height', w);
+					$('#pizza-selection').parent().css('height', w);
+
+				} else {
+					$('#pizza-selection').css('height', 'auto');
+					$('#pizza-selection').parent().css('height', 'auto');
+
+				}
+			};
+
 		});
 
 		$(function orderLogic(){

@@ -78,21 +78,13 @@
 		<div class="modal-dialog">
 			<form role="form" id="order-modal-form">
 				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="order-modal-label">Pizza bestellen</h4>
-					</div>
 					<div class="modal-body">
+						<h3 id="order-modal-name" style="margin-top: 0;"></h3>
 						<div class="form-group">
-							<label class="control-label">Pizza</label>
-							<p id="order-modal-name"></p>
-						</div>
-						<div class="form-group">
-							<label class="control-label">Zutaten</label>
 							<p id="order-modal-ingredients"></p>
 						</div>
-						<div class="form-group">
-							<label class="control-label">Kommentar</label>
+						<div class="form-group" style="margin-top: 25px;">
+							<label class="control-label">Zusätzliche Angaben</label>
 							<textarea id="order-modal-comment" class="form-control"></textarea>
 						</div>
 					</div>
@@ -165,7 +157,7 @@
 			};
 
 			function addOrderDialog(item) {
-				$('#order-modal-name').text(item.name);
+				$('#order-modal-name').text("Pizza " + item.name);
 				$('#order-modal-ingredients').text(item.ingredients.join(", "));
 
 				$('#order-modal').modal('show');

@@ -31,68 +31,34 @@
 
 		<div class="row">
 			<div class="col-sm-8">
-							<table class="table table-striped">
-								<tr>
-									<th>Name</th>
-									<th>Pizzaname</th>
-									<th>Nr.</th>
-									<th>Kommentar</th>
-									<th>bezahlt?</th>
-								</tr>
-								<!-- Begin Table Data -->
+							<table class="table table-striped" id="orders">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Pizzaname</th>
+										<th>Nr.</th>
+										<th>Kommentar</th>
+										<th>bezahlt?</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
 								
-								
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<!-- End Table Data -->
 							</table>
 				
 			</div>
 			<div class="col-sm-4">
 				
-							<table class="table table-striped">
-								<tr>
-									<th>Bestell-Nr.</th>
-									<th>Anzahl</th>
-									<th>Kommentar</th>
-								</tr>
-								<!-- Begin Table Data -->
-								
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<!-- End Table Data -->
+							<table class="table table-striped" id="summary">
+								<thead>
+									<tr>
+										<th>Nr.</th>
+										<th>Anzahl</th>
+										<th>Kommentar</th>
+									</tr>
+								</head>
+								<tbody>	
+								</tbody>
 							</table>
 				
 		</div>
@@ -107,6 +73,49 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
+	<script type="application/javascript">
+		$(function loadOrders() {
+			var url = '../../pizza/json.php?mode=all_orders';
 
+			$.ajax({
+				url: url,
+				success: dataReceived,
+			});
+
+			function dataReceived(data) {
+				$.each(data.orders, function(i, item){
+					var $row = $("<tr>");
+
+					$row.append($("<td>").text(item.name));
+					$row.append($("<td>").text(item.pizza_name));
+					$row.append($("<td>").append($("<span>").addClass('label').
+							addClass('label-primary').css('display', 'block').
+							text(item.pizza_number)));
+					$row.append($("<td>").text(item.comment));
+					$row.append($("<td>").text(item.paid));
+
+					$("#orders tbody").append($row);
+
+				});
+
+				$.each(data.summary, function(i, item){
+					var $row = $("<tr>");
+
+					$row.append($("<td>").append($("<span>").addClass('label').
+							addClass('label-primary').css('display', 'block').
+							text(item.number)));
+					$row.append($("<td>").text(item.number));
+					$row.append($("<td>").text(item.count));
+					$row.append($("<td>").text(item.comment));
+
+					$("#summary tbody").append($row);
+					
+				});
+
+			};
+
+		});
+
+	</script>
 
 </html>

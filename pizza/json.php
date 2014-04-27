@@ -2,7 +2,7 @@
 require_once("../common/config.php");
 
 //this is JSON!
-header("Content-Type: application/json; charset=UTF8");
+header("Content-Type: application/json");
 
 $mode = mysql_real_escape_string($_GET['mode']);
 
@@ -43,6 +43,8 @@ if($mode == "all_pizzas" && $service){
 	//only proceed if there are results
 	if($num > 0){
 
+		echo "[";
+
 		$i = 1;
 		//build JSON from datasets
 		while($row = mysql_fetch_assoc($sql)){
@@ -73,8 +75,9 @@ if($mode == "all_pizzas" && $service){
 			}
 	
 			$i++;
-	
 		}
+		
+		echo "]";
 	}
 }
 
@@ -105,6 +108,7 @@ if($mode == "all_orders"){
 
 	//only proceed if there are results
 	if($num > 0){
+		echo "[";
 
 		$i = 1;
 		//build JSON from datasets
@@ -126,6 +130,8 @@ if($mode == "all_orders"){
 	
 			$i++;
 		}
+		echo "]";
+
 	}
 }
 
@@ -135,8 +141,6 @@ if($mode == "all_orders"){
 
 
 //show output
-echo "[";
 echo $out;
-echo "]";
 
 ?>

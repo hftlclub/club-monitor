@@ -35,7 +35,7 @@ var jsKeyboard = {
         var s = "";
         s += "<div id=\"keyboard\">";
         s += "<div id=\"keyboardHeader\">";
-        //s += "<div onclick=\"jsKeyboard.hide();\"><span>" + jsKeyboard.settings.text.close + "</span><span class=\"closex\"> X</span></div>"
+        s += "<div onclick=\"jsKeyboard.hide();\"><span>" + jsKeyboard.settings.text.close + "</span><span class=\"closex\"> X</span></div>"
         s += "</div>";
 
         /*capital letter*/
@@ -124,7 +124,7 @@ var jsKeyboard = {
         $("#keyboard").animate({ "bottom": "0" }, "slow", function() { });
     },
     hide: function() {
-        $("#keyboard").animate({ "bottom": "-350px" }, "slow", function() { });
+        $("#keyboard").animate({ "bottom": "-380px" }, "slow", function() { });
     },
     defaultKeyboard: {
         capitalLetter:

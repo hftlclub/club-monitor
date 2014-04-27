@@ -46,34 +46,31 @@ if($mode == "all_pizzas" && $service){
 		$i = 1;
 		//build JSON from datasets
 		while($row = mysql_fetch_assoc($sql)){
-			$ingr = explode("",$row['ingredients']);
+			$ingr = explode("\n", $row['ingredients']);
 						
 			$out .= "{";
-			$out .= "    \"id\" : \"".$row['id']."\",";
-			$out .= "    \"number\" : \"".$row['number']."\",";
-			$out .= "    \"name\"   : \"".$row['name']."\",";
-			$out .= "    \"ingredients\" : [";
+			$out .= "\"id\" : \"".$row['id']."\", ";
+			$out .= "\"number\" : \"".$row['number']."\", ";
+			$out .= "\"name\" : \"".$row['name']."\", ";
+			$out .= "\"ingredients\" : [";
 			
 			//go through newline-separated ingredients
 			for($j = 0; $j < count($ingr); $j++){
-				$out .= "            \"".trim($ingr[$j])."\"";
+				$out .= "\"".trim($ingr[$j])."\"";
 				
 				//no comma for last entry
 				if($j < (count($ingr) - 1)){
-					$out .= ",";
+					$out .= ", ";
 				}
-				
-				$out .= "";
 			}
 			
-			$out .= "    ]";
+			$out .= "]";
 			$out .= "}";
 			
 			//no comma for last entry
 			if($i != $num){
 				$out .= ",";
 			}
-			$out .= "";
 	
 			$i++;
 	
@@ -96,9 +93,10 @@ if($mode == "all_orders"){
 				pizza_orders.*,
 				pizza_pizzas.number AS pizza_number,
 				pizza_pizzas.name AS pizza_name
-		FROM pizza_orders
+		FROM pizza_orders, pizza_pizzas
 		WHERE
-			pizza_pizzas.id = pizza_orders.pizza
+			pizza_pizzas.id = pizza_orders.pizza AND
+			pizza_orders.ordered = 0
 		ORDER BY timestamp ASC
 	;";
 	
@@ -113,25 +111,23 @@ if($mode == "all_orders"){
 		while($row = mysql_fetch_assoc($sql)){
 						
 			$out .= "{";
-			$out .= "    \"id\" : \"".$row['id']."\",";
-			$out .= "    \"name\" : \"".$row['name']."\",";
-			$out .= "    \"pizza_number\"   : \"".$row['pizza_number']."\",";
-			$out .= "    \"pizza_name\"   : \"".$row['pizza_name']."\",";
-			$out .= "    \"comment\"   : \"".$row['comment']."\",";
-			$out .= "    \"paid\"   : ".$row['paid']."";
+			$out .= "\"id\" : \"".$row['id']."\", ";
+			$out .= "\"name\" : \"".$row['name']."\", ";
+			$out .= "\"pizza_number\" : \"".$row['pizza_number']."\", ";
+			$out .= "\"pizza_name\" : \"".$row['pizza_name']."\", ";
+			$out .= "\"comment\" : \"".$row['comment']."\", ";
+			$out .= "\"paid\" : ".$row['paid'];
 			$out .= "}";
 			
 			//no comma for last entry
 			if($i != $num){
-				$out .= ",";
+				$out .= ",n";
 			}
-			$out .= "";
 	
 			$i++;
 		}
 	}
 }
-
 
 
 

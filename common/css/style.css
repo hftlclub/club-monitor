@@ -19,3 +19,11 @@ body{
 span.largeicon {
     font-size: 2em;
 }
+
+#order-modal{
+	z-index: 5 !important;
+}
+
+.modal-backdrop {
+	z-index: 1 !important;
+}

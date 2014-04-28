@@ -109,6 +109,10 @@ if($mode == "all_orders"){
 			
 			/// COLLECT DATA FOR SUMMARY
 			
+			//summary only for paid pizza
+			if($row['paid'] != 1)
+				continue;
+			
 			//initialize summary array
 			if(!array_key_exists($row['pizza_id'], $summary)){
 				$summary[$row['pizza_id']] = array(

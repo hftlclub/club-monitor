@@ -89,15 +89,20 @@
 
     <!-- Script zum erkennen mobiler Endgeräte -->
 	<script type="text/javascript">    
-  	  // User-Agent-String auslesen
-		var UserAgent = navigator.userAgent.toLowerCase();
-		// User-Agent auf gewisse Schlüsselwörter prüfen
-		if(UserAgent.search(/(iphone|ipod|opera mini|fennec|palm|blackberry|android|symbian|series60)/)>-1){
-	 	 // mobiles Endgerät
-			
-		}
-		else{
- 	  		document.write("<div id=\"virtualKeyboard\"></div>");
+        // check wether to enable onscreeenkeyboard or not
+        var keyboardEnabled = getCookie("EnableOnscreenKeyboard");
+        if (keyboardEnabled == "true") {
+            document.write("<div id=\"virtualKeyboard\"></div>");
+        }
+
+		function getCookie(cname) {
+		    var name = cname + "=";
+		    var ca = document.cookie.split(';');
+		    for (var i = 0; i < ca.length; i++) {
+		        var c = ca[i].trim();
+		        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+		    }
+		    return "";
 		}
 	</script>
 

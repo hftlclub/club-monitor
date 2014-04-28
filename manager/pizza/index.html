@@ -109,7 +109,7 @@
 						$btnspan.addClass("glyphicon-remove");
 						
 						$btn.click(function(){
-							payOrder(item.id);
+							payOrder(item);
 						});
 						
 					} 
@@ -148,7 +148,7 @@
 						.append($("<a>")
 							.text("Bezahlen")
 							.click(function () {
-								payOrder(item.id);
+								payOrder(item);
 							})
 					);
 					
@@ -156,7 +156,7 @@
 						.append($("<a>")
 							.text("Zahlung stornieren")
 							.click(function () {
-								unpayOrder(item.id);
+								unpayOrder(item);
 							})
 					);
 					
@@ -164,7 +164,7 @@
 						.append($("<a>")
 							.text("Bestellung löschen")
 							.click(function () {
-								delOrder(item.id);
+								delOrder(item);
 							})
 					);
 					
@@ -207,23 +207,46 @@
 		});
 		
 		
-		function payOrder(id){
-			//TODO: Confirmation!
+		function payOrder(item){
+			var text = "Diese Bestellung bezahlen?\n\n"
+				+ "Pizza: " + item.pizza_name + " (" + item.pizza_number + ")\n"
+				+ "Name: " + item.name + "\n";
+			if(item.comment) text += "Kommentar: " + item.comment;
 			
-			dbAction("pay", id);
+			if(!confirm(text)){
+				return false;
+			}
+			
+			dbAction("pay", item.id);
+			return true;
 		}
 		
 		
-		function unpayOrder(id){
-			//TODO: Confirmation!
+		function unpayOrder(item){
+			var text = "ACHTUNG!\nDie Zahlung wird storniert. Fortfahren?\n\n"
+				+ "Pizza: " + item.pizza_name + " (" + item.pizza_number + ")\n"
+				+ "Name: " + item.name + "\n";
+			if(item.comment) text += "Kommentar: " + item.comment;
 			
-			dbAction("unpay", id);
+			if(!confirm(text)){
+				return false;
+			}
+			
+			dbAction("unpay", item.id);
 		}
 		
-		function delOrder(id){
-			//TODO: Confirmation!
+		
+		function delOrder(item){
+			var text = "ACHTUNG!\nDie Bestellung wird unwiderruflich gelöscht! Fortfahren?\n\n"
+				+ "Pizza: " + item.pizza_name + " (" + item.pizza_number + ")\n"
+				+ "Name: " + item.name + "\n";
+			if(item.comment) text += "Kommentar: " + item.comment;
 			
-			dbAction("delOrder", id);
+			if(!confirm(text)){
+				return false;
+			}
+			
+			dbAction("delOrder", item.id);
 		}
 		
 		

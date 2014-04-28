@@ -203,6 +203,7 @@
 		
 		$(function(){
 			loadOrders();
+			setInterval(function(){ loadOrders() }, 20000); //timeout for refresh
 		});
 		
 		

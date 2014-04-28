@@ -53,7 +53,7 @@
 
         function initializeOptions() {
             var keyboardEnabled = getCookie("EnableOnscreenKeyboard");
-            if (keyboardEnabled == true) {
+            if (keyboardEnabled == "true" ) {
                 $("#buttonKeyboard").addClass("btn-success");
                 $("#buttonKeyboard").removeClass("btn-default");
             }
@@ -63,7 +63,7 @@
         {
             var keyboardEnabled = getCookie("EnableOnscreenKeyboard");
 
-            if (keyboardEnabled == true) {
+            if (keyboardEnabled == "true") {
                 $("#buttonKeyboard").addClass("btn-default");
                 $("#buttonKeyboard").removeClass("btn-success");
                 document.cookie = "EnableOnscreenKeyboard=false";

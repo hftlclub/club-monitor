@@ -4,9 +4,8 @@ require_once("../common/config.php");
 //this is JSON!
 header("Content-Type: application/json");
 
-//and it should not be cached with 304 not modified, so set:
-$protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
-header($protocol . ' 200 OK');
+//and it should not be cached by browsers like IE
+header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() - 3600));
 
 $mode = mysql_real_escape_string($_GET['mode']);
 

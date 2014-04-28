@@ -106,6 +106,11 @@
 					if (item.paid == 0) {
 						$btn.addClass("btn-danger");
 						$btnspan.addClass("glyphicon-remove");
+						
+						$btn.click(function(){
+							payOrder(item.id);
+						});
+						
 					} 
 					//green Button with ok symbol if paid
 					else {
@@ -136,19 +141,27 @@
 						.addClass("dropdown-menu")
 						.attr("role", "menu")
 						.attr("id", "menu-" + item.id)
-						.attr("aria-labelledby", "toggle-" + item.id);
+						.attr("aria-labelledby", "toggle-" + item.id)
 					
 					var $btnPay = $("<li>")
 						.append($("<a>")
 							.text("Bezahlen")
-							.attr("orderid", item.id)
 							.click(function () {
-								setPaid($(this).attr("orderid"));
+								payOrder(item.id);
 							})
-						);
+					);
+					
+					var $btnUnpay = $("<li>")
+						.append($("<a>")
+							.text("Zahlung stornieren")
+							.click(function () {
+								unpayOrder(item.id);
+							})
+					);
 					
 					
 					$menu.append($btnPay);
+					$menu.append($btnUnpay);
 					
 					$dd.append($toggle);
 					$dd.append($menu);	
@@ -183,15 +196,31 @@
 		});
 		
 		
-		function setPaid(id){
-			var data = { "mode" : "pay", "id" : id };
+		function payOrder(id){
+			//TODO: Confirmation!
+			
+			dbAction("pay", id);
+		}
+		
+		
+		function unpayOrder(id){
+			//TODO: Confirmation!
+			
+			dbAction("unpay", id);
+		}
+		
+		
+		
+		function dbAction(mode, id, values){
+			if(!values) var values = {};
+			var data = { "mode" : mode, "id" : id, "values" : values };
 			
 			$.ajax({
 				type: "post",
 				url: "db_actions.php",
 				data: JSON.stringify(data),
 				contentType: "application/json",
-				success: loadOrders, //function(){alert("yep")},
+				success: loadOrders, //function(){alert("jkljl")},
 				error: function(o,c,m) { alert(m); },
 			});
 		}

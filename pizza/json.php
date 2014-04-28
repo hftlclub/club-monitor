@@ -5,7 +5,8 @@ require_once("../common/config.php");
 header("Content-Type: application/json");
 
 //and it should not be cached with 304 not modified, so set:
-http_response_code(200);
+$protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
+header($protocol . ' 200 OK');
 
 $mode = mysql_real_escape_string($_GET['mode']);
 

@@ -59,7 +59,7 @@
 										<th>Anzahl</th>
 										<th>Kommentar</th>
 									</tr>
-								</head>
+								</thead>
 								<tbody>	
 								</tbody>
 							</table>
@@ -83,6 +83,7 @@
 			$.ajax({
 				url: url,
 				success: dataReceived,
+				error: function(o,c,m) { alert(m); },
 			});
 
 			function dataReceived(data) {
@@ -226,5 +227,5 @@
 		}
 
 	</script>
-
+  </body>
 </html>

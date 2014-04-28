@@ -95,6 +95,7 @@ if($mode == "all_orders"){
 			
 			$dtout['orders'][] = array(
 				"id"           => $row['id'],
+				"timestamp"    => $row['timestamp'],
 				"name"         => $row['name'],
 				"pizza_number" => $row['pizza_number'],
 				"pizza_name"   => $row['pizza_name'],

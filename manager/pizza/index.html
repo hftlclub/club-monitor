@@ -169,8 +169,15 @@
 					);
 					
 					
-					$menu.append($btnPay);
-					$menu.append($btnUnpay);
+					
+					//show either pay OR unpay button!
+					if(item.paid == 0){
+						$menu.append($btnPay);
+					}else{
+						$menu.append($btnUnpay);
+					}
+					
+					
 					$menu.append($btnDel);
 					
 					$dd.append($toggle);

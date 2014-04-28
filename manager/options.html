@@ -66,12 +66,14 @@
             if (keyboardEnabled == "true") {
                 $("#buttonKeyboard").addClass("btn-default");
                 $("#buttonKeyboard").removeClass("btn-success");
+                $("#buttonKeyboard").blur();
                 document.cookie = "EnableOnscreenKeyboard=false";
             }
             else //keyboard war disabled und soll nun enabled werden:
             {
                 $("#buttonKeyboard").addClass("btn-success");
                 $("#buttonKeyboard").removeClass("btn-default");
+                $("#buttonKeyboard").blur();
                 document.cookie = "EnableOnscreenKeyboard=true";
             }
         }

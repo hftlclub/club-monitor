@@ -4,6 +4,9 @@ require_once("../common/config.php");
 //this is JSON!
 header("Content-Type: application/json");
 
+//and it should not be cached with 304 not modified, so set:
+http_response_code(200);
+
 $mode = mysql_real_escape_string($_GET['mode']);
 
 

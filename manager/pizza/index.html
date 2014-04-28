@@ -160,9 +160,18 @@
 							})
 					);
 					
+					var $btnDel = $("<li>")
+						.append($("<a>")
+							.text("Bestellung löschen")
+							.click(function () {
+								delOrder(item.id);
+							})
+					);
+					
 					
 					$menu.append($btnPay);
 					$menu.append($btnUnpay);
+					$menu.append($btnDel);
 					
 					$dd.append($toggle);
 					$dd.append($menu);	
@@ -208,6 +217,12 @@
 			//TODO: Confirmation!
 			
 			dbAction("unpay", id);
+		}
+		
+		function delOrder(id){
+			//TODO: Confirmation!
+			
+			dbAction("delOrder", id);
 		}
 		
 		

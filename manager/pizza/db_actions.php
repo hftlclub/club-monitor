@@ -42,7 +42,7 @@ if(($data['mode'] == "pay" OR $data['mode'] == "unpay") AND $data['id']){
 
 
 
-if($data['mode'] == "deleteOrder" AND $data['id']){
+if($data['mode'] == "delOrder" AND $data['id']){
 	//check whether order ID exists
 	$query = "SELECT id FROM pizza_orders WHERE id = '".$data['id']."';";
 	$sql = mysql_query($query);

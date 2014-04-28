@@ -23,8 +23,9 @@ $service = "535c198491490"; //Bittus pizza
 
 
 if($mode == "all_pizzas" && $service){
-	unset($out);
-	
+
+	$dtout = array();
+
 	//check whether service ID exists
 	$query = "SELECT id FROM pizza_services WHERE id = '".$service."';";
 	$sql = mysql_query($query);
@@ -33,47 +34,27 @@ if($mode == "all_pizzas" && $service){
 	if(mysql_num_rows($sql) != 1){
 		die();
 	}
+	
 
 	//get all pizzas from specific service
-	$query = "SELECT * FROM pizza_pizzas WHERE service = '".$service."' ORDER BY CAST(number as SIGNED INTEGER) ASC;";
+	$query = "SELECT id, number, name, ingredients FROM pizza_pizzas WHERE service = '".$service."' ORDER BY CAST(number as SIGNED INTEGER) ASC;";
 	$sql   = mysql_query($query);
-	
-	$num = mysql_num_rows($sql);
 
 	//only proceed if there are results
-	if($num > 0){
-
-		$out .= "[";
-
-		//build JSON from datasets
-		$parts = array();
+	if(mysql_num_rows($sql)){
 		while($row = mysql_fetch_assoc($sql)){
+			//separate ingredients and put them into array
 			$ingr = explode("\n", $row['ingredients']);
-						
-			$new = "{";
-			$new .= "\"id\" : \"".$row['id']."\", ";
-			$new .= "\"number\" : \"".$row['number']."\", ";
-			$new .= "\"name\" : \"".$row['name']."\", ";
-			$new .= "\"ingredients\" : [";
 			
-			//go through newline-separated ingredients
-			$partsing = array();
-			for($j = 0; $j < count($ingr); $j++){
-				$partsing[] = "\"".trim($ingr[$j])."\"";
-			}
+			//trim this array from whitespaces
+			$ingr = array_map("trim", $ingr);
 			
-			$new .= implode(", ", $partsing);
+			//apply array to row (overwrite newline separated list)
+			$row['ingredients'] = $ingr;
 			
-			$new .= "]";
-			$new .= "}";
-			
-			$parts[] = $new;
-		}
-		
-		//join JSON parts
-		$out .= implode(", ", $parts);
-		
-		$out .= "]";
+			//push to output
+			$dtout[] = $row;
+		}	
 	}
 }
 
@@ -85,7 +66,8 @@ if($mode == "all_pizzas" && $service){
 ###
 
 if($mode == "all_orders"){
-	unset($out);
+	
+	$dtout = array();
 
 	//get all orders from DB
 	$query = "SELECT
@@ -101,37 +83,29 @@ if($mode == "all_orders"){
 	;";
 	
 	$sql = mysql_query($query);
-	$num = mysql_num_rows($sql);
 
 	//only proceed if there are results
-	if($num > 0){
+	if(mysql_num_rows($sql)){
 		$summary = array();
+		
 	
-		$out .= "{";
-		$out .= "\"orders\" : [";
-
-		$parts = array();
-		//build JSON from datasets
+		//put all orders to output array $dtout
+		$dtout['orders'] = array();
 		while($row = mysql_fetch_assoc($sql)){
 			
-			//convert newlines to \n
-			$row['comment'] = str_replace("\n","\\n", $row['comment']);
-			
-			$new = "{";
-			$new .= "\"id\" : \"".$row['id']."\", ";
-			$new .= "\"name\" : \"".$row['name']."\", ";
-			$new .= "\"pizza_number\" : \"".$row['pizza_number']."\", ";
-			$new .= "\"pizza_name\" : \"".$row['pizza_name']."\", ";
-			$new .= "\"comment\" : \"".$row['comment']."\", ";
-			$new .= "\"paid\" : ".$row['paid'];
-			$new .= "}";
-			
-			$parts[] = $new;
+			$dtout['orders'][] = array(
+				"id"           => $row['id'],
+				"name"         => $row['name'],
+				"pizza_number" => $row['pizza_number'],
+				"pizza_name"   => $row['pizza_name'],
+				"comment"      => $row['comment'],
+				"paid"         => $row['paid']
+			);
 			
 			
-			/// DATA FOR SUMMARY
+			/// COLLECT DATA FOR SUMMARY
 			
-			//initialize array
+			//initialize summary array
 			if(!array_key_exists($row['pizza_id'], $summary)){
 				$summary[$row['pizza_id']] = array(
 					"number" => $row['pizza_number'],
@@ -148,51 +122,41 @@ if($mode == "all_orders"){
 			
 			
 		}
-		
-		//join JSON parts
-		$out .= implode(", ", $parts);
-		
-		$out .= "],";
-		
-		
 
 		//Generate summary
-		$out .= "\"summary\" : [";
-		
-		$parts = array();
+		$dtout['summary'] = array();
 		
 		foreach($summary AS $temp){
-			if(($temp['count'] - count($temp['comments'])) != 0){ //only show if there are some left without comment
-				$parts[] = "{\"number\" : \"".$temp['number']."\", \"count\" : ".($temp['count'] - count($temp['comments'])).", \"comment\" : \"\"}";
+			//number of orders for this pizza without comment
+			$cntwo = $temp['count'] - count($temp['comments']);
+			
+			if($cntwo != 0){ //only show if there are some left without comment
+				$dtout['summary'][] = array(
+					"number"  => $temp['number'],
+					"count"   => $cntwo,
+					"comment" => ""
+				);
 			}
 			
 			//go through commented entries and show them each separately
 			if(count($temp['comments'])){
 				foreach($temp['comments'] AS $comm){
-					$parts[] = "{\"number\" : \"".$temp['number']."\", \"count\" : 1, \"comment\" : \"".$comm."\"}";
+					$dtout['summary'][] = array(
+						"number"  => $temp['number'],
+						"count"   => 1,
+						"comment" => $comm
+					);
 				}
 			}
 		}
-		
-		//join JSON parts
-		$out .= implode(", ", $parts);
-		
-		
-		$out .= "]";
-		
-		
-		$out .= "}";
-		
-
 	}
 }
 
 
 
-
-
+//////////////////////////////
 
 //show output
-echo $out;
+echo json_encode($dtout);
 
 ?>

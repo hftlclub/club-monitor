@@ -41,6 +41,7 @@
 										<th>Pizzaname</th>
 										<th>Kommentar</th>
 										<th>bezahlt?</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -112,6 +113,45 @@
 					}
 					$btn.append($btnspan);
 					$row.append($("<td>").append($btn));
+
+					//Dropdown
+					var $dd = $("<div>").addClass("dropdown");
+					
+					var $toggle = $("<button>")
+						.attr("data-toggle", "dropdown")
+						.attr("id", "toggle-" + item.id)
+						.addClass("btn")
+						.addClass("btn-xs")
+						.addClass("btn-default")
+						.append($("<span>")
+							.addClass("caret")
+					);
+					
+					$toggle.click(function () {
+						$(".dropdown-toggle").dropdown("toggle");
+					});
+					
+					var $menu = $("<ul>")
+						.addClass("dropdown-menu")
+						.attr("role", "menu")
+						.attr("id", "menu-" + item.id)
+						.attr("aria-labelledby", "toggle-" + item.id);
+					
+					var $btnPay = $("<li>")
+						.append($("<a>")
+							.text("Bezahlen")
+							.attr("orderid", item.id)
+							.click(function () {
+								alert($(this).attr("orderid"));
+							})
+						);
+					
+					
+					$menu.append($btnPay);
+					$dd.append($toggle);
+					$dd.append($menu);	
+					
+					$row.append($("<td>").append($dd));
 
 
 					$("#orders tbody").append($row);

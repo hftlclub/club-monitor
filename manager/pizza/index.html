@@ -37,8 +37,8 @@
 								<thead>
 									<tr>
 										<th>Name</th>
-										<th>Pizzaname</th>
 										<th>Nr.</th>
+										<th>Pizzaname</th>
 										<th>Kommentar</th>
 										<th>bezahlt?</th>
 									</tr>
@@ -89,15 +89,17 @@
 					var $row = $("<tr>");
 
 					$row.append($("<td>").text(item.name));
-					$row.append($("<td>").text(item.pizza_name));
 					$row.append($("<td>").append($("<span>").addClass("label").
 							addClass("label-primary").css("display", "block").
 							text(item.pizza_number)));
+							
+					$row.append($("<td>").text(item.pizza_name));
 					$row.append($("<td>").text(item.comment));
 					
 					//Buttons paid / not paid
 					var $btn = $("<button>").addClass("btn").addClass("btn-xs");
 					var $btnspan = $("<span>").addClass("glyphicon");
+					
 					//red Button with remove symbol if not paid
 					if (item.paid == 0) {
 						$btn.addClass("btn-danger");
@@ -110,11 +112,11 @@
 					}
 					$btn.append($btnspan);
 					$row.append($("<td>").append($btn));
-							
+
 
 					$("#orders tbody").append($row);
-
 				});
+
 
 				$.each(data.summary, function(i, item){
 					var $row = $("<tr>");

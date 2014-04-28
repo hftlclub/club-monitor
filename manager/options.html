@@ -53,7 +53,7 @@
 
         function initializeOptions() {
             var keyboardEnabled = getCookie("EnableOnscreenKeyboard");
-            if (keyboardEnabled) {
+            if (keyboardEnabled == true) {
                 $("#buttonKeyboard").addClass("btn-success");
                 $("#buttonKeyboard").removeClass("btn-default");
             }
@@ -63,15 +63,15 @@
         {
             var keyboardEnabled = getCookie("EnableOnscreenKeyboard");
 
-            if (keyboardEnabled) {
+            if (keyboardEnabled == true) {
                 $("#buttonKeyboard").addClass("btn-default");
                 $("#buttonKeyboard").removeClass("btn-success");
                 document.cookie = "EnableOnscreenKeyboard=false";
             }
             else //keyboard war disabled und soll nun enabled werden:
             {
-                $("#buttonKeyboard").addClass("btn-default");
-                $("#buttonKeyboard").removeClass("btn-success");
+                $("#buttonKeyboard").addClass("btn-success");
+                $("#buttonKeyboard").removeClass("btn-default");
                 document.cookie = "EnableOnscreenKeyboard=true";
             }
         }

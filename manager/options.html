@@ -43,7 +43,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="./common/js/bootstrap.min.js"></script>
+    <script src="../common/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
 
@@ -52,7 +52,7 @@
         });
 
         function initializeOptions() {
-            var keyboardEnabled = getCookie("EnableOnscreenKeyboard");
+            var keyboardEnabled = localStorage.getItem("EnableOnscreenKeyboard");
             if (keyboardEnabled == "true" ) {
                 $("#buttonKeyboard").addClass("btn-success");
                 $("#buttonKeyboard").removeClass("btn-default");
@@ -61,31 +61,21 @@
 
         function toggleTouchKeyboard()
         {
-            var keyboardEnabled = getCookie("EnableOnscreenKeyboard");
+            var keyboardEnabled = localStorage.getItem("EnableOnscreenKeyboard");
 
             if (keyboardEnabled == "true") {
                 $("#buttonKeyboard").addClass("btn-default");
                 $("#buttonKeyboard").removeClass("btn-success");
                 $("#buttonKeyboard").blur();
-                document.cookie = "EnableOnscreenKeyboard=false";
+                localStorage.setItem("EnableOnscreenKeyboard", "false");
             }
             else //keyboard war disabled und soll nun enabled werden:
             {
                 $("#buttonKeyboard").addClass("btn-success");
                 $("#buttonKeyboard").removeClass("btn-default");
                 $("#buttonKeyboard").blur();
-                document.cookie = "EnableOnscreenKeyboard=true";
+                localStorage.setItem("EnableOnscreenKeyboard", "true");
             }
-        }
-
-        function getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i].trim();
-                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-            }
-            return "";
         }
 
     </script>

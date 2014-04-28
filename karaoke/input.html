@@ -90,20 +90,10 @@
     <!-- Script zum erkennen mobiler Endgeräte -->
 	<script type="text/javascript">    
         // check wether to enable onscreeenkeyboard or not
-        var keyboardEnabled = getCookie("EnableOnscreenKeyboard");
+        var keyboardEnabled = localStorage.getItem("EnableOnscreenKeyboard");
         if (keyboardEnabled == "true") {
             document.write("<div id=\"virtualKeyboard\"></div>");
         }
-
-		function getCookie(cname) {
-		    var name = cname + "=";
-		    var ca = document.cookie.split(';');
-		    for (var i = 0; i < ca.length; i++) {
-		        var c = ca[i].trim();
-		        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-		    }
-		    return "";
-		}
 	</script>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

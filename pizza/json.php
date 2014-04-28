@@ -79,7 +79,7 @@ if($mode == "all_orders"){
 		WHERE
 			pizza_pizzas.id = pizza_orders.pizza AND
 			pizza_orders.ordered = 0
-		ORDER BY timestamp ASC
+		ORDER BY pizza_orders.timestamp ASC
 	;";
 	
 	$sql = mysql_query($query);

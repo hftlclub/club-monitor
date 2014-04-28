@@ -77,7 +77,7 @@
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 	<script type="application/javascript">
-		$(function loadOrders() {
+		function loadOrders() {
 			var url = '../../pizza/json.php?mode=all_orders';
 
 			$.ajax({
@@ -86,6 +86,7 @@
 			});
 
 			function dataReceived(data) {
+				$("#orders tbody").empty();
 				$.each(data.orders, function(i, item){
 					var $row = $("<tr>");
 
@@ -125,11 +126,11 @@
 						.addClass("btn-default")
 						.append($("<span>")
 							.addClass("caret")
-					);
+						)
+						.click(function () {
+							$(".dropdown-toggle").dropdown("toggle");
+						});
 					
-					$toggle.click(function () {
-						$(".dropdown-toggle").dropdown("toggle");
-					});
 					
 					var $menu = $("<ul>")
 						.addClass("dropdown-menu")
@@ -142,12 +143,13 @@
 							.text("Bezahlen")
 							.attr("orderid", item.id)
 							.click(function () {
-								alert($(this).attr("orderid"));
+								setPaid($(this).attr("orderid"));
 							})
 						);
 					
 					
 					$menu.append($btnPay);
+					
 					$dd.append($toggle);
 					$dd.append($menu);	
 					
@@ -158,6 +160,7 @@
 				});
 
 
+				$("#summary tbody").empty();
 				$.each(data.summary, function(i, item){
 					var $row = $("<tr>");
 
@@ -173,7 +176,25 @@
 
 			};
 
+		}
+		
+		$(function(){
+			loadOrders();
 		});
+		
+		
+		function setPaid(id){
+			var data = { "mode" : "pay", "id" : id };
+			
+			$.ajax({
+				type: "post",
+				url: "db_actions.php",
+				data: JSON.stringify(data),
+				contentType: "application/json",
+				success: loadOrders, //function(){alert("yep")},
+				error: function(o,c,m) { alert(m); },
+			});
+		}
 
 	</script>
 

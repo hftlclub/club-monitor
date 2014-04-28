@@ -6,8 +6,8 @@ overflow:hidden;
 }
 */
 
-#keyboard{background-color:#7b8490;padding:10px; width:800px; height:288;display:block; border-top:3px solid #000; padding-left:25px; display:block; 
-          position:absolute; bottom:-380px; left:112px;}
+#keyboard{background-color:#7b8490;padding:10px; width:942px; height:288;display:block; border-top:3px solid #000; padding-left:25px; display:block; 
+          position:absolute; bottom:-380px; left:41px;}
 #keyboard:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
 
 #keyboardHeader {position:relative;}
@@ -34,15 +34,15 @@ overflow:hidden;
 .button_dash {margin-left:26px;}
 .button_underscore {margin-left:26px;}
 .button_enter {width:103px; font-size:1.3em; }
-.button_del{font-size:1.3em;}
+.button_del{width:129px; font-size:1.3em;}
 .button_smallletter{font-size:1.3em;}
 .button_capitalletterleft{font-size:1.3em;}
 .button_capitalletterright{ width:129px; font-size:1.3em;}
-.button_numberleft{width:172px; font-size:1.3em; margin-left:26px;}
-.button_numberright{width:129px; font-size:1.3em;}
-.button_space {width:376px;}
+.button_numberleft{width:60px; font-size:1.3em;}
+.button_numberright{width:60px; font-size:1.3em;}
+.button_space {width:198px;}
 .button_symbolsleft{width:172px; font-size:1.3em; margin-left:26px;}
-.button_symbolsright{width:129px; font-size:1.3em;}
+.button_symbolsright{width:60px; font-size:1.3em;}
 
 
 .key {width:100%; height:100%; text-align:center; padding-top:12px; text-shadow: 0px 1px 1px #ffffff;filter: dropshadow(color=#ffffff, offx=0, offy=1);}

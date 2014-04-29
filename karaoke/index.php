@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="3; URL=<?php echo $_SERVER['REQUEST_URI'] ?>">
+    <!-- <meta http-equiv="refresh" content="3; URL=<?php echo $_SERVER['REQUEST_URI'] ?>"> -->
     <title>Karaokemanager - Überblick</title>
 
     <!-- Bootstrap -->
@@ -18,6 +18,23 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../common/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript"> 
+   		function refresh() {
+   			$('#refresh').load('refresh.php?'+ 1*new Date());
+  		}
+   		var auto_refresh = setInterval(function() { refresh() }, 1000);
+   		refresh();
+   		
+   		
+	</script>
+    
 </head>
 <body>
     <div class="container">
@@ -28,26 +45,10 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-md-8">
-                <table class="table table-striped">
-                    <tr>
-                        <th>#</th>
-                        <th>nächster Song</th>
-                        <th>Sänger</th>
-                    </tr>
-
-                    <?php
-                    require("../common/config.php");
-
-                    $sql = mysql_query("SELECT songlist.interpret, songlist.title, queue.singer, queue.id FROM songlist, queue WHERE queue.songid = songlist.id AND queue.played = 0 ORDER BY timestamp ASC;");
-                    $i = 1;
-                    while($row = mysql_fetch_assoc($sql)):
-                    ?>
-                    <tr>
-                        <td><?php echo $i++ ?></td>
-                        <td><?php echo $row['interpret']." - ".$row['title'] ?></td>
-                        <td><?php echo $row['singer'] ?></td>
-                    </tr>
-                    <?php endwhile; ?>
+                <table class="table table-striped"  id=refresh>
+                
+                	<!-- script calls table in refresh.php -->
+              
                 </table>
             </div>
             <div class="col-xs-12 col-md-4">
@@ -59,10 +60,6 @@
             </div>
         </div>
     </div>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../common/js/bootstrap.min.js"></script>
+      
 </body>
 </html>

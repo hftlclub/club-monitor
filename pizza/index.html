@@ -140,11 +140,19 @@
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 	<script src="../common/js/jquery.slimscroll.min.js"></script>
+	<script type="text/javascript" src="../common/js/jquery.kinetic.min.js"></script>
+
 
 	<script type="application/javascript">
+				
 		$(function fancyScroll() {
 
+			$('#pizza-selection').css('overflow','hidden');
 			$('#pizza-selection').slimScroll();
+			$('#pizza-selection').kinetic();
+
+			
+
 			$(window).resize(checkScrolling);
 			checkScrolling();
 

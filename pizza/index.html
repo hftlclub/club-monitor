@@ -21,8 +21,12 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-	<style type="text/css">
-	</style>
+	
+	<script type="text/javascript" src="../common/js/jsKeyboard.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../common/js/jquery.slimscroll.min.js"></script>
+	<script type="text/javascript" src="../common/js/jquery.kinetic.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
   </head>
   <body>
@@ -104,8 +108,6 @@
 	</script>
 	
 	<!-- Keyboard -->
-    <script type="text/javascript" src="../common/js/jsKeyboard.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript">
         $(function () {
             jsKeyboard.init("virtualKeyboard");
@@ -134,28 +136,20 @@
     </script>
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-	<script src="../common/js/jquery.slimscroll.min.js"></script>
-	<script type="text/javascript" src="../common/js/jquery.kinetic.min.js"></script>
-
 
 	<script type="application/javascript">
 				
 		$(function fancyScroll() {
 
 			$('#pizza-selection').css('overflow','hidden');
-			$('#pizza-selection').slimScroll();
-			$('#pizza-selection').kinetic();
+			$('#pizza-selection').slimScroll(); //scrollable div
+			$('#pizza-selection').kinetic();    //touch scrolling
 
 			
-
 			$(window).resize(checkScrolling);
 			checkScrolling();
 
+			//pizza-selection div size according to window size
 			function checkScrolling() {
 				if ($(this).width() >= 768) {
 					var w = $(window).height() - 200;

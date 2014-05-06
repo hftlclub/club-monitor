@@ -153,11 +153,11 @@
                     li.click(function () {
                         //remove all active elements
                         $("#search-results").children().removeClass("list-group-item-success");
-                        $("#search-results").children().removeClass("glyphicon-ok");
-                        $("#search-results").children().addClass("glyphicon-plus");
+                        $("#search-results").children().children(".badge").children(".glyphicon").removeClass("glyphicon-ok");
+                        $("#search-results").children().children(".badge").children(".glyphicon").addClass("glyphicon-plus");
                         //activate this
                         $(this).addClass("list-group-item-success");
-                        $(this).addClass("glyphicon-ok");
+                        $(this).children(".badge").children(".glyphicon").addClass("glyphicon-ok");
 
                         //einzele daten in versteckte felder packen zur Übergabe:
                         $('input[name=hiddenInputSongname]').val(data.tracks[i].name);

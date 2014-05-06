@@ -18,23 +18,6 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../common/js/bootstrap.min.js"></script>
-
-    <script type="text/javascript"> 
-   		function refresh() {
-   			$('#refresh').load('refresh.php?'+ 1*new Date());
-  		}
-   		var auto_refresh = setInterval(function() { refresh() }, 1000);
-   		refresh();
-   		
-   		
-	</script>
-    
 </head>
 <body>
     <div class="container">
@@ -45,10 +28,10 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-md-8">
-                <table class="table table-striped"  id=refresh>
-                
-                	<!-- script calls table in refresh.php -->
-              
+                <table class="table table-striped" id=refresh>
+
+                    <!-- script calls table in refresh.php -->
+
                 </table>
             </div>
             <div class="col-xs-12 col-md-4">
@@ -60,6 +43,19 @@
             </div>
         </div>
     </div>
-      
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../common/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        function refresh() {
+            $('#refresh').load('refresh.php?' + 1 * new Date());
+        }
+        var auto_refresh = setInterval(function () { refresh() }, 1000);
+
+        refresh();
+    </script>
 </body>
 </html>

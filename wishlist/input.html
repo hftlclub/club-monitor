@@ -160,10 +160,10 @@
                         $(this).children(".badge").children(".glyphicon").addClass("glyphicon-ok");
 
                         //einzele daten in versteckte felder packen zur Übergabe:
-                        $('input[name=hiddenInputSongname]').val(data.tracks[i].name);
-                        $('input[name=hiddenInputInterpret]').val(data.tracks[i].artists[j].name);
-                        $('input[name=hiddenInputAlbum]').val(data.tracks[i].album.name);
-                        $('input[name=hiddenInputHref]').val(data.tracks[i].href);
+                        $('input[name=inputSongname]').val(data.tracks[i].name);
+                        $('input[name=inputInterpret]').val(data.tracks[i].artists[j].name);
+                        $('input[name=inputAlbum]').val(data.tracks[i].album.name);
+                        $('input[name=inputHref]').val(data.tracks[i].href);
 
                         $('#submitButton').removeClass("disabled");
 

@@ -27,3 +27,7 @@ span.largeicon {
 .modal-backdrop {
 	z-index: 1 !important;
 }
+
+.btn-lg {
+    margin: 10px;
+}

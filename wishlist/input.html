@@ -19,7 +19,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body onload="$('#Text2').focus();">
+<body onload="$('#SongInput').focus();">
     <div class="container">
         <form class="form-horizontal" role="form" action="./post_input.php" method="post">
             <div class="row">
@@ -30,7 +30,10 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="center-block" style="text-align:center;">
-                        <input type="hidden" id="Hidden1" name="inputSongId" value="" />
+                        <input type="hidden" id="hiddenInputSongname" name="inputSongname" value="" />
+                        <input type="hidden" id="hiddenInputInterpret" name="inputInterpret" value="" />
+                        <input type="hidden" id="hiddenInputAlbum" name="inputAlbum" value="" />
+                        <input type="hidden" id="hiddenInputHref" name="inputHref" value="" />
                         <button type="submit" id="submitButton" class="btn btn-default btn-lg disabled">
                             <span class="glyphicon glyphicon-play-circle largeicon"></span><br />Song wünschen
                         </button>
@@ -46,9 +49,9 @@
                             <div class="input-group input-group-lg">
                                 <!-- class="form-control typeahead" -->
 
-                                <input type="text" class="form-control input-lg" id="Text2" name="inputSong" onfocus="jsKeyboard.focus(this);clean(this);" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''" autocomplete="off" placeholder="Bitte hier einen Song eintragen">
+                                <input type="text" class="form-control input-lg" id="SongInput" name="inputSong" onfocus="jsKeyboard.focus(this);clean(this);" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''" autocomplete="off" placeholder="Bitte hier einen Song eintragen">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" onclick="$('#Text2').val('');">
+                                    <button class="btn btn-default" type="button" onclick="$('#SongInput').val('');">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                 </span>
@@ -120,9 +123,9 @@
             $("#feedback").html("");
         }
 
-        $("#Text2").bind('keyup', function (e) {
+        $("#SongInput").bind('keyup', function (e) {
             //keyup event des eingabefeldes löst eine triggerGetResults abfrage aus
-            triggerGetResults($("#Text2").val());
+            triggerGetResults($("#SongInput").val());
         });
 
         function triggerGetResults(search) {
@@ -145,19 +148,27 @@
             for (var i in data.tracks) {
                 for (var j in data.tracks[i].artists) {
                     // var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].value + "</a>");
-                    var li = $("<a class=\"list-group-item\" trackid=\"" + "22222" + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data.tracks[i].artists[j].name + " - " + data.tracks[i].name + " (" + data.tracks[i].album.name + " - " + data.tracks[i].album.released + " )" + "</a>");
+                    var li = $("<a class=\"list-group-item\"><span class=\"badge\"><span class=\"glyphicon glyphicon-plus\"></span></span>" + data.tracks[i].artists[j].name + " - " + data.tracks[i].name + " (" + data.tracks[i].album.name + " - " + data.tracks[i].album.released + " )" + "</a>");
                     html.append(li);
                     li.click(function () {
                         //remove all active elements
                         $("#search-results").children().removeClass("list-group-item-success");
+                        $("#search-results").children().removeClass("glyphicon-ok");
+                        $("#search-results").children().addClass("glyphicon-plus");
                         //activate this
                         $(this).addClass("list-group-item-success");
-                        $('input[name=inputSongId]').val($(this).attr("trackid"));
+                        $(this).addClass("glyphicon-ok");
+
+                        //einzele daten in versteckte felder packen zur Übergabe:
+                        $('input[name=hiddenInputSongname]').val(data.tracks[i].name);
+                        $('input[name=hiddenInputInterpret]').val(data.tracks[i].artists[j].name);
+                        $('input[name=hiddenInputAlbum]').val(data.tracks[i].album.name);
+                        $('input[name=hiddenInputHref]').val(data.tracks[i].href);
 
                         $('#submitButton').removeClass("disabled");
 
                         //write activated song to textfield
-                        $('#Text2').val($(this).text());
+                        $('#SongInput').val($(this).text());
 
                         return false;
                     })
@@ -167,17 +178,10 @@
             $("#song-search").append(html);
         }
 
-
-
-
-
-
         function dataReceived(data) {
-            $("#Text2").val(data[0].value);
+            $("#SongInput").val(data[0].value);
             triggerGetResults(data[0].value);
         };
-
-
     </script>
 </body>
 </html>

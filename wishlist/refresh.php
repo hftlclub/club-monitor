@@ -5,7 +5,7 @@
 <?php
                     require("../common/config.php");
 
-                    $sql = mysql_query("SELECT id, interpret, song, album, href, timestamp, player FROM wishlist WHERE played = 0 ORDER BY timestamp ASC;");
+                    $sql = mysql_query("SELECT id, interpret, song, album, href, timestamp, played FROM wishlist WHERE played = 0 ORDER BY timestamp ASC;");
                     $i = 1;
                     while($row = mysql_fetch_assoc($sql)):
                     ?>

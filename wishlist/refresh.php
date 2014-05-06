@@ -11,6 +11,6 @@
                     ?>
                     <tr>
                         <td><?php echo $i++ ?></td>
-                        <td><?php echo $row['title']." - ".$row['interpret'] ?></td>
+                        <td><?php echo $row['song']." - ".$row['interpret'] ?></td>
                     </tr>
 <?php endwhile; ?>

@@ -148,7 +148,7 @@
             for (var i in data.tracks) {
                 for (var j in data.tracks[i].artists) {
                     // var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].value + "</a>");
-                    var li = $("<a class=\"list-group-item\"><span class=\"badge\"><span class=\"glyphicon glyphicon-plus\"></span></span>" + data.tracks[i].artists[j].name + " - " + data.tracks[i].name + " (" + data.tracks[i].album.name + " - " + data.tracks[i].album.released + " )" + "</a>");
+                    var li = $("<a class=\"list-group-item\" songname=\"" + data.tracks[i].name + "\" interpret=\"" + data.tracks[i].artists[j].name + "\" album=\"" + data.tracks[i].album.name + "\" href=\"" + data.tracks[i].href + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-plus\"></span></span>" + data.tracks[i].artists[j].name + " - " + data.tracks[i].name + " (" + data.tracks[i].album.name + " - " + data.tracks[i].album.released + " )" + "</a>");
                     html.append(li);
                     li.click(function () {
                         //remove all active elements
@@ -160,10 +160,10 @@
                         $(this).children(".badge").children(".glyphicon").addClass("glyphicon-ok");
 
                         //einzele daten in versteckte felder packen zur Übergabe:
-                        $('input[name=inputSongname]').val(data.tracks[i].name);
-                        $('input[name=inputInterpret]').val(data.tracks[i].artists[j].name);
-                        $('input[name=inputAlbum]').val(data.tracks[i].album.name);
-                        $('input[name=inputHref]').val(data.tracks[i].href);
+                        $('input[name=inputSongname]').val($(this).attr("songname"));
+                        $('input[name=inputInterpret]').val($(this).attr("interpret"));
+                        $('input[name=inputAlbum]').val($(this).attr("album"));
+                        $('input[name=inputHref]').val($(this).attr("href"));
 
                         $('#submitButton').removeClass("disabled");
 

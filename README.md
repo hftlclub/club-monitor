@@ -8,6 +8,8 @@ If you have any suggestions, please feel free to contribute!
 * Karaoke Manager
 	- Guests shall be able to register their desired karaoke songs on a touchscreen.
 * Pizza Order
+* Song wishlist
+	- uses Spotify API for song lists 
 * Image Slideshow (planned)
 
 

@@ -5,12 +5,12 @@ This project aims to provide a user interface and manager application for [HfTL 
 If you have any suggestions, please feel free to contribute!
 
 ## Features
-* Karaoke Manager
+- [x] Karaoke Manager
 	- Guests shall be able to register their desired karaoke songs on a touchscreen.
-* Pizza Order
-* Song wishlist
+- [x] Pizza Order
+- [x] Song wishlist
 	- uses Spotify API for song lists 
-* Image Slideshow (planned)
+- [ ] Image Slideshow
 
 
 ## Screenshots

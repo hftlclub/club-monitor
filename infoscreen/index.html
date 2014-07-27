@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HfTL-Club - Pizzabestellung</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../common/css/bootstrap.cyborg.min.css">
+    <link href="../common/css/jsKeyboard.css" rel="stylesheet">
+    <link href="../common/css/style.css" rel="stylesheet">
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script type="text/javascript" src="../common/js/jsKeyboard.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../common/js/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="../common/js/jquery.kinetic.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <h1>HfTL-Club <small>Pizzabestellung</small></h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-default panel-pizza">
+                    <div class="panel-heading">Auswahl</div>
+                    <div class="list-group" id="pizza-selection">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default panel-pizza">
+                    <div class="panel-heading">Bestellung</div>
+                    <div class="panel-body">
+                        <form role="form" id="cart-form">
+                            <div class="form-group">
+                                <label for="input-cart-name">Name</label>
+                                <input id="input-cart-name" class="form-control" placeholder="Namen eingeben" onfocus="jsKeyboard.focus(this);clean(this);placeholder=''" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''">
+                            </div>
+                            <div class="form-group">
+                                <label>Ausgewählt</label>
+                                <div class="list-group" id="cart-items">
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-success btn-lg btn-block" value="Jetzt zahlungspflichtig bestellen">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal fade" id="order-modal" tabindex="-1" role="dialog" aria-labelledby="order-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <form role="form" id="order-modal-form">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3 id="order-modal-name" style="margin-top: 0;"></h3>
+                        <div class="form-group">
+                            <p id="order-modal-ingredients"></p>
+                        </div>
+                        <div class="form-group" style="margin-top: 25px;">
+                            <label class="control-label">Zusätzliche Angaben</label>
+                            <textarea id="order-modal-comment" class="form-control" onfocus="jsKeyboard.focus(this);clean(this);placeholder=''" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                        <input type="submit" class="btn btn-success" value="Hinzufügen">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- for Keyboard -->
+    <!-- Script zum erkennen mobiler Endgeräte -->
+    <script type="text/javascript">
+        // User-Agent-String auslesen
+        var UserAgent = navigator.userAgent.toLowerCase();
+        // User-Agent auf gewisse Schlüsselwörter prüfen
+        if (UserAgent.search(/(iphone|ipod|opera mini|fennec|palm|blackberry|android|symbian|series60)/) > -1) {
+            // mobiles Endgerät
+
+        }
+        else {
+            document.write("<div id=\"virtualKeyboard\"></div>");
+        }
+    </script>
+
+    <!-- Keyboard -->
+    <script type="text/javascript">
+        $(function () {
+            jsKeyboard.init("virtualKeyboard");
+            $("#txtContent").val(initText);
+        });
+
+        function focusIt(t) {
+            // define where the cursor is to write character clicked.
+            jsKeyboard.currentElement = $(t);
+            jsKeyboard.show();
+        }
+
+        function showKeyboard(id) {
+            clean($("#" + id));
+            jsKeyboard.currentElement = $("#" + id);
+            jsKeyboard.show();
+        }
+        var isCleaned = false;
+        function clean(t) {
+            if (!isCleaned) {
+                $(t).text("");
+                isCleaned = true;
+            }
+        }
+        var initText = "";
+    </script>
+
+
+
+    <script type="text/javascript">
+
+        $(function fancyScroll() {
+
+            $('#pizza-selection').css('overflow', 'hidden');
+            $('#pizza-selection').slimScroll(); //scrollable div
+            $('#pizza-selection').kinetic();    //touch scrolling
+
+
+            $(window).resize(checkScrolling);
+            checkScrolling();
+
+            //pizza-selection div size according to window size
+            function checkScrolling() {
+                if ($(this).width() >= 768) {
+                    var w = $(window).height() - 200;
+
+                    $('#pizza-selection').css('height', w);
+                    $('#pizza-selection').parent().css('height', w);
+
+                } else {
+                    $('#pizza-selection').css('height', 'auto');
+                    $('#pizza-selection').parent().css('height', 'auto');
+
+                }
+            };
+
+        });
+
+        $(function orderLogic() {
+            var dataUrl = "json.php?mode=all_pizzas&service=platzhalter";
+            var orderUrl = "post_order.php";
+            var orders = [];
+
+            $.ajax({
+                type: "get",
+                url: dataUrl,
+                dataType: "json",
+                success: processData,
+                error: function (o, c, m) { alert(m); }
+            });
+
+            $('#order-modal').modal({ show: false });
+            $('#order-modal-form').submit(addOrderSubmit);
+            $('#cart-form').submit(submitOrder);
+
+            function processData(data) {
+                var $list = $("#pizza-selection");
+
+                $.each(data, function (i, item) {
+                    var $num = $("<span>");
+                    $num.addClass("label label-primary");
+                    $num.css("width", '35px');
+                    $num.css("display", 'inline-block');
+                    $num.text(item["number"]);
+
+                    var $name = $("<h4>");
+                    $name.addClass("list-group-item-heading");
+                    $name.append($num);
+                    $name.append(" ");
+                    $name.append(item.name);
+
+                    var $ingredients = $("<p>");
+                    $ingredients.addClass("list-group-item-text");
+                    $ingredients.css("margin-left", "40px");
+                    $ingredients.text(item.ingredients.join(", "));
+
+                    var $entry = $("<a>");
+                    $entry.addClass("list-group-item");
+                    $entry.attr("href", "#");
+                    $entry.append($name);
+                    $entry.append($ingredients);
+
+                    $list.append($entry);
+
+                    $entry.click(function () {
+                        addOrderDialog(item);
+                    });
+
+                });
+
+            };
+
+            function addOrderDialog(item) {
+                var $num = $("<span>");
+                $num.addClass("label");
+                $num.addClass("label-primary");
+                $num.text(item["number"]);
+
+                var $name = $("<span>");
+                $name.text("Pizza " + item.name);
+
+                $('#order-modal-name').empty();
+                $('#order-modal-name').append($num)
+                $('#order-modal-name').append(' ')
+                $('#order-modal-name').append($name);
+
+                $('#order-modal-ingredients').text(item.ingredients.join(", "));
+
+                $('#order-modal').modal('show');
+                $('#order-modal-comment').val("");
+
+                $('#order-modal-form').data('item', item);
+
+            };
+
+            function addOrderSubmit() {
+                var item = $('#order-modal-form').data('item');
+                var comment = $('#order-modal-comment').val();
+
+                $('#order-modal').modal('hide');
+
+                addToCart(item, comment);
+
+                return false;
+
+            };
+
+            function addToCart(item, comment) {
+                orders.push({ id: item.id, comment: comment });
+
+                var $entry = $("<a>");
+                $entry.addClass("list-group-item");
+                $entry.text(item.name);
+
+                if (comment) {
+                    var $asterisk = $("<span>");
+                    $asterisk.addClass("text-danger");
+                    $asterisk.text('*');
+                    $entry.append(" ");
+                    $entry.append($asterisk);
+
+                }
+
+                $("#cart-items").append($entry);
+
+            };
+
+            function submitOrder() {
+                var data = {};
+                data.pizzas = orders;
+                data.name = $('#input-cart-name').val();
+
+                $.ajax({
+                    type: "post",
+                    url: orderUrl,
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function () { alert("Bitte geh zur Bar bezahlen.") },
+                    error: function (o, c, m) { alert(m); },
+                });
+
+                return false;
+
+            };
+
+        });
+
+        /*
+        $("#input-cart-name").focusout(function() {
+              jsKeyboard.hide();
+        })
+        */
+
+    </script>
+</body>
+</html>

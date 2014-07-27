@@ -28,8 +28,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class=" center-block" style="text-align:center;">
+                    <button type="button" class="btn btn-default btn-lg" onclick="window.location.href='./infoscreen/'">
+                        <span class="glyphicon glyphicon-info-sign largeicon"> </span><br />  Infoscreen
+                    </button>
                     <button type="button" class="btn btn-default btn-lg" onclick="window.location.href='./pizza/'">
-                        <span class="glyphicon glyphicon-shopping-cart largeicon"> </span><br />  Pizza  
+                        <span class="glyphicon glyphicon-shopping-cart largeicon"> </span><br />  Pizza
                     </button>
                     <button type="button" class="btn btn-default btn-lg" onclick="window.location.href='./karaoke/'">
                         <span class="glyphicon glyphicon-music largeicon"></span><br />Karaoke
@@ -46,12 +49,49 @@
                 </div>
             </div>
         </div>
+        <div class="row" id="redirectDiv">
+            <hr />
+            <div class="col-md-12">
+                <div class="center-block" style="text-align:center;">
+                    <p>Dieses Display startet in <span id="remainingTime"></span> Sekunden im Infoscreen Modus...</p>
+                </div>
+            </div>
+        </div>
     </div>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="./common/js/jquery-1.8.2.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="./common/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        var redirectTimeout = 30; // seconds for auto redirect to a module - set to 0 to disable the redirect (config this in the database?)
+
+
+        function renewTimeout() {
+            // refresh text
+            $('#remainingTime').text(redirectTimeout);
+
+            if(redirectTimeout == 0)
+            {
+                //redirect now!
+                var url = "./infoscreen/";
+                window.location.replace(url);
+            }
+            redirectTimeout--;
+        }
+
+        if (redirectTimeout == 0)
+        {
+            $('redirectDiv').hide();
+        }
+        else
+        {
+            var auto_refresh = setInterval(function () { renewTimeout() }, 1000);
+            renewTimeout();
+        }
+    </script>
+
 </body>
 </html>

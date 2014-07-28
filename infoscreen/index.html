@@ -33,95 +33,10 @@
                 <h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default panel-pizza">
-                            <div class="panel-heading">Biers</div>
-                            <div class="panel-body">
-                                Brauchen wir hier einen Body? Vll. um auf die besondere Qualität unserer Bierauswahl hinzuweisen...
-                            </div>
-                            <table class="table">
-                                <tr>
-                                    <td>Uri</td>
-                                    <td>1,00 €</td>
-                                </tr>
-                                <tr>
-                                    <td>Paulaner Hefeweizen (dunkel)</td>
-                                    <td>1,50 €</td>
-                                </tr>
-                                <tr>
-                                    <td>Uri</td>
-                                    <td>1,00 €</td>
-                                </tr>
-                                <tr>
-                                    <td>Paulaner Hefeweizen (dunkel)</td>
-                                    <td>1,50 €</td>
-                                </tr>
-                                <tr>
-                                    <td>Uri</td>
-                                    <td>1,00 €</td>
-                                </tr>
-                                <tr>
-                                    <td>Paulaner Hefeweizen (dunkel)</td>
-                                    <td>1,50 €</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default panel-pizza">
-                            <div class="panel-heading">Cocktails</div>
-                            <table class="table">
-                                <tr>
-                                    <td>Cuba Libre <sup>1,2,3</sup></td>
-                                    <td>3,00 €</td>
-                                </tr>
-                                <tr>
-                                    <td>Caipirinha <sup>1,2,3,4,5,6,7,8</sup></td>
-                                    <td>3,00 €</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="panel panel-default panel-pizza">
-                            <div class="panel-heading">Biers</div>
-                            <table class="table">
-                                <tr>
-                                    <td>Uri</td>
-                                    <td>1,00 €</td>
-                                </tr>
-                                <tr>
-                                    <td>Paulaner Hefeweizen (dunkel)</td>
-                                    <td>1,50 €</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="panel panel-default panel-pizza">
-                            <div class="panel-heading">Cocktails</div>
-                            <table class="table">
-                                <tr>
-                                    <td>Cuba Libre <sup>1,2,3</sup></td>
-                                    <td>3,00 €</td>
-                                </tr>
-                                <tr>
-                                    <td>Caipirinha <sup>1,2,3,4,5,6,7,8</sup></td>
-                                    <td>3,00 €</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <div class="row" id="catlist"></div>
+        
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default panel-pizza">
@@ -175,7 +90,7 @@
     <script type="text/javascript">
 
         $(function orderLogic() {
-            var dataUrl = "json.php?mode=all_pizzas&service=platzhalter";
+            var dataUrl = "json.php?mode=drinks";
             var orderUrl = "post_order.php";
             var orders = [];
 
@@ -187,121 +102,85 @@
                 error: function (o, c, m) { alert(m); }
             });
 
-            $('#order-modal').modal({ show: false });
-            $('#order-modal-form').submit(addOrderSubmit);
-            $('#cart-form').submit(submitOrder);
 
             function processData(data) {
-                var $list = $("#pizza-selection");
-
-                $.each(data, function (i, item) {
-                    var $num = $("<span>");
-                    $num.addClass("label label-primary");
-                    $num.css("width", '35px');
-                    $num.css("display", 'inline-block');
-                    $num.text(item["number"]);
-
-                    var $name = $("<h4>");
-                    $name.addClass("list-group-item-heading");
-                    $name.append($num);
-                    $name.append(" ");
-                    $name.append(item.name);
-
-                    var $ingredients = $("<p>");
-                    $ingredients.addClass("list-group-item-text");
-                    $ingredients.css("margin-left", "40px");
-                    $ingredients.text(item.ingredients.join(", "));
-
-                    var $entry = $("<a>");
-                    $entry.addClass("list-group-item");
-                    $entry.attr("href", "#");
-                    $entry.append($name);
-                    $entry.append($ingredients);
-
-                    $list.append($entry);
-
-                    $entry.click(function () {
-                        addOrderDialog(item);
+                //the view container
+                var $catlist = $("#catlist");
+				
+				//go through categories
+                $.each(data.categories, function (i, cat) {
+                    
+                    //initialize category box
+                    var $catbox = $("<div>")
+                    	.addClass("col-xs-12 col-md-6");
+                    
+                    //initialize table
+                    var $table = $("<table>")
+                    	.addClass("table");
+                    
+                   
+                    //go through drinks and make table
+                    $.each(cat.drinks, function (i, drink) {
+                    	
+                    	$table.append(
+                    		$("<tr>")
+                    			.append(
+                    				$("<td>")
+                    					.append(
+                    						$("<span>").text(drink.name)
+                    					)
+                    					.append(
+                    						$("<sup>").text(drink.additives.join(", "))
+                    					)
+                    			)
+                    			.append(
+                    				$("<td>").text(parsePrice(drink.price))
+                    			)
+                    	);
+                    				
                     });
+                    
+                    
+                    //build the category box
+                    $catbox.append(
+                    	$("<div>")
+                    		.addClass("row")
+                    		.append(
+                    			$("<div>")
+                    				.addClass("col-md-12")
+                    				.append(
+                    					$("<div>")
+											.addClass("panel panel-default panel-pizza")
+											.append(
+												$("<div>")
+													.addClass("panel-heading")
+													.text(cat.name)
+											)
+											.append($table)
+                    				)
+                    		)
+                    );
+                    
 
+					//append category box to view container
+                    $catlist.append($catbox);
                 });
 
-            };
+            }
+            
+            
+            //parse float value to price string: 1.5 to 1,50 EUR
+            function parsePrice(price){
+				retval = parseFloat(price, 10).toFixed(2).toString()
+				retval = retval.replace(".", ",");
+				retval += " EUR";
+				
+				return retval;
+            }
+            
+            
 
-            function addOrderDialog(item) {
-                var $num = $("<span>");
-                $num.addClass("label");
-                $num.addClass("label-primary");
-                $num.text(item["number"]);
-
-                var $name = $("<span>");
-                $name.text("Pizza " + item.name);
-
-                $('#order-modal-name').empty();
-                $('#order-modal-name').append($num)
-                $('#order-modal-name').append(' ')
-                $('#order-modal-name').append($name);
-
-                $('#order-modal-ingredients').text(item.ingredients.join(", "));
-
-                $('#order-modal').modal('show');
-                $('#order-modal-comment').val("");
-
-                $('#order-modal-form').data('item', item);
-
-            };
-
-            function addOrderSubmit() {
-                var item = $('#order-modal-form').data('item');
-                var comment = $('#order-modal-comment').val();
-
-                $('#order-modal').modal('hide');
-
-                addToCart(item, comment);
-
-                return false;
-
-            };
-
-            function addToCart(item, comment) {
-                orders.push({ id: item.id, comment: comment });
-
-                var $entry = $("<a>");
-                $entry.addClass("list-group-item");
-                $entry.text(item.name);
-
-                if (comment) {
-                    var $asterisk = $("<span>");
-                    $asterisk.addClass("text-danger");
-                    $asterisk.text('*');
-                    $entry.append(" ");
-                    $entry.append($asterisk);
-
-                }
-
-                $("#cart-items").append($entry);
-
-            };
-
-            function submitOrder() {
-                var data = {};
-                data.pizzas = orders;
-                data.name = $('#input-cart-name').val();
-
-                $.ajax({
-                    type: "post",
-                    url: orderUrl,
-                    data: JSON.stringify(data),
-                    contentType: "application/json",
-                    success: function () { alert("Bitte geh zur Bar bezahlen.") },
-                    error: function (o, c, m) { alert(m); },
-                });
-
-                return false;
-
-            };
-
-        });
+		});
 
     </script>
 </body>

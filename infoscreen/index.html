@@ -43,7 +43,7 @@
                     <div class="panel-heading">Hinweise</div>
                     <div class="panel-body">
                         Für unsere Gläser erheben wir 1 € Pfand, für Weizengläser sind es 2 €.<br />
-                        Zusatzstoffe: 1 - Zucker, 2 - Hefebakterien,...
+                        Zusatzstoffe: <span id="additives"></span>
                     </div>
                 </div>
             </div>
@@ -91,8 +91,6 @@
 
         $(function orderLogic() {
             var dataUrl = "json.php?mode=drinks";
-            var orderUrl = "post_order.php";
-            var orders = [];
 
             $.ajax({
                 type: "get",
@@ -129,8 +127,8 @@
                     					.append(
                     						$("<span>").text(drink.name)
                     					)
-                    					.append(
-                    						$("<sup>").text(drink.additives.join(", "))
+										.append(
+											$("<sup>").text(drink.additives.join(", "))
                     					)
                     			)
                     			.append(
@@ -164,6 +162,24 @@
 
 					//append category box to view container
                     $catlist.append($catbox);
+                    
+                    
+                    
+                    //build additives list for footer
+                    var $add_text = "";
+                    
+                    var len = data.additives.length;
+                    $.each(data.additives, function (i, item) {
+                    	$add_text += item.index + " - " + item.name;
+                    	if(i < len - 1) {
+                    		$add_text += ", ";
+                    	}
+                    });
+                    
+                    $("#additives").text($add_text);
+                    
+                    
+                    
                 });
 
             }

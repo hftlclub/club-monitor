@@ -31,3 +31,10 @@ span.largeicon {
 .btn-lg {
     margin: 0px 5px 10px 5px;
 }
+
+.steckerlogo {
+    background-image: url('../pictures/stecker.png');
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}

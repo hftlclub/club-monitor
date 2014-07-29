@@ -97,7 +97,7 @@
                 <!-- Image/Next Highlights View -->
                 <div class="row">
                     <div class="col-md-12">
-						<div class="page-header">
+						<div class="page-header steckerlogo">
 							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> Highlights</small></h1>
 						</div>
 					</div>
@@ -149,6 +149,8 @@
 						return;
 					}
 
+					switchToModule(frame.type);
+
 					switch(frame.type) {
 						case 'drinks':
 							// nuttin' to do
@@ -159,22 +161,33 @@
 							break;
 						case 'highlights':
 							getBindElement('highlights', 'description').html(frame.settings.description);
-							getBindElement('highlights', 'picture').attr('src', frame.settings.url).attr('height', windowHeight()-160);
+							getBindElement('highlights', 'picture')
+								.attr('src', '')
+								.attr('src', frame.settings.url)
+								.attr('height', windowHeight()-160);
 
 							if(frame.settings.description) {
-								$("#hightlights-picture-row").removeClass("col-md-12");
-								$("#hightlights-picture-row").addClass("col-md-6");
-								$("#hightlights-image-row").show();
+								$("#hightlights-picture-row")
+									.removeClass("col-md-12")
+									.addClass("col-md-6");
+								$("#highlights-description-row").show();
+								var descHeight = $("#highlights-description-row").height();
+								var boxHeight = windowHeight()-160;
+								var margin = (boxHeight - descHeight) / 2;
+								$("#highlights-description-row")
+									.css("margin-top", margin+"px")
+									.css("padding-right", "40px");
+
 							} else {
-								$("#hightlights-picture-row").removeClass("col-md-6");
-								$("#hightlights-picture-row").addClass("col-md-12");
-								$("#hightlights-image-row").hide();
+								$("#hightlights-picture-row")
+									.removeClass("col-md-6")
+									.addClass("col-md-12");
+								$("#highlights-description-row").hide();
 							}
 
 							break;
 					};
 
-					switchToModule(frame.type);
 
 					window.setTimeout(next, frame.duration * 1000);
 				}

@@ -81,7 +81,10 @@
                     <div class="col-md-12">
                         <div style="text-align:center;">
                             <img data-bind="picture" src="" />
-                            <p data-bind="description">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information...</p>
+							<p data-bind="description">This is a simple hero
+							unit, a simple jumbotron-style component for
+							calling extra attention to featured content or
+							information...</p>
                         </div>
                     </div>
                 </div>
@@ -116,6 +119,7 @@
 					if(!frame) {
 						// reload page
 						window.location.href = window.location.href;
+						return;
 					}
 
 					switch(frame.type) {

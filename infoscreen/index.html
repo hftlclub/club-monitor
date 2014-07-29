@@ -188,14 +188,36 @@
             function processData(data) {
                 //the view container
                 var $catlist = $("#catlist");
+
+				var cols = {
+					'left': {
+						'size' : 0,
+						'$el' : $('<div>').addClass('col-md-6'),
+					},
+					'right': {
+						'size' : 0,
+						'$el' : $('<div>').addClass('col-md-6'),
+					},
+				};
+
+				$catlist.append(cols.left.$el);
+				$catlist.append(cols.right.$el);
+
+				data.categories.sort(function(a, b){
+					if( a.drinks.length > b.drinks.length )
+						return -1;
+
+					if( a.drinks.length < b.drinks.length )
+						return 1;
+
+					return 0;
+
+				});
+
+				console.log(data.categories);
 				
 				//go through categories
                 $.each(data.categories, function (i, cat) {
-                    
-                    //initialize category box
-                    var $catbox = $("<div>")
-                    	.addClass("col-xs-12 col-md-6");
-                    
                     //initialize table
                     var $table = $("<table>")
                     	.addClass("table");
@@ -223,33 +245,28 @@
                     	);
                     				
                     });
-                    
-                    
-                    //build the category box
-                    $catbox.append(
-                    	$("<div>")
-                    		.addClass("row")
-                    		.append(
-                    			$("<div>")
-                    				.addClass("col-md-12")
-                    				.append(
-                    					$("<div>")
-											.addClass("panel panel-default panel-pizza")
-											.append(
-												$("<div>")
-													.addClass("panel-heading")
-													.text(cat.name)
-											)
-											.append($table)
-                    				)
-                    		)
-                    );
-                    
 
-					//append category box to view container
-                    $catlist.append($catbox);
+					if(cols.right.size >= cols.left.size)
+						var col = cols.left;
+					else
+						var col = cols.right;
                     
-                    
+					col.size = col.size + cat.drinks.length;
+                    //build the category box
+                    col.$el.append(
+							$("<div>")
+								.addClass("col-md-12")
+								.append(
+									$("<div>")
+										.addClass("panel panel-default panel-pizza")
+										.append(
+											$("<div>")
+												.addClass("panel-heading")
+												.text(cat.name)
+										)
+										.append($table)
+								)
+                    );
                     
                     //build additives list for footer
                     var $add_text = "";

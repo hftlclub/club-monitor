@@ -13,7 +13,9 @@
 
     <style type="text/css">
         body {
-            font-size: 180%;
+            font-size: 200%;
+			overflow: hidden;
+			font-weight: bold;
         }
     </style>
 
@@ -37,8 +39,10 @@
             <div data-module="drinks">
                 <!-- Getränkekarten View -->
                 <div class="row">
-                    <div class="page-header steckerlogo">
-                        <h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
+                    <div class="col-md-12">
+						<div class="page-header steckerlogo">
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
+						</div>
                     </div>
                 </div>
 
@@ -61,9 +65,11 @@
             <div data-module="text">
                 <!-- Freitext View -->
                 <div class="row">
-                    <div class="page-header steckerlogo">
-                        <h1>HfTL-Club <small><span class="glyphicon glyphicon-info-sign"></span> Informationen</small></h1>
-                    </div>
+                    <div class="col-md-12">
+						<div class="page-header steckerlogo">
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-info-sign"></span> Informationen</small></h1>
+						</div>
+					</div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -79,9 +85,11 @@
             <div data-module="highlights">
                 <!-- Image/Next Highlights View -->
                 <div class="row">
-                    <div class="page-header steckerlogo">
-                        <h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> Highlights</small></h1>
-                    </div>
+                    <div class="col-md-12">
+						<div class="page-header steckerlogo">
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> Highlights</small></h1>
+						</div>
+					</div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -256,9 +264,6 @@
 					col.size = col.size + cat.drinks.length;
                     //build the category box
                     col.$el.append(
-							$("<div>")
-								.addClass("col-md-12")
-								.append(
 									$("<div>")
 										.addClass("panel panel-default panel-pizza")
 										.append(
@@ -267,7 +272,6 @@
 												.text(cat.name)
 										)
 										.append($table)
-								)
                     );
 
 

@@ -49,7 +49,7 @@ if($mode == "drinks"){
 	if(mysql_num_rows($sql)){
 		//go through categories
 		while($row = mysql_fetch_assoc($sql)){
-			$drinks_query = "SELECT id, name, price, size, group FROM drinks_drinks WHERE category = '".$row['id']."';";
+			$drinks_query = "SELECT id, name, price, size, 'group' FROM drinks_drinks WHERE category = '".$row['id']."';";
 			$drinks_sql = mysql_query($drinks_query);
 			
 			//only add this category if it contains any drinks

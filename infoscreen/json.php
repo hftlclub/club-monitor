@@ -59,6 +59,9 @@ if($mode == "drinks"){
 				//go through drinks
 				while($drinks_row = mysql_fetch_assoc($drinks_sql)){
 					
+					if($drinks_row["group"] == null)
+						$drinks_row["group"] = "";
+					
 					//get additives for this drink
 					$add_query = "SELECT additive FROM drinks_addassign WHERE drink = '".$drinks_row['id']."';";
 					$add_sql = mysql_query($add_query);

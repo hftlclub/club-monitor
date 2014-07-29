@@ -28,7 +28,7 @@
 <body>
     <div class="container-fluid">
         <div id="modules">
-            <div id="module_drinks">
+            <div data-module-template="drinks">
                 <!-- Getränkekarten View -->
                 <div class="row">
                     <div class="page-header steckerlogo">
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <div id="module_text">
+            <div data-module-template="text">
                 <!-- Freitext View -->
                 <div class="row">
                     <div class="page-header">
@@ -70,7 +70,7 @@
             </div>
 
 
-            <div id="module_highlights">
+            <div data-module-template="highlights">
                 <!-- Image/Next Highlights View -->
                 <div class="row">
                     <div class="page-header">
@@ -109,46 +109,37 @@
 
             function processTimelineData(data)
             {
-                var next = false;
-                $.each(data.timelineEntries, function (i, entry) {
-                    // is this module currently played?
-                    if (entry.id == activeTimelineModule.id) {
-                        // so set next module to play!
-                        next = true;
-                    }
+				function next() {
+					var frame = data.shift();
 
-                    //is this module choosen to play next?
-                    if (next)
-                    {
-                        activeTimelineModule = entry;
-                        next = false; // oder gibt es ein break für die $.each???
-                    }
+					if(!frame) {
+						// reload page
+						window.location.href = window.location.href;
+					}
 
-                });
+					switchToModule(frame.type);
 
-                //what is the type of the module?
-                switchToModule(activeTimelineModule.type);
+					window.setTimeout(next, frame.duration * 1000);
+				}
 
-                //load the module-data to the corresponding module:
+				next();
 
             }
 
             //DEBUG: start with drinks:
-            switchToModule("drinks");
+            //switchToModule("drinks");
 
         });
 
         function switchToModule(moduleName)
         {
             hideAllModules();
-            $("#module_" + moduleName).show();
+            $('[data-module-template="'+moduleName+'"]').show();
         }
 
-        function hideAllModules() {
-            $("#module_drinks").hide();
-            $("#module_text").hide();
-            $("#module_highlights").hide();
-        }
+		function hideAllModules() {
+			$('[data-module-template]').hide()
+		};
     </script>
 
 

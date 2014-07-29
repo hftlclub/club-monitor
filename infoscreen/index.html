@@ -90,9 +90,48 @@
 
     <script type="text/javascript">
         // JS Block for module handling
+        var activeTimelineModule = null;
 
         $(function moduleLogic() {
-            //load timeline from database...
+            //first: hide all modules:
+            hideAllModules();
+
+            //second: load timeline from database...
+            var dataUrl = "json.php?mode=timeline";
+
+            $.ajax({
+                type: "get",
+                url: dataUrl,
+                dataType: "json",
+                success: processTimelineData,
+                error: function (o, c, m) { alert(m); }
+            });
+
+            function processTimelineData(data)
+            {
+                var next = false;
+                $.each(data.timelineEntries, function (i, entry) {
+                    // is this module currently played?
+                    if (entry.id == activeTimelineModule.id) {
+                        // so set next module to play!
+                        next = true;
+                    }
+
+                    //is this module choosen to play next?
+                    if (next)
+                    {
+                        activeTimelineModule = entry;
+                        next = false; // oder gibt es ein break für die $.each???
+                    }
+
+                });
+
+                //what is the type of the module?
+                switchToModule(activeTimelineModule.type);
+
+                //load the module-data to the corresponding module:
+
+            }
 
             //DEBUG: start with drinks:
             switchToModule("drinks");

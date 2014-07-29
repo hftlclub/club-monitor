@@ -98,10 +98,10 @@ if($mode == "drinks"){
 if($mode == "timeline"){
 
 	
-	$timelineEntry1  = array("id"=>3,"duration"=>10,"type"="drinks", "settings"=>null);
-	$timelineEntry2  = array("id"=>2,"duration"=>10,"type"="text", "settings"=>array("headline"=>"Da ist was los!", "body"=>"<h1>geiler lorem ipsum text
+	$timelineEntry1  = array("id"=>3,"duration"=>10,"type"=>"drinks", "settings"=>null);
+	$timelineEntry2  = array("id"=>2,"duration"=>10,"type"=>"text", "settings"=>array("headline"=>"Da ist was los!", "body"=>"<h1>geiler lorem ipsum text
 	blabla...</h1>"));
-	$timelineEntry3  = array("id"=>6,"duration"=>10,"type"="highlights", "settings"=>array("description"=>"Da ist was los! Und hier soll auch <b>HTML</b> möglich sein...", "url"=>"http://stura.hft-leipzig.de/wp-content/uploads/2014/07/beachparty_plakat_klein.jpg"));
+	$timelineEntry3  = array("id"=>6,"duration"=>10,"type"=>"highlights", "settings"=>array("description"=>"Da ist was los! Und hier soll auch <b>HTML</b> möglich sein...", "url"=>"http://stura.hft-leipzig.de/wp-content/uploads/2014/07/beachparty_plakat_klein.jpg"));
 	$dtout = array($timelineEntry1,$timelineEntry2,$timelineEntry3);
 	
 	

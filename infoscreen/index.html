@@ -13,7 +13,7 @@
     
     <style type="text/css">
         body {
-            font-size: 175%;
+            font-size: 180%;
         }
     </style>
 
@@ -214,6 +214,8 @@
 										.append(
                                             drink.additives != null ? $("<sup>").text(drink.additives.join(", ")) : ""
                     					)
+                    			).append(
+                    				$("<td>").text(drink.size)
                     			)
                     			.append(
                     				$("<td>").text(parsePrice(drink.price))

@@ -139,8 +139,7 @@
 						case 'highlights':
 
 							getBindElement('highlights', 'description').html(frame.settings.description);
-							getBindElement('highlights', 'picture').attr('src', frame.settings.url);
-							getBindElement('highlights', 'picture').attr('height', 400);
+							getBindElement('highlights', 'picture').attr('src', frame.settings.url).attr('height', windowHeight()-120);
 							break;
 					};
 
@@ -314,8 +313,8 @@
 		  } else {
 		    return 0;
 		  }
-		}
 
+		}
     </script>
 
 </body>

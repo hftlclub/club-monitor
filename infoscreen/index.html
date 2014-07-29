@@ -13,7 +13,9 @@
 
     <style type="text/css">
         body {
-            font-size: 180%;
+            font-size: 200%;
+			overflow: hidden;
+			font-weight: bold;
         }
     </style>
 
@@ -37,8 +39,10 @@
             <div data-module="drinks">
                 <!-- Getränkekarten View -->
                 <div class="row">
-                    <div class="page-header steckerlogo">
-                        <h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
+                    <div class="col-md-12">
+						<div class="page-header steckerlogo">
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
+						</div>
                     </div>
                 </div>
 
@@ -61,9 +65,11 @@
             <div data-module="text">
                 <!-- Freitext View -->
                 <div class="row">
-                    <div class="page-header steckerlogo">
-                        <h1>HfTL-Club <small><span class="glyphicon glyphicon-info-sign"></span> Informationen</small></h1>
-                    </div>
+                    <div class="col-md-12">
+						<div class="page-header steckerlogo">
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-info-sign"></span> Informationen</small></h1>
+						</div>
+					</div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -79,14 +85,16 @@
             <div data-module="highlights">
                 <!-- Image/Next Highlights View -->
                 <div class="row">
-                    <div class="page-header steckerlogo">
-                        <h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> Highlights</small></h1>
-                    </div>
+                    <div class="col-md-12">
+						<div class="page-header steckerlogo">
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> Highlights</small></h1>
+						</div>
+					</div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div style="text-align:center;">
-                            <img data-bind="picture" src="" />
+                            <img data-bind="picture" src="" height="" />
 							<p data-bind="description">This is a simple hero
 							unit, a simple jumbotron-style component for
 							calling extra attention to featured content or
@@ -137,8 +145,9 @@
 							getBindElement('text', 'body').html(frame.settings.body);
 							break;
 						case 'highlights':
+
 							getBindElement('highlights', 'description').html(frame.settings.description);
-							getBindElement('highlights', 'picture').attr('src', frame.settings.url);
+							getBindElement('highlights', 'picture').attr('src', frame.settings.url).attr('height', windowHeight()-120);
 							break;
 					};
 
@@ -189,13 +198,6 @@
             function processData(data) {
                 //the view container
                 var $catlist = $("#catlist");
-
-				//go through categories
-                $.each(data.categories, function (i, cat) {
-
-                    //initialize category box
-                    var $catbox = $("<div>")
-                    	.addClass("col-xs-12 col-md-6");
 
 				var cols = {
 					'left': {
@@ -263,9 +265,6 @@
 					col.size = col.size + cat.drinks.length;
                     //build the category box
                     col.$el.append(
-							$("<div>")
-								.addClass("col-md-12")
-								.append(
 									$("<div>")
 										.addClass("panel panel-default panel-pizza")
 										.append(
@@ -274,14 +273,7 @@
 												.text(cat.name)
 										)
 										.append($table)
-								)
                     );
-
-
-					//append category box to view container
-                    $catlist.append($catbox);
-
-
 
 
                     //build additives list for footer
@@ -317,6 +309,16 @@
 
 		});
 
+	function windowHeight () {
+ 		 if (window.innerHeight) {
+ 		   	return window.innerHeight;
+		  } else if (document.body && document.body.offsetHeight) {
+		  	  return document.body.offsetHeight;
+		  } else {
+		    return 0;
+		  }
+
+		}
     </script>
 
 </body>

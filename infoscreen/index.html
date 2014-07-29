@@ -207,7 +207,7 @@
                     						$("<span>").text(drink.name)
                     					)
 										.append(
-											$("<sup>").text(drink.additives.join(", "))
+                                            drink.additives != null ? $("<sup>").text(drink.additives.join(", ")) : ""
                     					)
                     			)
                     			.append(

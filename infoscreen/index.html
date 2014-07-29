@@ -82,10 +82,13 @@
 					</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="well">
+                    <div class="col-md-12 text-center">
+                        <div id="text-row" >
                         	<h1 data-bind="headline">Hello, world!</h1>
-                       		<p data-bind="body">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information...</p>
+							<br>
+							<p data-bind="body" class="large-text" id="text-body">This is a simple hero unit, a
+							simple jumbotron-style component for calling extra
+							attention to featured content or information...</p>
                         </div>
                     </div>
                 </div>
@@ -157,6 +160,13 @@
 						case 'text':
 							getBindElement('text', 'headline').text(frame.settings.headline);
 							getBindElement('text', 'body').html(frame.settings.body);
+
+							var descHeight = $("#text-row").height();
+							var boxHeight = windowHeight()-160;
+							var margin = (boxHeight - descHeight) / 2;
+
+							$("#text-row").css("margin-top", margin+"px");
+
 							break;
 						case 'highlights':
 							getBindElement('highlights', 'description').html(frame.settings.description);

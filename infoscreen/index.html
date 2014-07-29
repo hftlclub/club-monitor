@@ -97,15 +97,17 @@
 					</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6" id="hightlights-picture-row">
                         <div style="text-align:center;">
                             <img data-bind="picture" src="" height="" />
-							<p data-bind="description">This is a simple hero
-							unit, a simple jumbotron-style component for
-							calling extra attention to featured content or
-							information...</p>
                         </div>
                     </div>
+					<div class="col-md-6" id="highlights-description-row">
+						<p data-bind="description">This is a simple hero
+						unit, a simple jumbotron-style component for
+						calling extra attention to featured content or
+						information...</p>
+					</div>
                 </div>
             </div>
         </div>
@@ -150,9 +152,19 @@
 							getBindElement('text', 'body').html(frame.settings.body);
 							break;
 						case 'highlights':
-
 							getBindElement('highlights', 'description').html(frame.settings.description);
 							getBindElement('highlights', 'picture').attr('src', frame.settings.url).attr('height', windowHeight()-120);
+
+							if(frame.settings.description) {
+								$("#hightlights-picture-row").removeClass("col-md-12");
+								$("#hightlights-picture-row").addClass("col-md-6");
+								$("#hightlights-image-row").show();
+							} else {
+								$("#hightlights-picture-row").removeClass("col-md-6");
+								$("#hightlights-picture-row").addClass("col-md-12");
+								$("#hightlights-image-row").hide();
+							}
+
 							break;
 					};
 

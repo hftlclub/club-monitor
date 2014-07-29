@@ -19,6 +19,24 @@
 
 		h1 {
 			font-size: 60px;
+
+		@media (min-width: 1900px) {
+			body {
+				font-size: 300%;
+				overflow: hidden;
+			}
+
+			h1 {
+				font-size: 60px;
+			}
+
+			#drinks-notes p {
+				font-size: 17pt;
+			}
+
+			.large-text {
+				font-size: 30pt;
+			}
 		}
     </style>
 
@@ -101,6 +119,12 @@
 							information...</p>
                         </div>
                     </div>
+					<div class="col-md-6" id="highlights-description-row">
+						<p data-bind="description" class="large-text">This is a simple hero
+						unit, a simple jumbotron-style component for
+						calling extra attention to featured content or
+						information...</p>
+					</div>
                 </div>
             </div>
         </div>

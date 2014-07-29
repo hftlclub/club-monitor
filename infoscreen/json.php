@@ -102,7 +102,7 @@ if($mode == "timeline"){
 	$dtout = array();
 
 	//get additives and write them to array $adds
-	$timeline_result = mysql_query("SELECT * FROM infoscreen_timeline;");
+	$timeline_result = mysql_query("SELECT * FROM infoscreen_timeline ORDER BY `order` ASC;");
 	while($row = mysql_fetch_assoc($timeline_result)){
 		
 		if($row['moduleid']) {

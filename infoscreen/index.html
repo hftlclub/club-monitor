@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../common/css/bootstrap.min.css">
     <link rel="stylesheet" href="../common/css/bootstrap.cyborg.min.css">
     <link rel="stylesheet" href="../common/css/style.css">
-    
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,7 +31,7 @@
             <div data-module="drinks">
                 <!-- Getränkekarten View -->
                 <div class="row">
-                    <div class="page-header" id="steckerlogo">
+                    <div class="page-header steckerlogo">
                         <h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
             <div data-module="text">
                 <!-- Freitext View -->
                 <div class="row">
-                    <div class="page-header">
+                    <div class="page-header steckerlogo">
                         <h1>HfTL-Club <small><span class="glyphicon glyphicon-info-sign"></span> Informationen</small></h1>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
             <div data-module="highlights">
                 <!-- Image/Next Highlights View -->
                 <div class="row">
-                    <div class="page-header">
+                    <div class="page-header steckerlogo">
                         <h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> Highlights</small></h1>
                     </div>
                 </div>
@@ -183,22 +183,22 @@
             function processData(data) {
                 //the view container
                 var $catlist = $("#catlist");
-				
+
 				//go through categories
                 $.each(data.categories, function (i, cat) {
-                    
+
                     //initialize category box
                     var $catbox = $("<div>")
                     	.addClass("col-xs-12 col-md-6");
-                    
+
                     //initialize table
                     var $table = $("<table>")
                     	.addClass("table");
-                    
-                   
+
+
                     //go through drinks and make table
                     $.each(cat.drinks, function (i, drink) {
-                    	
+
                     	$table.append(
                     		$("<tr>")
                     			.append(
@@ -214,10 +214,10 @@
                     				$("<td>").text(parsePrice(drink.price))
                     			)
                     	);
-                    				
+
                     });
-                    
-                    
+
+
                     //build the category box
                     $catbox.append(
                     	$("<div>")
@@ -237,16 +237,16 @@
                     				)
                     		)
                     );
-                    
+
 
 					//append category box to view container
                     $catlist.append($catbox);
-                    
-                    
-                    
+
+
+
                     //build additives list for footer
                     var $add_text = "";
-                    
+
                     var len = data.additives.length;
                     $.each(data.additives, function (i, item) {
                     	$add_text += item.index + " - " + item.name;
@@ -254,29 +254,30 @@
                     		$add_text += ", ";
                     	}
                     });
-                    
+
                     $("#additives").text($add_text);
-                    
-                    
-                    
+
+
+
                 });
 
             }
-            
-            
+
+
             //parse float value to price string: 1.5 to 1,50 EUR
             function parsePrice(price){
 				retval = parseFloat(price, 10).toFixed(2).toString()
 				retval = retval.replace(".", ",");
 				retval += " EUR";
-				
+
 				return retval;
             }
-            
-            
+
+
 
 		});
 
     </script>
+
 </body>
 </html>

@@ -13,9 +13,13 @@
 
     <style type="text/css">
         body {
-            font-size: 280%;
+            font-size: 300%;
 			overflow: hidden;
         }
+
+		h1 {
+			font-size: 60px;
+		}
     </style>
 
 
@@ -48,13 +52,11 @@
                 <div class="row" id="catlist"></div>
 
 
-                <div class="row">
-                    <div class="col-md-12">
-						<p style="font-size: 17pt;">
-                                Für unsere Gläser erheben wir 1 € Pfand, für Weizengläser sind es 2 €.
-                                Zusatzstoffe: <span id="additives"></span>
-						</p>
-                    </div>
+				<div id="drinks-notes">
+					<p style="font-size: 17pt;">
+						Für unsere Gläser erheben wir 1 € Pfand, für Weizengläser sind es 2 €.<br>
+							Zusatzstoffe: <span id="additives"></span>
+					</p>
                 </div>
             </div>
 
@@ -292,9 +294,12 @@
 
                     $("#additives").text($add_text);
 
-
-
                 });
+
+				if(cols.right.size >= cols.left.size)
+					cols.left.$el.append($('#drinks-notes'));
+				else
+					cols.right.$el.append($('#drinks-notes'));
 
             }
 

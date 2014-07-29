@@ -190,13 +190,6 @@
                 //the view container
                 var $catlist = $("#catlist");
 
-				//go through categories
-                $.each(data.categories, function (i, cat) {
-
-                    //initialize category box
-                    var $catbox = $("<div>")
-                    	.addClass("col-xs-12 col-md-6");
-
 				var cols = {
 					'left': {
 						'size' : 0,
@@ -276,12 +269,6 @@
 										.append($table)
 								)
                     );
-
-
-					//append category box to view container
-                    $catlist.append($catbox);
-
-
 
 
                     //build additives list for footer

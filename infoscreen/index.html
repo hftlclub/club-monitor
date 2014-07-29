@@ -94,7 +94,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div style="text-align:center;">
-                            <img data-bind="picture" src="" />
+                            <img data-bind="picture" src="" height="" />
 							<p data-bind="description">This is a simple hero
 							unit, a simple jumbotron-style component for
 							calling extra attention to featured content or
@@ -145,8 +145,9 @@
 							getBindElement('text', 'body').html(frame.settings.body);
 							break;
 						case 'highlights':
+
 							getBindElement('highlights', 'description').html(frame.settings.description);
-							getBindElement('highlights', 'picture').attr('src', frame.settings.url);
+							getBindElement('highlights', 'picture').attr('src', frame.settings.url).attr('height', windowHeight()-120);
 							break;
 					};
 
@@ -308,6 +309,16 @@
 
 		});
 
+	function windowHeight () {
+ 		 if (window.innerHeight) {
+ 		   	return window.innerHeight;
+		  } else if (document.body && document.body.offsetHeight) {
+		  	  return document.body.offsetHeight;
+		  } else {
+		    return 0;
+		  }
+
+		}
     </script>
 
 </body>

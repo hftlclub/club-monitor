@@ -232,27 +232,34 @@
                     var $table = $("<table>")
                     	.addClass("table");
 
+					var groups = {};
 
                     //go through drinks and make table
                     $.each(cat.drinks, function (i, drink) {
 
-                    	$table.append(
-                    		$("<tr>")
-                    			.append(
-                    				$("<td>")
-                    					.append(
-                    						$("<span>").text(drink.name)
-                    					)
-										.append(
-                                            drink.additives != null ? $("<sup>").text(drink.additives.join(", ")) : ""
-                    					)
-                    			).append(
-                    				$("<td style='width:20%; text-align:right;'>").text(drink.size)
-                    			)
-                    			.append(
-                    				$("<td style='width:20%; text-align:right;'>").text(parsePrice(drink.price))
-                    			)
-                    	);
+						var $label = $("<span>").text(drink.name);
+						if(drink.additives != null)
+							$label.after($("<sup>").text(drink.additives.join(", ")));
+
+						if(groups[drink.group]) {
+							groups[drink.group].append(" / ").append($label);
+						}
+						else {
+							var $td = $("<td>").append($label);
+							var $tr = $("<tr>")
+								.append(
+									$td
+								).append(
+									$("<td style='width:20%; text-align:right;'>").text(drink.size)
+								)
+								.append(
+									$("<td style='width:20%; text-align:right;'>").text(parsePrice(drink.price))
+								);
+
+							$table.append($tr);
+							if(drink.group)
+								groups[drink.group] = $td;
+						}
 
                     });
 

@@ -20,6 +20,9 @@
 		body {
 			overflow-y: scroll;
 		}
+		.module-order-handle {
+			cursor: move;
+		}
     </style>
 
 
@@ -49,45 +52,27 @@
 
 		<div class="row" ng-controller="InfoscreenMngrCtrl">
 			<div class="col-md-12" ng-model="timeline" ui-sortable="sortableOptions">
-					<div class="panel panel-default" ng-repeat="module in timeline"
-						ng-click="active.id = module.id">
-						<div class="panel-heading" style="cursor: pointer;">
-							#{{ module.id }} {{ module.type }}
-							<a class="text-warning pull-right" ng-if="module.active" ng-click="disable(module.id)"><span class="glyphicon glyphicon-ban-circle"></span></a>
-							<a class="text-success pull-right" ng-if="!module.active" ng-click="activate(module.id)"><span class="glyphicon glyphicon-ok-circle"> </span></a>
-							<a class="text-danger pull-right" ng-click="remove(module.id)"><span class="glyphicon glyphicon-remove-circle"></span></a>
-						</div>
-						<div class="panel-body" ng-if="active.id == module.id">
-							<div ng-if="module.type == 'text'" class="">
-								<div class="form-group">
-									<label>Headline</label>
-									<input ng-model="module.settings.headline" class="form-control">
-								</div>
-								<div class="form-group">
-									<label>Text</label>
-									<textarea ng-model="module.settings.body" class="form-control"></textarea>
-								</div>
-							</div>
-							<div ng-if="module.type == 'barclosing'" class="">
-								<div class="form-group">
-									<label>Zeit</label>
-									<input ng-model="module.settings.time" type="time" class="form-control">
-								</div>
-							</div>
-							<div ng-if="module.type == 'highlights'" class="">
-								<div class="form-group">
-									<label>URL</label>
-									<input ng-model="module.settings.url" class="form-control">
-								</div>
-								<div class="form-group">
-									<label>Text</label>
-									<textarea ng-model="module.settings.description"
-										class="form-control"></textarea>
-								</div>
-							</div>
-							<div ng-if="module.type == 'drinks'" class="">
-								Nuttin' to do here.
-							</div>
+				<div ng-class="{'panel-success': module.active, 'panel-warning': !module.active}"
+				   	class="panel" ng-repeat="module in timeline" ng-click="active.id = module.id">
+						<div class="panel-body">
+							<span class="pull-right" style="font-size: large">
+								<a class="btn btn-default"
+									ng-click="disable(module.id)"><span
+										class="glyphicon glyphicon-pencil"></span></a>
+								<a class="btn btn-default" ng-if="module.active"
+									ng-click="disable(module.id)"><span
+										class="glyphicon glyphicon-volume-up"></span></a>
+								<a class="btn btn-default" ng-if="!module.active"
+									ng-click="activate(module.id)"><span
+										class="glyphicon glyphicon-volume-off"> </span></a>
+								<a class="btn btn-default"
+									ng-click="remove(module.id)"><span
+										class="glyphicon glyphicon-trash"></span></a>
+							</span>
+							<h4>
+								<span class="glyphicon glyphicon-resize-vertical module-order-handle"></span>
+								{{ module.type }}
+							</h4>
 						</div>
 					</div>
 
@@ -116,7 +101,9 @@
 			$scope.sortableOptions = {
 				stop: function(e, ui) {
 					$scope.submitOrder();
-				}
+				},
+				handle: '.module-order-handle',
+				axis: 'y',
 			}
 
 			$scope.remove = function(index) {
@@ -135,15 +122,15 @@
 			};
 
 			$scope.disable = function(id) {
-				$http.post('json.php?mode=disableItem', [id]).success($scope.refresh);
+				$http.post('json.php?mode=disableItem', [{id:id}]).success($scope.refresh);
 			};
 
 			$scope.activate = function(id) {
-				$http.post('json.php?mode=activateItem', [id]).success($scope.refresh);
+				$http.post('json.php?mode=activateItem', [{id:id}]).success($scope.refresh);
 			};
 
 			$scope.remove= function(id) {
-				$http.post('json.php?mode=deleteItem', [id]).success($scope.refresh);
+				$http.post('json.php?mode=deleteItem', [{id:id}]).success($scope.refresh);
 			};
 
 			$scope.refresh = function() {

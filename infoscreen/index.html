@@ -76,21 +76,48 @@
                 <!-- Freitext View -->
                 <div class="row">
                     <div class="col-md-12">
-						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-info-sign"></span> Informationen</small></h1>
-						</div>
-					</div>
+                        <div class="page-header steckerlogo">
+                            <h1>HfTL-Club <small><span class="glyphicon glyphicon-bullhorn"></span> Informationen</small></h1>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <div id="text-row" >
-                        	<h1 data-bind="headline">Hello, world!</h1>
-							<br>
-							<p data-bind="body" class="large-text" id="text-body">This is a simple hero unit, a
-							simple jumbotron-style component for calling extra
-							attention to featured content or information...</p>
+                        <div id="text-row">
+                            <h1 data-bind="headline">Hello, world!</h1>
+                            <br>
+                            <p data-bind="body" class="large-text" id="text-body">
+                                This is a simple hero unit, a
+                                simple jumbotron-style component for calling extra
+                                attention to featured content or information...
+                            </p>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div data-module="barclosing">
+                <!-- Barschluss View -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="page-header steckerlogo">
+                            <h1>HfTL-Club <small><span class="glyphicon glyphicon-bullhorn"></span> Barschluss</small></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2"><h1><span class="glyphicon glyphicon-off"></span></h1></div>
+                    <div class="col-md-6">
+                        <div id="barclosing-content">
+                            <p class="large-text">
+                                <h1>Leider ist es schon wieder so weit!</h1>
+                                Bestellt euch euer letztes Getränk und denkt daran euren Pfand rechtzeitig zurück zu geben.
+                                Um <span data-bind="time">22:00</span> Uhr ist Barschluss.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
             </div>
 
@@ -157,17 +184,27 @@
 						case 'drinks':
 							// nuttin' to do
 							break;
-						case 'text':
-							getBindElement('text', 'headline').text(frame.settings.headline);
-							getBindElement('text', 'body').html(frame.settings.body);
+					    case 'text':
+					        getBindElement('text', 'headline').text(frame.settings.headline);
+					        getBindElement('text', 'body').html(frame.settings.body);
 
-							var descHeight = $("#text-row").height();
-							var boxHeight = windowHeight()-160;
-							var margin = (boxHeight - descHeight) / 2;
+					        var descHeight = $("#text-row").height();
+					        var boxHeight = windowHeight()-160;
+					        var margin = (boxHeight - descHeight) / 2;
 
-							$("#text-row").css("margin-top", margin+"px");
+					        $("#text-row").css("margin-top", margin+"px");
 
-							break;
+					        break;
+					    case 'barclosing':
+					        getBindElement('barclosing', 'time').text(frame.settings.time);
+
+					        var descHeight = $("#text-row").height();
+					        var boxHeight = windowHeight()-160;
+					        var margin = (boxHeight - descHeight) / 2;
+
+					        $("#barclosing-content").css("margin-top", margin+"px");
+
+					        break;
 						case 'highlights':
 							getBindElement('highlights', 'description').html(frame.settings.description);
 							getBindElement('highlights', 'picture')

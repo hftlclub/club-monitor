@@ -43,6 +43,7 @@ if($mode == 'retrieve') {
 			"id" => $row["id"],
 			"type" => $row["type"],
 			"duration" => $row["duration"],
+			"active" => ($row["active"]==1),
 			"settings" => $settings,
 		);
 	}

@@ -107,12 +107,16 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2"></div>
-                    <div class="col-md-2" style="vertical-align:middle"><h1><span class="glyphicon glyphicon-off"></span></h1></div>
+                    <div class="col-md-2">
+                        <div id="barclosing-icon">
+                            <h1><span class="glyphicon glyphicon-off" style="font-size:4em;"></span></h1>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div id="barclosing-content">
                             <h1>
                                 Leider ist es schon wieder so weit!<br /><br />
-                                Bestellt euch euer letztes Getränk und denkt daran euren Pfand rechtzeitig zurück zu geben.
+                                Bestellt euch euer letztes Getränk und denkt daran euren Pfand rechtzeitig zurück zu geben.<br /><br />
                                 Um <span data-bind="time">22:00</span> Uhr ist Barschluss.
                             </h1>
                         </div>
@@ -207,6 +211,12 @@
                             var margin = (boxHeight - descHeight) / 2;
 
                             $("#barclosing-content").css("margin-top", margin+"px");
+
+                            var descHeight = $("#barclosing-icon").height();
+                            var boxHeight = windowHeight()-160;
+                            var margin = (boxHeight - descHeight) / 2;
+
+                            $("#barclosing-icon").css("margin-top", margin+"px");
 
                             break;
                         case 'highlights':
@@ -436,7 +446,7 @@
 
     <script type="text/javascript">
         // global JS block
-        
+
         function windowHeight () {
             if (window.innerHeight) {
                 return window.innerHeight;

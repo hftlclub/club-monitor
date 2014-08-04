@@ -12,24 +12,24 @@
     <link rel="stylesheet" href="../common/css/style.css">
 
     <style type="text/css">
-		@media (min-width: 1900px) {
-			body {
-				font-size: 300%;
-				overflow: hidden;
-			}
+        @media (min-width: 1900px) {
+            body {
+                font-size: 300%;
+                overflow: hidden;
+            }
 
-			h1 {
-				font-size: 60px;
-			}
+            h1 {
+                font-size: 60px;
+            }
 
-			#drinks-notes p {
-				font-size: 17pt;
-			}
+            #drinks-notes p {
+                font-size: 17pt;
+            }
 
-			.large-text {
-				font-size: 30pt;
-			}
-		}
+            .large-text {
+                font-size: 30pt;
+            }
+        }
     </style>
 
 
@@ -48,27 +48,27 @@
 </head>
 <body>
     <div class="container-fluid">
-    <div id="stecker"></div>
+        <div id="stecker"></div>
 
         <div id="modules">
             <div data-module="drinks">
                 <!-- Getränkekarten View -->
                 <div class="row">
                     <div class="col-md-12">
-						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
-						</div>
+                        <div class="page-header steckerlogo">
+                            <h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row" id="catlist"></div>
 
 
-				<div id="drinks-notes">
-					<p style="font-size: 17pt;">
-						Für unsere Gläser erheben wir 1 € Pfand, für Weizengläser sind es 2 €.<br>
-							Zusatzstoffe: <span id="additives"></span>
-					</p>
+                <div id="drinks-notes">
+                    <p style="font-size: 17pt;">
+                        Für unsere Gläser erheben wir 1 € Pfand, für Weizengläser sind es 2 €.<br>
+                        Zusatzstoffe: <span id="additives"></span>
+                    </p>
                 </div>
             </div>
 
@@ -76,21 +76,52 @@
                 <!-- Freitext View -->
                 <div class="row">
                     <div class="col-md-12">
-						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-info-sign"></span> Informationen</small></h1>
-						</div>
-					</div>
+                        <div class="page-header steckerlogo">
+                            <h1>HfTL-Club <small><span class="glyphicon glyphicon-bullhorn"></span> Informationen</small></h1>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <div id="text-row" >
-                        	<h1 data-bind="headline">Hello, world!</h1>
-							<br>
-							<p data-bind="body" class="large-text" id="text-body">This is a simple hero unit, a
-							simple jumbotron-style component for calling extra
-							attention to featured content or information...</p>
+                        <div id="text-row">
+                            <h1 data-bind="headline">Hello, world!</h1>
+                            <br>
+                            <p data-bind="body" class="large-text" id="text-body">
+                                This is a simple hero unit, a
+                                simple jumbotron-style component for calling extra
+                                attention to featured content or information...
+                            </p>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div data-module="barclosing">
+                <!-- Barschluss View -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="page-header steckerlogo">
+                            <h1>HfTL-Club <small><span class="glyphicon glyphicon-bullhorn"></span> Barschluss</small></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        <div id="barclosing-icon">
+                            <h1><span class="glyphicon glyphicon-off" style="font-size:4em;"></span></h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="barclosing-content">
+                            <h1>
+                                Leider ist es schon wieder so weit!<br /><br />
+                                Bestellt euch euer letztes Getränk und denkt daran euren Pfand rechtzeitig zurück zu geben.<br /><br />
+                                Um <span data-bind="time">22:00</span> Uhr ist Barschluss.
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
             </div>
 
@@ -99,10 +130,10 @@
                 <!-- Image/Next Highlights View -->
                 <div class="row">
                     <div class="col-md-12">
-						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> Highlights</small></h1>
-						</div>
-					</div>
+                        <div class="page-header steckerlogo">
+                            <h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> Highlights</small></h1>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12" id="highlights-picture-row">
@@ -110,12 +141,14 @@
                             <img data-bind="picture" src="" height="" />
                         </div>
                     </div>
-					<div class="col-md-6" id="highlights-description-row">
-						<p data-bind="description" class="large-text">This is a simple hero
-						unit, a simple jumbotron-style component for
-						calling extra attention to featured content or
-						information...</p>
-					</div>
+                    <div class="col-md-6" id="highlights-description-row">
+                        <p data-bind="description" class="large-text">
+                            This is a simple hero
+                            unit, a simple jumbotron-style component for
+                            calling extra attention to featured content or
+                            information...
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,78 +175,123 @@
 
             function processTimelineData(data)
             {
-				function next() {
-					var frame = data.shift();
+                var timeoutTimer = null;
 
-					if(!frame) {
-						// reload page
-						window.location.href = window.location.href;
-						return;
-					}
+                function next() {
+                    var frame = data.shift();
 
-					switchToModule(frame.type);
+                    if(!frame) {
+                        // reload page
+                        window.location.href = window.location.href;
+                        return;
+                    }
 
-					switch(frame.type) {
-						case 'drinks':
-							// nuttin' to do
-							break;
-						case 'text':
-							getBindElement('text', 'headline').text(frame.settings.headline);
-							getBindElement('text', 'body').html(frame.settings.body);
+                    switchToModule(frame.type);
 
-							var descHeight = $("#text-row").height();
-							var boxHeight = windowHeight()-160;
-							var margin = (boxHeight - descHeight) / 2;
+                    switch(frame.type) {
+                        case 'drinks':
+                            // nuttin' to do
+                            break;
+                        case 'text':
+                            getBindElement('text', 'headline').text(frame.settings.headline);
+                            getBindElement('text', 'body').html(frame.settings.body);
 
-							$("#text-row").css("margin-top", margin+"px");
+                            var descHeight = $("#text-row").height();
+                            var boxHeight = windowHeight()-160;
+                            var margin = (boxHeight - descHeight) / 2;
 
-							break;
-						case 'highlights':
-							getBindElement('highlights', 'description').html(frame.settings.description);
-							getBindElement('highlights', 'picture')
+                            $("#text-row").css("margin-top", margin+"px");
+
+                            break;
+                        case 'barclosing':
+                            getBindElement('barclosing', 'time').text(frame.settings.time);
+
+                            var descHeight = $("#barclosing-content").height();
+                            var boxHeight = windowHeight()-160;
+                            var margin = (boxHeight - descHeight) / 2;
+
+                            $("#barclosing-content").css("margin-top", margin+"px");
+
+                            var descHeight = $("#barclosing-icon").height();
+                            var boxHeight = windowHeight()-160;
+                            var margin = (boxHeight - descHeight) / 2;
+
+                            $("#barclosing-icon").css("margin-top", margin+"px");
+
+                            break;
+                        case 'highlights':
+                            getBindElement('highlights', 'description').html(frame.settings.description);
+                            getBindElement('highlights', 'picture')
 								.attr('src', '')
 								.attr('src', frame.settings.url)
 								.attr('height', windowHeight()-160);
 
-							if(frame.settings.description) {
-								console.log($("#highlights-picture-row"));
-								$("#highlights-picture-row")
+                            if(frame.settings.description) {
+                                console.log($("#highlights-picture-row"));
+                                $("#highlights-picture-row")
 									.removeClass("col-md-12")
 									.addClass("col-md-6");
-								$("#highlights-description-row").show();
+                                $("#highlights-description-row").show();
 
-								var descHeight = $("#highlights-description-row").height();
-								var boxHeight = windowHeight()-160;
-								var margin = (boxHeight - descHeight) / 2;
-								$("#highlights-description-row")
+                                var descHeight = $("#highlights-description-row").height();
+                                var boxHeight = windowHeight()-160;
+                                var margin = (boxHeight - descHeight) / 2;
+                                $("#highlights-description-row")
 									.css("margin-top", margin+"px")
 									.css("padding-right", "40px");
 
-							} else {
-								$("#highlights-picture-row")
+                            } else {
+                                $("#highlights-picture-row")
 									.removeClass("col-md-6")
 									.addClass("col-md-12");
-								$("#highlights-description-row").hide();
-							}
-							break;
-					};
+                                $("#highlights-description-row").hide();
+                            }
+                            break;
+                    };
 
 
-					window.setTimeout(next, frame.duration * 1000);
-				}
+                    timeoutTimer = window.setTimeout(next, frame.duration * 1000);
+                }
 
-				next();
+                next();
 
+                function switchToNextModule()
+                {
+                    if(timeoutTimer)
+                    {
+                        window.clearTimeout(timeoutTimer);
+                        next();
+                    }
+                }
+
+                function togglePause()
+                {
+                    if(timeoutTimer != null)
+                    {
+                        window.clearTimeout(timeoutTimer);
+                        timeoutTimer = null;
+                    }
+                    else
+                    {
+                        next();
+                    }
+                }
+
+                $(document).keypress(function(e) {
+                    if(e.which == 32) {
+                        switchToNextModule()
+                    }
+                    else if((e.which == 80) || (e.which == 112)) {
+                        togglePause()
+                    }
+                });
             }
-
-            //DEBUG: start with drinks:
-            //switchToModule("drinks");
 
         });
 
-		function getBindElement(module, name) {
-			return $('[data-module="'+module+'"] [data-bind="'+name+'"]');
-		}
+        function getBindElement(module, name) {
+            return $('[data-module="'+module+'"] [data-bind="'+name+'"]');
+        }
 
         function switchToModule(moduleName)
         {
@@ -221,9 +299,9 @@
             $('[data-module="'+moduleName+'"]').show();
         }
 
-		function hideAllModules() {
-			$('[data-module]').hide()
-		};
+        function hideAllModules() {
+            $('[data-module]').hide()
+        };
     </script>
 
 
@@ -245,54 +323,54 @@
                 //the view container
                 var $catlist = $("#catlist");
 
-				var cols = {
-					'left': {
-						'size' : 0,
-						'$el' : $('<div>').addClass('col-md-6'),
-					},
-					'right': {
-						'size' : 0,
-						'$el' : $('<div>').addClass('col-md-6'),
-					},
-				};
+                var cols = {
+                    'left': {
+                        'size' : 0,
+                        '$el' : $('<div>').addClass('col-md-6'),
+                    },
+                    'right': {
+                        'size' : 0,
+                        '$el' : $('<div>').addClass('col-md-6'),
+                    },
+                };
 
-				$catlist.append(cols.left.$el);
-				$catlist.append(cols.right.$el);
+                $catlist.append(cols.left.$el);
+                $catlist.append(cols.right.$el);
 
-				data.categories.sort(function(a, b){
-					if( a.drinks.length > b.drinks.length )
-						return -1;
+                data.categories.sort(function(a, b){
+                    if( a.drinks.length > b.drinks.length )
+                        return -1;
 
-					if( a.drinks.length < b.drinks.length )
-						return 1;
+                    if( a.drinks.length < b.drinks.length )
+                        return 1;
 
-					return 0;
+                    return 0;
 
-				});
+                });
 
-				console.log(data.categories);
+                console.log(data.categories);
 
-				//go through categories
+                //go through categories
                 $.each(data.categories, function (i, cat) {
                     //initialize table
                     var $table = $("<table>")
                     	.addClass("table");
 
-					var groups = {};
+                    var groups = {};
 
                     //go through drinks and make table
                     $.each(cat.drinks, function (i, drink) {
 
-						var $label = $("<span>").text(drink.name);
-						if(drink.additives != null)
-							$label.after($("<sup>").text(drink.additives.join(", ")));
+                        var $label = $("<span>").text(drink.name);
+                        if(drink.additives != null)
+                            $label.after($("<sup>").text(drink.additives.join(", ")));
 
-						if(groups[drink.group]) {
-							groups[drink.group].append(" / ").append($label);
-						}
-						else {
-							var $td = $("<td>").append($label);
-							var $tr = $("<tr>")
+                        if(groups[drink.group]) {
+                            groups[drink.group].append(" / ").append($label);
+                        }
+                        else {
+                            var $td = $("<td>").append($label);
+                            var $tr = $("<tr>")
 								.append(
 									$td
 								).append(
@@ -302,20 +380,20 @@
 									$("<td style='width:20%; text-align:right;'>").text(parsePrice(drink.price))
 								);
 
-							$table.append($tr);
-							if(drink.group)
-								groups[drink.group] = $td;
-						}
+                            $table.append($tr);
+                            if(drink.group)
+                                groups[drink.group] = $td;
+                        }
 
                     });
 
 
-					if(cols.right.size >= cols.left.size)
-						var col = cols.left;
-					else
-						var col = cols.right;
+                    if(cols.right.size >= cols.left.size)
+                        var col = cols.left;
+                    else
+                        var col = cols.right;
 
-					col.size = col.size + cat.drinks.length;
+                    col.size = col.size + cat.drinks.length;
                     //build the category box
                     col.$el.append(
 									$("<div>")
@@ -334,47 +412,51 @@
 
                     var len = data.additives.length;
                     $.each(data.additives, function (i, item) {
-                    	$add_text += item.index + " - " + item.name;
-                    	if(i < len - 1) {
-                    		$add_text += ", ";
-                    	}
+                        $add_text += item.index + " - " + item.name;
+                        if(i < len - 1) {
+                            $add_text += ", ";
+                        }
                     });
 
                     $("#additives").text($add_text);
 
                 });
 
-				if(cols.right.size >= cols.left.size)
-					cols.left.$el.append($('#drinks-notes'));
-				else
-					cols.right.$el.append($('#drinks-notes'));
+                if(cols.right.size >= cols.left.size)
+                    cols.left.$el.append($('#drinks-notes'));
+                else
+                    cols.right.$el.append($('#drinks-notes'));
 
             }
 
 
             //parse float value to price string: 1.5 to 1,50 EUR
             function parsePrice(price){
-				retval = parseFloat(price, 10).toFixed(2).toString()
-				retval = retval.replace(".", ",");
-				retval += " EUR";
+                retval = parseFloat(price, 10).toFixed(2).toString()
+                retval = retval.replace(".", ",");
+                retval += " EUR";
 
-				return retval;
+                return retval;
             }
 
 
 
-		});
+        });
+    </script>
 
-	function windowHeight () {
- 		 if (window.innerHeight) {
- 		   	return window.innerHeight;
-		  } else if (document.body && document.body.offsetHeight) {
-		  	  return document.body.offsetHeight;
-		  } else {
-		    return 0;
-		  }
+    <script type="text/javascript">
+        // global JS block
 
-		}
+        function windowHeight () {
+            if (window.innerHeight) {
+                return window.innerHeight;
+            } else if (document.body && document.body.offsetHeight) {
+                return document.body.offsetHeight;
+            } else {
+                return 0;
+            }
+
+        }
     </script>
 
 </body>

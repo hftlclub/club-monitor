@@ -129,7 +129,9 @@
 					dout.push({order: i, id: obj.id});
 				});
 
-				$http.post('json.php?mode=reorderTimeline', dout);
+				$http.post('json.php?mode=reorderTimeline', dout).success(function(){
+					$scope.refresh();
+				});
 			};
 
 			$scope.refresh = function() {

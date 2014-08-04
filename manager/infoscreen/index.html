@@ -15,7 +15,6 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.12.8/sortable.min.js"></script>
-	<script src="../../common/js/jquery.ui.touch-punch.min.js"></script>
 
     <style type="text/css">
 		body {
@@ -57,6 +56,12 @@
 				   	class="panel" ng-repeat="module in timeline" ng-click="active.id = module.id">
 						<div class="panel-body">
 							<span class="pull-right" style="font-size: large">
+								<a class="btn btn-default" ng-disabled="$first"
+									ng-click="moveUp($index)"><span
+										class="glyphicon glyphicon-chevron-up"></span></a>
+								<a class="btn btn-default" ng-disabled="$last"
+									ng-click="moveDown($index)"><span
+										class="glyphicon glyphicon-chevron-down"></span></a>
 								<a class="btn btn-default"
 									ng-click="disable(module.id)"><span
 										class="glyphicon glyphicon-pencil"></span></a>
@@ -105,12 +110,26 @@
 				},
 				handle: '.module-order-handle',
 				axis: 'y',
-			}
+			};
 
 			$scope.remove = function(index) {
 			    $scope.timeline.splice(index, 1);
 
-			}
+			};
+			
+			$scope.moveDown = function(index) {
+				$scope.swap(index, index+1);
+			};
+
+			$scope.moveUp = function(index) {
+				$scope.swap(index, index-1);
+			};
+
+			$scope.swap = function(a, b) {
+				var l = $scope.timeline;
+				l[a] = l.splice(b, 1, l[a])[0];
+				$scope.submitOrder();
+			};
 
 			$scope.submitOrder = function() {
 				var dout = [];

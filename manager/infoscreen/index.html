@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="de" ng-app="steckerApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HfTL-Club - Infoscreen</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../../common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../common/css/bootstrap.cyborg.min.css">
+    <link rel="stylesheet" href="../../common/css/style.css">
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+
+    <style type="text/css">
+		body {
+			overflow-y: scroll;
+		}
+    </style>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="page-header steckerlogo">
+					<h1>
+						HfTL-Club 
+						<small>
+							<span class="glyphicon glyphicon-info-sign"></span>
+							Infoscreen
+						</small>
+					</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" ng-controller="InfoscreenMngrCtrl">
+			<div class="col-md-12">
+				<form role="form" ng-submit="submit()">
+					<div class="panel panel-default" ng-repeat="module in timeline"
+						ng-click="active.id = module.id">
+						<div class="panel-heading" style="cursor: pointer;">
+							#{{ module.id }} {{ module.type }}
+							<a class="text-danger pull-right" ng-click="remove($index)"><span class="glyphicon glyphicon-remove"></span></a>
+						</div>
+						<div class="panel-body" ng-if="active.id == module.id">
+							<div ng-if="module.type == 'text'" class="">
+								<div class="form-group">
+									<label>Headline</label>
+									<input ng-model="module.settings.headline" class="form-control">
+								</div>
+								<div class="form-group">
+									<label>Text</label>
+									<textarea ng-model="module.settings.body" class="form-control"></textarea>
+								</div>
+							</div>
+							<div ng-if="module.type == 'barclosing'" class="">
+								<div class="form-group">
+									<label>Zeit</label>
+									<input ng-model="module.settings.time" type="time" class="form-control">
+								</div>
+							</div>
+							<div ng-if="module.type == 'highlights'" class="">
+								<div class="form-group">
+									<label>URL</label>
+									<input ng-model="module.settings.url" class="form-control">
+								</div>
+								<div class="form-group">
+									<label>Text</label>
+									<textarea ng-model="module.settings.description"
+										class="form-control"></textarea>
+								</div>
+							</div>
+							<div ng-if="module.type == 'drinks'" class="">
+								Nuttin' to do here.
+							</div>
+						</div>
+					</div>
+
+					<p>
+						<a class="btn btn-default" ng-click="add('drinks')"><span class="glyphicon glyphicon-plus"></span> Drinks</a>
+						<a class="btn btn-default" ng-click="add('text')"><span class="glyphicon glyphicon-plus"></span> Text</a>
+						<a class="btn btn-default" ng-click="add('barclosing')"><span class="glyphicon glyphicon-plus"></span> Barschluss</a>
+						<a class="btn btn-default" ng-click="add('highlights')"><span class="glyphicon glyphicon-plus"></span> Highlights</a>
+					</p>
+
+
+				</form>
+			</div>
+		</div>
+
+
+    </div>
+
+    <script type="application/javascript">
+		/* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
+
+		var steckerApp = angular.module('steckerApp', []);
+
+		steckerApp.controller('InfoscreenMngrCtrl', function($scope, $http) {
+			$scope.active = { id: 0 };
+
+			function refresh() {
+				$http.get('json.php?mode=retrieve').success(function(data){
+					$scope.timeline = data;
+				});
+			};
+			refresh();
+
+			$scope.submit = function() {
+
+			}
+
+			$scope.remove = function(index) {
+			    $scope.timeline.splice(index, 1);
+
+			}
+
+			$scope.add = function(type) {
+				$scope.timeline.push({
+					type : type,
+				});
+
+			}
+
+		});
+
+    </script>
+
+</body>
+</html>

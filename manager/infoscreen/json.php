@@ -69,17 +69,21 @@ if($mode == 'addItem') {
 	
 	switch ($contents->type) {
 		case 'drinks':
-			$returnId = addItemDrinks($contents->order)
+			$returnId = addItemDrinks($contents->order);
 			break;
 		case 'barclosing':
-			$returnId = addItemBarclosing($contents->order)
+			$returnId = addItemBarclosing($contents->order);
 			break;
 		case 'text':
-			$returnId = addItemText($contents)
+			$returnId = addItemText($contents);
 			break;
 	}
 	
 	mysql_query("COMMIT");
+	
+	$output[] = array(
+		"id" => $returnId
+	);
 }
 
 function addItemDrinks ($order)

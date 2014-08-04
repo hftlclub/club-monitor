@@ -76,7 +76,8 @@
 										class="glyphicon glyphicon-trash"></span></a>
 							</span>
 							<h4>
-								<span class="glyphicon glyphicon-resize-vertical module-order-handle"></span>
+								<span ng-if="!hasTouch"
+									class="glyphicon glyphicon-resize-vertical module-order-handle"></span>
 								{{ module.type }}
 							</h4>
 						</div>
@@ -97,12 +98,24 @@
     </div>
 
     <script type="application/javascript">
+		function isTouchSupported() {
+			var msTouchEnabled = window.navigator.msMaxTouchPoints;
+			var generalTouchEnabled = "ontouchstart" in document.createElement("div");
+
+			if (msTouchEnabled || generalTouchEnabled) {
+				return true;
+			}
+			return false;
+		}
+
+
 		/* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
 
 		var steckerApp = angular.module('steckerApp', ['ui.sortable']);
 
 		steckerApp.controller('InfoscreenMngrCtrl', function($scope, $http) {
 			$scope.active = { id: 0 };
+			$scope.hasTouch = isTouchSupported();
 
 			$scope.sortableOptions = {
 				stop: function(e, ui) {

@@ -169,7 +169,7 @@
                 url: dataUrl,
                 dataType: "json",
                 success: processTimelineData,
-                error: function (o, c, m) { alert(m); }
+                error: function (o, c, m) { throw(m); }
             });
 
             function processTimelineData(data)

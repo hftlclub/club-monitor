@@ -7,6 +7,8 @@ header("Content-Type: application/json");
 //and it should not be cached by browsers like IE
 header("Expires: ".gmdate("D, d M Y H:i:s \G\M\T", time() - 3600));
 
+$output = array();
+
 $mode = mysql_real_escape_string($_GET['mode']);
 
 //exit if no mode given
@@ -26,7 +28,6 @@ if($mode == 'reorderTimeline') {
 }
 
 if($mode == 'retrieve') {
-	$dtout = array();
 
 	//get additives and write them to array $adds
 	$timeline_result = mysql_query("SELECT * FROM infoscreen_timeline ORDER BY `order` ASC;");
@@ -39,7 +40,7 @@ if($mode == 'retrieve') {
 			$settings = array();
 		}
 
-		$dtout[] = array(
+		$output[] = array(
 			"id" => $row["id"],
 			"type" => $row["type"],
 			"duration" => $row["duration"],
@@ -54,6 +55,7 @@ if($mode == 'retrieve') {
 //////////////////////////////
 
 //show output
-echo json_encode($dtout);
+if(!empty($output))
+	echo json_encode($output);
 
 ?>

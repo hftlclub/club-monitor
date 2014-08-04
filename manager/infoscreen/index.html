@@ -112,7 +112,7 @@
 			$scope.active = { id: 0 };
 
 			$scope.sortableOptions = {
-				update: function(e, ui) {
+				stop: function(e, ui) {
 					$scope.submitOrder();
 				}
 			}

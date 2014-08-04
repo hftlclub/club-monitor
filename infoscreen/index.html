@@ -253,6 +253,28 @@
                         next();
                     }
                 }
+
+                function togglePause()
+                {
+                    if(timeoutTimer != null)
+                    {
+                        window.clearTimeout(timeoutTimer);
+                        timeoutTimer = null;
+                    }
+                    else
+                    {
+                        next();
+                    }
+                }
+
+                $(document).keypress(function(e) {
+                    if(e.which == 32) {
+                        switchToNextModule()
+                    }
+                    else if((e.which == 80) || (e.which == 112)) {
+                        togglePause()
+                    }
+                });
             }
 
         });
@@ -414,12 +436,7 @@
 
     <script type="text/javascript">
         // global JS block
-        $(document).on('keypress', function(e) {
-            if(e.which == 32) {
-                switchToNextModule()
-            }
-        });
-
+        
         function windowHeight () {
             if (window.innerHeight) {
                 return window.innerHeight;

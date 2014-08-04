@@ -14,6 +14,16 @@ if(!$mode){
 	die();
 }
 
+if($mode == 'reorderTimeline') {
+	$contents = json_decode( file_get_contents('php://input') );
+	
+	mysql_query("BEGIN");
+	foreach($contents as $data)
+	{
+		mysql_query("UPDATE `infoscreen_timeline` SET `order`='".(int)($data->order)."' WHERE `id`='".(int)($data->id)."'");
+	}
+	mysql_query("COMMIT");
+}
 
 if($mode == 'retrieve') {
 	$dtout = array();

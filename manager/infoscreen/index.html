@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="../../common/css/bootstrap.cyborg.min.css">
     <link rel="stylesheet" href="../../common/css/style.css">
 
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.12.8/sortable.min.js"></script>
 
     <style type="text/css">
 		body {
@@ -45,8 +48,7 @@
 		</div>
 
 		<div class="row" ng-controller="InfoscreenMngrCtrl">
-			<div class="col-md-12">
-				<form role="form" ng-submit="submit()">
+			<div class="col-md-12" ng-model="timeline" ui-sortable="sortableOptions">
 					<div class="panel panel-default" ng-repeat="module in timeline"
 						ng-click="active.id = module.id">
 						<div class="panel-heading" style="cursor: pointer;">
@@ -95,7 +97,6 @@
 					</p>
 
 
-				</form>
 			</div>
 		</div>
 
@@ -105,20 +106,15 @@
     <script type="application/javascript">
 		/* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
 
-		var steckerApp = angular.module('steckerApp', []);
+		var steckerApp = angular.module('steckerApp', ['ui.sortable']);
 
 		steckerApp.controller('InfoscreenMngrCtrl', function($scope, $http) {
 			$scope.active = { id: 0 };
 
-			function refresh() {
-				$http.get('json.php?mode=retrieve').success(function(data){
-					$scope.timeline = data;
-				});
-			};
-			refresh();
-
-			$scope.submit = function() {
-
+			$scope.sortableOptions = {
+				update: function(e, ui) {
+					$scope.submitOrder();
+				}
 			}
 
 			$scope.remove = function(index) {
@@ -126,12 +122,23 @@
 
 			}
 
-			$scope.add = function(type) {
-				$scope.timeline.push({
-					type : type,
+			$scope.submitOrder = function() {
+				var dout = [];
+
+				$scope.timeline.forEach(function(obj, i){
+					dout.push({order: i, id: obj.id});
 				});
 
-			}
+				$http.post('json.php?mode=reorderTimeline', dout);
+			};
+
+			$scope.refresh = function() {
+				$http.get('json.php?mode=retrieve').success(function(data){
+					$scope.timeline = data;
+				});
+			};
+			$scope.refresh();
+
 
 		});
 

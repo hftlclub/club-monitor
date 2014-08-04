@@ -27,6 +27,39 @@ if($mode == 'reorderTimeline') {
 	mysql_query("COMMIT");
 }
 
+if($mode == 'activateItem') {
+	$contents = json_decode( file_get_contents('php://input') );
+	
+	mysql_query("BEGIN");
+	foreach($contents as $data)
+	{
+		mysql_query("UPDATE `infoscreen_timeline` SET `active`='1' WHERE `id`='".(int)($data->id)."'");
+	}
+	mysql_query("COMMIT");
+}
+
+if($mode == 'disableItem') {
+	$contents = json_decode( file_get_contents('php://input') );
+	
+	mysql_query("BEGIN");
+	foreach($contents as $data)
+	{
+		mysql_query("UPDATE `infoscreen_timeline` SET `active`='0' WHERE `id`='".(int)($data->id)."'");
+	}
+	mysql_query("COMMIT");
+}
+
+if($mode == 'deleteItem') {
+	$contents = json_decode( file_get_contents('php://input') );
+	
+	mysql_query("BEGIN");
+	foreach($contents as $data)
+	{
+		mysql_query("DELETE FROM `infoscreen_timeline` WHERE `id`='".(int)($data->id)."'");
+	}
+	mysql_query("COMMIT");
+}
+
 if($mode == 'retrieve') {
 
 	//get additives and write them to array $adds

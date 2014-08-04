@@ -60,6 +60,90 @@ if($mode == 'deleteItem') {
 	mysql_query("COMMIT");
 }
 
+if($mode == 'addItem') {
+	$contents = json_decode( file_get_contents('php://input') );
+	
+	mysql_query("BEGIN");
+	
+	$returnId = null;
+	
+	switch ($contents->type) {
+		case 'drinks':
+			$returnId = addItemDrinks($contents->order)
+			break;
+		case 'barclosing':
+			$returnId = addItemBarclosing($contents->order)
+			break;
+		case 'text':
+			$returnId = addItemText($contents)
+			break;
+	}
+	
+	mysql_query("COMMIT");
+}
+
+function addItemDrinks ($order)
+{
+	$id = myuniqid();
+	
+	mysql_query("INSERT INTO `infoscreen_timeline` (
+		`id` ,
+		`duration` ,
+		`type` ,
+		`moduleid` ,
+		`order` ,
+		`active` 
+		)
+		VALUES (
+		 '".$id."', '10', 'drinks', NULL , '".(int)$order."', '0'
+		);
+		");
+	
+	return $id;
+}
+
+function addItemBarclosing ($order)
+{
+	$id = myuniqid();
+	
+	mysql_query("INSERT INTO `infoscreen_timeline` (
+		`id` ,
+		`duration` ,
+		`type` ,
+		`moduleid` ,
+		`order` ,
+		`active` 
+		)
+		VALUES ( '".$id."', '10', 'barclosing', NULL , '".(int)$order."', '0' );
+		");
+	
+	return $id;
+}
+
+function addItemText ($data)
+{
+	$moduleId = myuniqid();
+	mysql_query("INSERT INTO `module_text` (
+		`id`
+		)
+		VALUES ( '".$moduleId."');
+		");
+		
+	$timelineId = myuniqid();
+	mysql_query("INSERT INTO `infoscreen_timeline` (
+		`id` ,
+		`duration` ,
+		`type` ,
+		`moduleid` ,
+		`order` ,
+		`active` 
+		)
+		VALUES ( '".$timelineId."', '10', 'drinks', ".$moduleId." , '".(int)($data->order)."', '0' );
+		");
+	
+	return $timelineId;
+}
+
 if($mode == 'retrieve') {
 
 	//get additives and write them to array $adds

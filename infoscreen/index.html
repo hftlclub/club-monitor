@@ -29,6 +29,10 @@
 			.large-text {
 				font-size: 30pt;
 			}
+
+			.normal-text {
+				font-size: 20pt;
+			}
 		}
 	</style>
 
@@ -148,6 +152,16 @@
 					</div>
 				</div>
 			</div>
+			<div data-ticker="bottomticker">
+				<!-- Ticker View -->
+				<div class="row">
+					<div class="col-md-12" id="ticker-row">
+						<div class="normal-text" style="text-align:center;">
+							+++ <span data-bind="text"></span> +++
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -192,8 +206,12 @@
 					switch(frame.type) {
 						case 'drinks':
 							// nuttin' to do
+							// but hide ticker!
+							$(document).trigger("tickerPause");
 							break;
 						case 'text':
+							$(document).trigger("tickerResume");
+
 							getBindElement('text', 'headline').text(frame.settings.headline);
 							getBindElement('text', 'body').html(frame.settings.body);
 
@@ -205,6 +223,8 @@
 
 							break;
 						case 'barclosing':
+							$(document).trigger("tickerResume");
+
 							getBindElement('barclosing', 'time').text(frame.settings.time);
 
 							var descHeight = $("#barclosing-content").height();
@@ -221,6 +241,8 @@
 
 							break;
 						case 'highlights':
+							$(document).trigger("tickerResume");
+
 							getBindElement('highlights', 'description').html(frame.settings.description);
 							getBindElement('highlights', 'picture')
 								.attr('src', '')
@@ -322,6 +344,66 @@
 		function hideAllModules() {
 			$('[data-module]').hide()
 		};
+	</script>
+
+	<script type="text/javascript">
+		// JS Block for ticker handling
+
+		$(function tickerLogic() {
+			var tickerTimeout = null;
+			
+			$(showTicker);
+
+			function showTicker()
+			{
+				var tickerUrl = "json.php?mode=ticker";
+
+				$.ajax({
+					type: "get",
+					url: tickerUrl,
+					dataType: "json",
+					success: processTickerData,
+					error: function (o, c, m) { throw(m); }
+				});
+			}
+
+			function processTickerData(data)
+			{
+				$('[data-ticker]').show();
+				$('[data-ticker="bottomticker"] [data-bind="text"]').text('('+data[0].posted+' Uhr) ' + data[0].author + ': ' + data[0].text);
+
+				tickerTimeout = window.setTimeout(showTicker, 10000);
+			}
+
+			function pauseTicker()
+			{
+				clearTimeout(tickerTimeout);
+				tickerTimeout = null;
+				$('[data-ticker]').hide();
+			}
+
+			function resumeTicker()
+			{
+				if(tickerTimeout == null)
+					tickerTimeout = window.setTimeout(showTicker, 10000);
+				$('[data-ticker]').show();
+			}
+
+			function reloadTicker()
+			{
+				$.ajax({
+					type: "get",
+					url: tickerUrl,
+					dataType: "json",
+					success: processTickerData,
+					error: function (o, c, m) { throw(m); }
+				});
+			}
+
+			$(document).on( "tickerPause", pauseTicker);
+			$(document).on( "tickerResume", resumeTicker);
+
+		});
 	</script>
 
 

@@ -119,12 +119,24 @@ if($mode == "timeline"){
 			"settings" => $settings,
 		);
 	}
-	
-	
 }
 
 
+if($mode == "ticker"){
+	$dtout = array();
 
+	//get additives and write them to array $adds
+	$ticker_result = mysql_query("SELECT * FROM infoscreen_ticker WHERE `views` < '111' ORDER BY `views` ASC, `posted` ASC LIMIT 1;");
+	while($row = mysql_fetch_assoc($ticker_result)){
+		$dtout[] = array(
+			"id" => $row["id"],
+			"author" => $row["author"],
+			"text" => $row["text"],
+			"posted" => date('H:i', strtotime($row["posted"]))
+		);
+		mysql_query("UPDATE infoscreen_ticker SET `views` = `views`+1 WHERE `id`='".$row["id"]."';");
+	}
+}
 
 //////////////////////////////
 

@@ -56,11 +56,8 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 		$upload.upload({
 			url: 'json.php?mode=fileUpload',
 			file: $files[0],
-			data: {
-				id: $scope.active,
-			},
 		}).success(function(data){
-		$scope.module.settings.url = data.url;
+			$scope.module.settings.url = data.url;
 		});
 	};
 

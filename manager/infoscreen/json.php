@@ -22,7 +22,7 @@ if($mode == 'reorderTimeline') {
 	mysql_query("BEGIN");
 	foreach($contents as $data)
 	{
-		mysql_query("UPDATE `infoscreen_timeline` SET `order`='".(int)($data->order)."' WHERE `id`='".(int)($data->id)."'");
+		mysql_query("UPDATE `infoscreen_timeline` SET `order`='".(int)($data->order)."' WHERE `id`='".$data->id."'");
 	}
 	mysql_query("COMMIT");
 }
@@ -33,7 +33,7 @@ if($mode == 'activateItem') {
 	mysql_query("BEGIN");
 	foreach($contents as $data)
 	{
-		mysql_query("UPDATE `infoscreen_timeline` SET `active`='1' WHERE `id`='".(int)($data->id)."'");
+		mysql_query("UPDATE `infoscreen_timeline` SET `active`='1' WHERE `id`='".$data->id."'");
 	}
 	mysql_query("COMMIT");
 }
@@ -44,7 +44,7 @@ if($mode == 'disableItem') {
 	mysql_query("BEGIN");
 	foreach($contents as $data)
 	{
-		mysql_query("UPDATE `infoscreen_timeline` SET `active`='0' WHERE `id`='".(int)($data->id)."'");
+		mysql_query("UPDATE `infoscreen_timeline` SET `active`='0' WHERE `id`='".$data->id."'");
 	}
 	mysql_query("COMMIT");
 }
@@ -55,7 +55,7 @@ if($mode == 'deleteItem') {
 	mysql_query("BEGIN");
 	foreach($contents as $data)
 	{
-		mysql_query("DELETE FROM `infoscreen_timeline` WHERE `id`='".(int)($data->id)."'");
+		mysql_query("DELETE FROM `infoscreen_timeline` WHERE `id`='".$data->id."'");
 	}
 	mysql_query("COMMIT");
 }

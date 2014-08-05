@@ -31,7 +31,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="page-header steckerlogo">
-						<h1>HfTL-Club <small><span class="glyphicon glyphicon-pencil"></span> Kurznachricht einreichen</small></h1>
+						<h1>HfTL-Club <small><span class="glyphicon glyphicon-comment"></span> Kurznachricht einreichen</small></h1>
 					</div>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 						<form role="form" id="send-form">
 							<div class="form-group">
 								<label>Name</label>
-								<input name="name" class="form-control" required="true">
+								<input name="author" class="form-control" required="true">
 							</div>
 							<div class="form-group">
 								<label>Text</label>
@@ -62,11 +62,11 @@
 		$(function(){
 			$('#send-form').submit(function(e){
 				var $form = $('#send-form');
-				var $name = $form.find('[name="name"]');
+				var $author = $form.find('[name="author"]');
 				var $text = $form.find('[name="text"]');
 
 				var dout = {
-					name: $name.val(),
+					author: $author.val(),
 					text: $text.val(),
 				};
 
@@ -77,6 +77,11 @@
 					url: 'json.php?mode=addShortMessage',
 					data: JSON.stringify(dout),
 					contentType: 'application/json',
+					success: function() {
+						$author.val('');
+						$text.val('');
+						alert('Nachricht erfolgreich eingegangen!');
+					},
 				});
 			});
 		});

@@ -16,7 +16,7 @@ if(!$mode){
 	die();
 }
 
-if($mode == 'addShortmessage') {
+if($mode == 'addShortMessage') {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("INSERT INTO `infoscreen_ticker` (
@@ -25,7 +25,7 @@ if($mode == 'addShortmessage') {
 		`text`
 		)
 		VALUES (
-			'"+myuniqid()+"', '"+$contents->author+"', '"+$contents->text+"'
+			'".myuniqid()."', '".$contents->author."', '".$contents->text."'
 		);
 	");
 }

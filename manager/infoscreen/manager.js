@@ -13,7 +13,7 @@
 
 /* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
 
-angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
+angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
 .config(function($routeProvider, $locationProvider) {
 	$routeProvider
@@ -34,7 +34,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 })
 
 
-.controller('FormController', function ($scope, $http, $routeParams, $location) {
+.controller('FormController', function ($scope, $http, $routeParams, $location, $upload) {
 	// load data
 	$scope.active = {id: $routeParams.id};
 	$http.get('json.php?mode=retrieve').success(function (data) {
@@ -44,12 +44,26 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 		});
 	});
 
-	// ---
+	// --- submit ---
 	$scope.submit = function() {
 		$http.post('json.php?mode=editItem', $scope.module).success(function(data){
 			$location.path('/');
 		});
 	};
+
+	// --- upload ---
+	$scope.upload = function($files) {
+		$upload.upload({
+			url: 'json.php?mode=fileUpload',
+			file: $files[0],
+			data: {
+				id: $scope.active,
+			},
+		}).success(function(data){
+		$scope.module.settings.url = data.url;
+		});
+	};
+
 })
 
 

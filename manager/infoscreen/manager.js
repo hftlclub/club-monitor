@@ -13,14 +13,33 @@
 
 /* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
 
-angular.module('steckerApp', ['ui.sortable'])
+angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 
-
-.controller('InfoscreenMngrCtrl', function ($scope) {
+.config(function($routeProvider, $locationProvider) {
+	$routeProvider
+		.when('/', {
+			templateUrl: 'list-tpl.html',
+			controller: 'ListController',
+		})
+		.when('/edit/:id', {
+			templateUrl: 'form-tpl.html',
+			controller: 'FormController',
+		})
 })
 
 
-.controller('InfoscreenMngrCtrl', function ($scope, $http, $q) {
+.controller('MainController', function($scope, $route, $routeParams, $location) {
+	$scope.$route = $route;
+	$scope.$location = $location;
+	$scope.$routeParams = $routeParams;
+})
+
+
+.controller('FormController', function ($scope) {
+})
+
+
+.controller('ListController', function ($scope, $http, $q) {
 	$scope.active = { id: 0 };
 	$scope.hasTouch = isTouchSupported();
 

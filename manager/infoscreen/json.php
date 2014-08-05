@@ -84,7 +84,7 @@ if($mode == 'addItem') {
 	
 	mysql_query("COMMIT");
 	
-	$output = array(
+	$output[] = array(
 		"id" => $returnId
 	);
 }
@@ -202,6 +202,95 @@ if($mode == 'retrieve') {
 			"settings" => $settings,
 		);
 	}
+}
+
+
+
+
+
+
+
+
+
+
+
+if($mode == 'editItem') {
+	$contents = json_decode( file_get_contents('php://input') );
+	
+	//print_r($contents); exit;
+	
+	
+	mysql_query("BEGIN");
+	
+	$returnId = null;
+	
+	switch ($contents->type) {
+		case 'drinks':
+			$ret = editItemDrinks($contents);
+			break;
+		case 'barclosing':
+			$ret = editItemBarclosing($contents);
+			break;
+		case 'text':
+			$ret = editItemText($contents);
+			break;
+		case 'highlights':
+			$ret = editItemHighlights($contents);
+			break;
+	}
+	
+	mysql_query("COMMIT");
+	
+	$output[] = $ret
+
+
+function editItemDrinks($data){
+	$act = ($data->active) ? 1 : 0;
+	$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
+	
+	if(mysql_query($query)){
+		return true;
+	}
+	
+}
+
+function editItemBarclosing($data){
+	$act = ($data->active) ? 1 : 0;
+	/*$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
+	
+	if(mysql_query($query)){
+		return true;
+	}*/
+	
+}
+
+function editItemText($data){
+	$act = ($data->active) ? 1 : 0;
+	/*$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
+	
+	if(mysql_query($query)){
+		return true;
+	}*/
+	
+}
+
+function editItemHighlights($data){
+	$act = ($data->active) ? 1 : 0;
+	/*$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
+	
+	if(mysql_query($query)){
+		return true;
+	}*/
+	
+}
+
+function editItemDrinks($data){
+	$act = ($data->active) ? 1 : 0;
+	/*$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
+	
+	if(mysql_query($query)){
+		return true;
+	}*/
 	
 }
 

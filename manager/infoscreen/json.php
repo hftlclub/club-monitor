@@ -209,11 +209,6 @@ if($mode == 'retrieve') {
 
 
 
-
-
-
-
-
 if($mode == 'editItem') {
 	$data = json_decode( file_get_contents('php://input') );
 	
@@ -283,6 +278,32 @@ function getModuleIdFromTimeline($tid){
 		return false;
 	}
 }
+
+
+
+
+
+
+if($mode == 'fileUpload') {
+	$file     = $_FILES['file'];
+	$pathinfo = pathinfo($file['name']);
+	
+	$mime = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file['tmp_name']);
+	
+	if(preg_match("/image/", $mime)){
+		$webpath = "common/uploads/";
+		$relpath = "../../".$webpath;
+ 
+		$filename  = myuniqid()."_".mysql_real_escape_string($file['name']);
+       	if(move_uploaded_file($file['tmp_name'], $relpath.$filename)){
+	    	error_log($webpath.$filename); //debug
+			$output[] = $webpath.$filename;  	
+       	}	
+	}
+}
+
+
+
 
 
 

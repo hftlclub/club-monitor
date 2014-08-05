@@ -77,6 +77,9 @@ if($mode == 'addItem') {
 		case 'text':
 			$returnId = addItemText($contents);
 			break;
+		case 'highlights':
+			$returnId = addItemHighlights($contents);
+			break;
 	}
 	
 	mysql_query("COMMIT");
@@ -108,8 +111,14 @@ function addItemDrinks ($order)
 
 function addItemBarclosing ($order)
 {
-	$id = myuniqid();
-	
+	$moduleId = myuniqid();
+	mysql_query("INSERT INTO `module_barclosing` (
+		`id`
+		)
+		VALUES ( '".$moduleId."');
+		");
+		
+	$timelineId = myuniqid();
 	mysql_query("INSERT INTO `infoscreen_timeline` (
 		`id` ,
 		`duration` ,
@@ -118,10 +127,10 @@ function addItemBarclosing ($order)
 		`order` ,
 		`active` 
 		)
-		VALUES ( '".$id."', '10', 'barclosing', NULL , '".(int)$order."', '0' );
+		VALUES ( '".$timelineId."', '10', 'barclosing', ".$moduleId." , '".(int)$order."', '0' );
 		");
 	
-	return $id;
+	return $timelineId;
 }
 
 function addItemText ($data)
@@ -143,6 +152,30 @@ function addItemText ($data)
 		`active` 
 		)
 		VALUES ( '".$timelineId."', '10', 'drinks', ".$moduleId." , '".(int)($data->order)."', '0' );
+		");
+	
+	return $timelineId;
+}
+
+function addItemHighlights ($data)
+{
+	$moduleId = myuniqid();
+	mysql_query("INSERT INTO `module_highlights` (
+		`id`
+		)
+		VALUES ( '".$moduleId."');
+		");
+		
+	$timelineId = myuniqid();
+	mysql_query("INSERT INTO `infoscreen_timeline` (
+		`id` ,
+		`duration` ,
+		`type` ,
+		`moduleid` ,
+		`order` ,
+		`active` 
+		)
+		VALUES ( '".$timelineId."', '10', 'highlights', ".$moduleId." , '".(int)($data->order)."', '0' );
 		");
 	
 	return $timelineId;

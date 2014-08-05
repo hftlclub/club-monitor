@@ -127,7 +127,7 @@ function addItemBarclosing ($order)
 		`order` ,
 		`active` 
 		)
-		VALUES ( '".$timelineId."', '10', 'barclosing', ".$moduleId." , '".(int)$order."', '0' );
+		VALUES ( '".$timelineId."', '10', 'barclosing', '".$moduleId."' , '".(int)$order."', '0' );
 		");
 	
 	return $timelineId;
@@ -151,7 +151,7 @@ function addItemText ($data)
 		`order` ,
 		`active` 
 		)
-		VALUES ( '".$timelineId."', '10', 'drinks', ".$moduleId." , '".(int)($data->order)."', '0' );
+		VALUES ( '".$timelineId."', '10', 'drinks', '".$moduleId."' , '".(int)($data->order)."', '0' );
 		");
 	
 	return $timelineId;
@@ -175,7 +175,7 @@ function addItemHighlights ($data)
 		`order` ,
 		`active` 
 		)
-		VALUES ( '".$timelineId."', '10', 'highlights', ".$moduleId." , '".(int)($data->order)."', '0' );
+		VALUES ( '".$timelineId."', '10', 'highlights', '".$moduleId."' , '".(int)($data->order)."', '0' );
 		");
 	
 	return $timelineId;

@@ -255,7 +255,7 @@ function editItemText($data) {
 }
 
 function editItemHighlights($data) {
-	$query = "UPDATE module_text SET
+	$query = "UPDATE module_highlights SET
 				description = '".$data->settings->description."',
 				url         = '".$data->settings->url."'
 			WHERE id = '".getModuleIdFromTimeline($data->id)."';";

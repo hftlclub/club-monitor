@@ -16,7 +16,7 @@
 					<span class="glyphicon glyphicon-star"></span> Highlights
 				</span>
 			</h4>
-			<br>
+			<hr>
 			<form role="form" ng-submit="submit()">
 				<div class="form-group">
 					<label>Anzeigedauer</label>
@@ -33,8 +33,7 @@
 					<div class="form-group">
 						<label>Uhrzeit</label>
 						<input ng-model="module.settings.time"
-					   	       class="form-control"
-							   ng-required="true">
+					   	       class="form-control">
 					</div>
 				</div>
 
@@ -52,10 +51,29 @@
 					</div>
 				</div>
 
+				<div ng-if="module.type == 'highlights'">
+					<div class="form-group">
+						<span class="btn btn-primary btn-file">
+							Bild hochladen
+							<input type="file" accept="image/*"
+								ng-file-select="fileUpload($files)">
+						</span>
+					</div>
+					<div class="form-group">
+						<label>Text</label>
+						<textarea ng-model="module.settings.body"
+							class="form-control"></textarea>
+					</div>
+				</div>
+
 				<input type="submit" class="btn btn-success" value="Speichern">
 				<a href="#/" class="btn btn-default">Abbrechen</a>
 
 			</form>
 		</div>
+	</div>
+
+	<div class="well" style="text-align: center;" ng-if="module.settings.url">
+		<img ng-src="{{ module.settings.url }}" style="max-width: 100%;">
 	</div>
 </div>

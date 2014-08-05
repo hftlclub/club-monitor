@@ -84,7 +84,7 @@ if($mode == 'addItem') {
 	
 	mysql_query("COMMIT");
 	
-	$output[] = array(
+	$output = array(
 		"id" => $returnId
 	);
 }

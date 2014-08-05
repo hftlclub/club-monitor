@@ -383,7 +383,7 @@
 					
 					var tickerHeight = $("#ticker-row").height();
 					var tickerFromTop = $("#ticker-row").offset();
-					var margin =  (windowHeight() - tickerFromTop - tickerHeight);
+					var margin =  (windowHeight() - tickerFromTop.top - tickerHeight);
 
 					$("#ticker-row").css("margin-top", margin+"px");
 				}

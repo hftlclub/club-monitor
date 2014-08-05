@@ -1,0 +1,7 @@
+﻿body {
+	overflow-y: scroll;
+}
+
+.module-order-handle {
+	cursor: move;
+}

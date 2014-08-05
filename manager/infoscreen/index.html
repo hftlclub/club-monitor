@@ -10,22 +10,13 @@
 	<link rel="stylesheet" href="../../common/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../common/css/bootstrap.cyborg.min.css">
 	<link rel="stylesheet" href="../../common/css/style.css">
+	<link rel="stylesheet" href="manager.css">
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.12.8/sortable.min.js"></script>
-
-	<style type="text/css">
-		body {
-			overflow-y: scroll;
-		}
-
-		.module-order-handle {
-			cursor: move;
-		}
-	</style>
-
+	<script src="manager.js"></script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,10 +24,6 @@
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
-
-	<script type="text/ng-template" id="modalBarclosingForm.html">
-		blubber
-	</script>
 
 </head>
 <body>
@@ -56,171 +43,10 @@
 		</div>
 
 		<div class="row" ng-controller="InfoscreenMngrCtrl">
-			<div class="col-md-12" ng-model="timeline" ui-sortable="sortableOptions">
-				<div ng-class="{'panel-success': module.active, 'panel-warning': !module.active}"
-					 class="panel" ng-repeat="module in timeline" ng-click="active.id = module.id">
-					<div class="panel-body">
-						<span class="pull-right" style="font-size: large">
-							<a class="btn btn-default" ng-disabled="$first"
-							   ng-click="moveUp($index)">
-								<span class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-							<a class="btn btn-default" ng-disabled="$last"
-							   ng-click="moveDown($index)">
-								<span class="glyphicon glyphicon-chevron-down"></span>
-							</a>
-							<a class="btn btn-default"
-							   ng-click="disable(module.id)">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</a>
-							<a class="btn btn-default" ng-if="module.active"
-							   ng-click="disable(module.id)">
-								<span class="glyphicon glyphicon-volume-up"></span>
-							</a>
-							<a class="btn btn-default" ng-if="!module.active"
-							   ng-click="activate(module.id)">
-								<span class="glyphicon glyphicon-volume-off"></span>
-							</a>
-							<a class="btn btn-default"
-							   ng-click="remove(module.id)">
-								<span class="glyphicon glyphicon-trash"></span>
-							</a>
-						</span>
-						<h4>
-							<span ng-if="!hasTouch"
-								  class="glyphicon glyphicon-resize-vertical module-order-handle"></span>
-							<span ng-if="module.type == 'drinks'">
-								<span class="glyphicon glyphicon-glass"></span> Drinks
-							</span>
-							<span ng-if="module.type == 'text'">
-								<span class="glyphicon glyphicon-bullhorn"></span> Text
-							</span>
-							<span ng-if="module.type == 'barclosing'">
-								<span class="glyphicon glyphicon-bullhorn"></span> Barschluss
-							</span>
-							<span ng-if="module.type == 'highlights'">
-								<span class="glyphicon glyphicon-star"></span> Highlights
-							</span>
-						</h4>
-					</div>
-				</div>
-
-				<p>
-					<a class="btn btn-default" ng-click="add('drinks')"><span class="glyphicon glyphicon-plus"></span> Drinks</a>
-					<a class="btn btn-default" ng-click="add('text')"><span class="glyphicon glyphicon-plus"></span> Text</a>
-					<a class="btn btn-default" ng-click="add('barclosing')"><span class="glyphicon glyphicon-plus"></span> Barschluss</a>
-					<a class="btn btn-default" ng-click="add('highlights')"><span class="glyphicon glyphicon-plus"></span> Highlights</a>
-				</p>
-
-
-			</div>
+			<div ng-include="'list-tpl.html'"></div>
 		</div>
 
-
 	</div>
-
-	<script type="application/javascript">
-		function isTouchSupported() {
-		  var msTouchEnabled = window.navigator.msMaxTouchPoints;
-		  var generalTouchEnabled = "ontouchstart" in document.createElement("div");
-
-		  if (msTouchEnabled || generalTouchEnabled) {
-			return true;
-		  }
-		  return false;
-		}
-
-
-		/* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
-
-		var steckerApp = angular.module('steckerApp', ['ui.sortable']);
-
-		var BarclosingFormCtrl = function($scope) {
-		};
-
-		steckerApp.controller('InfoscreenMngrCtrl', function($scope, $http, $q) {
-		  $scope.active = { id: 0 };
-		  $scope.hasTouch = isTouchSupported();
-
-		  $scope.sortableOptions = {
-			stop: function(e, ui) {
-			  $scope.submitOrder();
-			},
-			handle: '.module-order-handle',
-			axis: 'y',
-		  };
-
-		  $scope.remove = function(index) {
-				  $scope.timeline.splice(index, 1);
-
-		  };
-
-		  $scope.moveDown = function(index) {
-			$scope.swap(index, index+1);
-		  };
-
-		  $scope.moveUp = function(index) {
-			$scope.swap(index, index-1);
-		  };
-
-		  $scope.swap = function(a, b) {
-			var l = $scope.timeline;
-			l[a] = l.splice(b, 1, l[a])[0];
-			$scope.submitOrder();
-		  };
-
-		  $scope.add = function(type) {
-			$http.post('json.php?mode=addItem', {
-			  type: type,
-			  order: $scope.timeline.length
-			}).success(function(data){
-			  $scope.refresh().then(function(data){
-			  });
-			});
-		  };
-
-		  $scope.submitOrder = function() {
-			var dout = [];
-
-			$scope.timeline.forEach(function(obj, i){
-			  dout.push({order: i, id: obj.id});
-			});
-
-			$http.post('json.php?mode=reorderTimeline', dout).success($scope.refresh);
-
-		  };
-
-		  $scope.disable = function(id) {
-			$http.post('json.php?mode=disableItem', [{id:id}]).success($scope.refresh);
-		  };
-
-		  $scope.activate = function(id) {
-			$http.post('json.php?mode=activateItem', [{id:id}]).success($scope.refresh);
-		  };
-
-		  $scope.remove = function(id) {
-			$http.post('json.php?mode=deleteItem', [{id:id}]).success($scope.refresh);
-		  };
-
-		  $scope.refresh = function() {
-			var deferred = $q.defer();
-
-			$http.get('json.php?mode=retrieve').success(function(data){
-			  $scope.timeline = data;
-			  deferred.resolve(data);
-			});
-
-			return deferred.promise;
-
-		  };
-
-		  $scope.refresh();
-
-
-		});
-
-
-	</script>
 
 </body>
 </html>

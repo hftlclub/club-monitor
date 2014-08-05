@@ -1,0 +1,58 @@
+﻿<div class="col-md-12" ng-model="timeline" ui-sortable="sortableOptions">
+	<div ng-class="{'panel-success': module.active, 'panel-warning': !module.active}"
+		 class="panel" ng-repeat="module in timeline" ng-click="active.id = module.id">
+		<div class="panel-body">
+			<span class="pull-right" style="font-size: large">
+				<a class="btn btn-default" ng-disabled="$first"
+				   ng-click="moveUp($index)">
+					<span class="glyphicon glyphicon-chevron-up"></span>
+				</a>
+				<a class="btn btn-default" ng-disabled="$last"
+				   ng-click="moveDown($index)">
+					<span class="glyphicon glyphicon-chevron-down"></span>
+				</a>
+				<a class="btn btn-default"
+				   ng-click="disable(module.id)">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</a>
+				<a class="btn btn-default" ng-if="module.active"
+				   ng-click="disable(module.id)">
+					<span class="glyphicon glyphicon-volume-up"></span>
+				</a>
+				<a class="btn btn-default" ng-if="!module.active"
+				   ng-click="activate(module.id)">
+					<span class="glyphicon glyphicon-volume-off"></span>
+				</a>
+				<a class="btn btn-default"
+				   ng-click="remove(module.id)">
+					<span class="glyphicon glyphicon-trash"></span>
+				</a>
+			</span>
+			<h4>
+				<span ng-if="!hasTouch"
+					  class="glyphicon glyphicon-resize-vertical module-order-handle"></span>
+				<span ng-if="module.type == 'drinks'">
+					<span class="glyphicon glyphicon-glass"></span> Drinks
+				</span>
+				<span ng-if="module.type == 'text'">
+					<span class="glyphicon glyphicon-bullhorn"></span> Text
+				</span>
+				<span ng-if="module.type == 'barclosing'">
+					<span class="glyphicon glyphicon-bullhorn"></span> Barschluss
+				</span>
+				<span ng-if="module.type == 'highlights'">
+					<span class="glyphicon glyphicon-star"></span> Highlights
+				</span>
+			</h4>
+		</div>
+	</div>
+
+	<p>
+		<a class="btn btn-default" ng-click="add('drinks')"><span class="glyphicon glyphicon-plus"></span> Drinks</a>
+		<a class="btn btn-default" ng-click="add('text')"><span class="glyphicon glyphicon-plus"></span> Text</a>
+		<a class="btn btn-default" ng-click="add('barclosing')"><span class="glyphicon glyphicon-plus"></span> Barschluss</a>
+		<a class="btn btn-default" ng-click="add('highlights')"><span class="glyphicon glyphicon-plus"></span> Highlights</a>
+	</p>
+
+
+</div>

@@ -351,6 +351,7 @@
 
 		$(function tickerLogic() {
 			var tickerTimeout = null;
+			var somethingToShow = false;
 			
 			$(showTicker);
 
@@ -369,8 +370,17 @@
 
 			function processTickerData(data)
 			{
-				$('[data-ticker]').show();
-				$('[data-ticker="bottomticker"] [data-bind="text"]').text('('+data[0].posted+' Uhr) ' + data[0].author + ': ' + data[0].text);
+				if(data.length == 0)
+				{
+					somethingToShow = false;
+					$('[data-ticker]').hide();
+				}
+				else
+				{
+					$('[data-ticker]').show();
+					somethingToShow = true;
+					$('[data-ticker="bottomticker"] [data-bind="text"]').text('('+data[0].posted+' Uhr) ' + data[0].author + ': ' + data[0].text);
+				}
 
 				tickerTimeout = window.setTimeout(showTicker, 10000);
 			}
@@ -386,7 +396,8 @@
 			{
 				if(tickerTimeout == null)
 					tickerTimeout = window.setTimeout(showTicker, 10000);
-				$('[data-ticker]').show();
+				if(somethingToShow)
+					$('[data-ticker]').show();
 			}
 
 			function reloadTicker()

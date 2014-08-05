@@ -34,7 +34,7 @@ span.largeicon {
 
 @media (min-width: 800px) {
 	.steckerlogo {
-		background-image: url('../pictures/stecker.png');
+		background-image: url('../pictures/steckerlogo_white.svg');
 		background-position: right;
 		background-repeat: no-repeat;
 		background-size: contain;

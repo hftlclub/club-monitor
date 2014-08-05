@@ -1,1 +1,79 @@
-*form*
+<div class="col-md-12" ng-if="module">
+	<div class="panel"
+	     ng-class="{'panel-success':module.active, 'panel-warning':!module.active}">
+		<div class="panel-body">
+			<h4>
+				<span ng-if="module.type == 'drinks'">
+					<span class="glyphicon glyphicon-glass"></span> Drinks
+				</span>
+				<span ng-if="module.type == 'text'">
+					<span class="glyphicon glyphicon-bullhorn"></span> Text
+				</span>
+				<span ng-if="module.type == 'barclosing'">
+					<span class="glyphicon glyphicon-bullhorn"></span> Barschluss
+				</span>
+				<span ng-if="module.type == 'highlights'">
+					<span class="glyphicon glyphicon-star"></span> Highlights
+				</span>
+			</h4>
+			<hr>
+			<form role="form" ng-submit="submit()">
+				<div class="form-group">
+					<label>Anzeigedauer</label>
+					<input ng-model="module.duration"
+				           class="form-control">
+				</div>
+				<div class="form-group">
+					<label>
+						<input ng-model="module.active" type="checkbox"> Aktiv
+					</label>
+				</div>
+
+				<div ng-if="module.type == 'barclosing'">
+					<div class="form-group">
+						<label>Uhrzeit</label>
+						<input ng-model="module.settings.time"
+					   	       class="form-control">
+					</div>
+				</div>
+
+				<div ng-if="module.type == 'text'">
+					<div class="form-group">
+						<label>Überschrift</label>
+						<input ng-model="module.settings.headline"
+					   	       class="form-control"
+							   ng-required="true">
+					</div>
+					<div class="form-group">
+						<label>Text</label>
+						<textarea ng-model="module.settings.body"
+							class="form-control"></textarea>
+					</div>
+				</div>
+
+				<div ng-if="module.type == 'highlights'">
+					<div class="form-group">
+						<span class="btn btn-primary btn-file">
+							Bild hochladen
+							<input type="file" accept="image/*"
+								ng-file-select="upload($files)">
+						</span>
+					</div>
+					<div class="form-group">
+						<label>Text</label>
+						<textarea ng-model="module.settings.body"
+							class="form-control"></textarea>
+					</div>
+				</div>
+
+				<input type="submit" class="btn btn-success" value="Speichern">
+				<a href="#/" class="btn btn-default">Abbrechen</a>
+
+			</form>
+		</div>
+	</div>
+
+	<div class="well" style="text-align: center;" ng-if="module.settings.url">
+		<img ng-src="{{ module.settings.url }}" style="max-width: 100%;">
+	</div>
+</div>

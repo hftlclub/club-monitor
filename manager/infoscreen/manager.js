@@ -13,7 +13,7 @@
 
 /* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
 
-angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
+angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
 .config(function($routeProvider, $locationProvider) {
 	$routeProvider
@@ -27,7 +27,6 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 		})
 })
 
-
 .controller('MainController', function($scope, $route, $routeParams, $location) {
 	$scope.$route = $route;
 	$scope.$location = $location;
@@ -35,11 +34,38 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 })
 
 
-.controller('FormController', function ($scope) {
+.controller('FormController', function ($scope, $http, $routeParams, $location, $upload) {
+	// load data
+	$scope.active = {id: $routeParams.id};
+	$http.get('json.php?mode=retrieve').success(function (data) {
+		data.forEach(function(module){
+			if(module.id == $scope.active.id)
+				$scope.module = module;
+		});
+	});
+
+	// --- submit ---
+	$scope.submit = function() {
+		$http.post('json.php?mode=editItem', $scope.module).success(function(data){
+			$location.path('/');
+		});
+	};
+
+	// --- upload ---
+	$scope.upload = function($files) {
+		$upload.upload({
+			url: 'json.php?mode=fileUpload',
+			file: $files[0],
+		}).success(function(data){
+			$scope.module.settings.url = data.url;
+			$http.post('json.php?mode=editItem', $scope.module);
+		});
+	};
+
 })
 
 
-.controller('ListController', function ($scope, $http, $q) {
+.controller('ListController', function ($scope, $http, $q, $location) {
 	$scope.active = { id: 0 };
 	$scope.hasTouch = isTouchSupported();
 
@@ -75,8 +101,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 			type: type,
 			order: $scope.timeline.length
 		}).success(function (data) {
-			$scope.refresh().then(function (data) {
-			});
+			$location.path('/edit/'+data.id);
 		});
 	};
 

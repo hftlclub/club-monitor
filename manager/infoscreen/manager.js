@@ -58,6 +58,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 			file: $files[0],
 		}).success(function(data){
 			$scope.module.settings.url = data.url;
+			$http.post('json.php?mode=editItem', $scope.module);
 		});
 	};
 

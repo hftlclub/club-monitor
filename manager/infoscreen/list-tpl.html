@@ -37,12 +37,15 @@
 				</span>
 				<span ng-if="module.type == 'text'">
 					<span class="glyphicon glyphicon-bullhorn"></span> Text
+					<small ng-bind="module.settings.headline"></small>
 				</span>
 				<span ng-if="module.type == 'barclosing'">
 					<span class="glyphicon glyphicon-bullhorn"></span> Barschluss
+					<small ng-bind="module.settings.time"></small>
 				</span>
 				<span ng-if="module.type == 'highlights'">
 					<span class="glyphicon glyphicon-star"></span> Highlights
+					<small ng-bind="module.settings.description | limitTo : 20"></small>
 				</span>
 			</h4>
 		</div>

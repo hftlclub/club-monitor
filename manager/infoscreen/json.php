@@ -289,15 +289,17 @@ if($mode == 'fileUpload') {
 	$pathinfo = pathinfo($file['name']);
 	
 	$mime = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file['tmp_name']);
-	
+
 	if(preg_match("/image/", $mime)){
-		$webpath = "common/uploads/";
-		$relpath = "../../".$webpath;
+		$webpath = "/common/uploads/";
+		$relpath = getcwd()."/../../".$webpath;
  
 		$filename  = myuniqid()."_".mysql_real_escape_string($file['name']);
        	if(move_uploaded_file($file['tmp_name'], $relpath.$filename)){
 	    	error_log($webpath.$filename); //debug
-			$output[] = $webpath.$filename;  	
+			$output = array(
+				'url' => $webpath.$filename,
+			);
        	}	
 	}
 }

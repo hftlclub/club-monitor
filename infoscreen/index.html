@@ -14,8 +14,18 @@
 	<style type="text/css">
 		#ticker-row {
 			position: fixed;
-			bottom: 5px;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.7);
+			color: #fff;
+			padding: 10px;
 		}
+
+	/*	#ticker-row::before {
+			background: black;
+			opacity: 0.5;
+			height: 50px;
+
+		}*/
 
 		@media (min-width: 1900px) {
 			body {
@@ -224,7 +234,7 @@
 							getBindElement('text', 'body').html(frame.settings.body);
 
 							var descHeight = $("#text-row").height();
-							var boxHeight = windowHeight()-200;
+							var boxHeight = windowHeight()-160;
 							var margin = (boxHeight - descHeight) / 2;
 
 							$("#text-row").css("margin-top", margin+"px");
@@ -236,13 +246,13 @@
 							getBindElement('barclosing', 'time').text(frame.settings.time);
 
 							var descHeight = $("#barclosing-content").height();
-							var boxHeight = windowHeight()-240;
+							var boxHeight = windowHeight()-160;
 							var margin = (boxHeight - descHeight) / 2;
 
 							$("#barclosing-content").css("margin-top", margin+"px");
 
 							var descHeight = $("#barclosing-icon").height();
-							var boxHeight = windowHeight()-240;
+							var boxHeight = windowHeight()-160;
 							var margin = (boxHeight - descHeight) / 2;
 
 							$("#barclosing-icon").css("margin-top", margin+"px");
@@ -255,7 +265,7 @@
 							getBindElement('highlights', 'picture')
 								.attr('src', '')
 								.attr('src', frame.settings.url)
-								.attr('height', windowHeight()-240);
+								.attr('height', windowHeight()-160);
 
 							if(frame.settings.description) {
 								console.log($("#highlights-picture-row"));
@@ -265,7 +275,7 @@
 								$("#highlights-description-row").show();
 
 								var descHeight = $("#highlights-description-row").height();
-								var boxHeight = windowHeight()-240;
+								var boxHeight = windowHeight()-160;
 								var margin = (boxHeight - descHeight) / 2;
 								$("#highlights-description-row")
 									.css("margin-top", margin+"px")

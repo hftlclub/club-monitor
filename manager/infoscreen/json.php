@@ -151,7 +151,7 @@ function addItemText ($data)
 		`order` ,
 		`active` 
 		)
-		VALUES ( '".$timelineId."', '10', 'text', '".$moduleId."' , '".(int)($data->order)."', '0' );
+		VALUES ( '".$timelineId."', '10', 'drinks', '".$moduleId."' , '".(int)($data->order)."', '0' );
 		");
 	
 	return $timelineId;
@@ -189,9 +189,9 @@ if($mode == 'retrieve') {
 		
 		if($row['moduleid']) {
 			$module_result = mysql_query("SELECT * FROM module_".$row["type"]." WHERE id='".$row['moduleid']."';");
-			$settings = mysql_fetch_assoc($module_result);
+			$settings = mysql_fetch_object($module_result);
 		} else {
-			$settings = array();
+			$settings = NULL;
 		}
 
 		$output[] = array(
@@ -215,84 +215,75 @@ if($mode == 'retrieve') {
 
 
 if($mode == 'editItem') {
-	$contents = json_decode( file_get_contents('php://input') );
+	$data = json_decode( file_get_contents('php://input') );
 	
 	//print_r($contents); exit;
 	
 	
 	mysql_query("BEGIN");
 	
-	$returnId = null;
-	
-	switch ($contents->type) {
-		case 'drinks':
-			$ret = editItemDrinks($contents);
-			break;
+	//update duration and active state
+	$act = ($data->active) ? 1 : 0;
+	mysql_query("UPDATE infoscreen_timeline SET duration = ".(int)($data->duration).", active = ".$act." WHERE id = '".$data->id."';");
+
+
+	switch ($data->type) {
 		case 'barclosing':
-			$ret = editItemBarclosing($contents);
+			editItemBarclosing($data);
 			break;
 		case 'text':
-			$ret = editItemText($contents);
+			editItemText($data);
 			break;
 		case 'highlights':
-			$ret = editItemHighlights($contents);
+			editItemHighlights($data);
 			break;
 	}
 	
 	mysql_query("COMMIT");
-	
-	$output[] = $ret
+}
 
 
-function editItemDrinks($data){
-	$act = ($data->active) ? 1 : 0;
-	$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
+
+function editItemBarclosing($data) {
+	$query = "UPDATE module_barclosing SET time = '".$data->settings->time."' WHERE id = '".getModuleIdFromTimeline($data->id)."';";
 	
-	if(mysql_query($query)){
-		return true;
+	mysql_query($query);
+}
+
+function editItemText($data) {
+	$query = "UPDATE module_text SET
+				headline = '".$data->settings->headline."',
+				body     = '".$data->settings->body."'
+			WHERE id = '".getModuleIdFromTimeline($data->id)."';";
+	
+	mysql_query($query);
+}
+
+function editItemHighlights($data) {
+	$query = "UPDATE module_text SET
+				description = '".$data->settings->description."',
+				url         = '".$data->settings->url."'
+			WHERE id = '".getModuleIdFromTimeline($data->id)."';";
+	
+	mysql_query($query);
+}
+
+
+function getModuleIdFromTimeline($tid){
+	$sql = mysql_query("SELECT moduleid FROM infoscreen_timeline WHERE id = '".$tid."';");
+	
+	if(mysql_num_rows($sql) == 1){
+		$row = mysql_fetch_assoc($sql);
+		if($row['moduleid']){		
+			return $row['moduleid'];
+		}else{
+			return false;
+		}
+	}else{
+		return false;
 	}
-	
 }
 
-function editItemBarclosing($data){
-	$act = ($data->active) ? 1 : 0;
-	/*$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
-	
-	if(mysql_query($query)){
-		return true;
-	}*/
-	
-}
-
-function editItemText($data){
-	$act = ($data->active) ? 1 : 0;
-	/*$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
-	
-	if(mysql_query($query)){
-		return true;
-	}*/
-	
-}
-
-function editItemHighlights($data){
-	$act = ($data->active) ? 1 : 0;
-	/*$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
-	
-	if(mysql_query($query)){
-		return true;
-	}*/
-	
-}
-
-function editItemDrinks($data){
-	$act = ($data->active) ? 1 : 0;
-	/*$query = "UPDATE infoscreen_timeline SET duration = ".$data->duration.", active = ".$act." WHERE id = '".$data->id."';";
-	
-	if(mysql_query($query)){
-		return true;
-	}*/
-	
-}
 
 
 

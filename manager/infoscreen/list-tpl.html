@@ -27,6 +27,10 @@
 				   ng-click="remove(module.id)">
 					<span class="glyphicon glyphicon-trash"></span>
 				</a>
+				<a class="btn btn-default module-order-handle active">
+				<span ng-if="!hasTouch"
+					  class="glyphicon glyphicon-resize-vertical"></span>
+				</a>
 			</span>
 			<h4>
 				<span ng-if="!hasTouch"

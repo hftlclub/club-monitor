@@ -11,40 +11,6 @@
 	<link rel="stylesheet" href="../common/css/bootstrap.cyborg.min.css">
 	<link rel="stylesheet" href="../common/css/style.css">
 
-	<style type="text/css">
-		#ticker-row {
-			position: fixed;
-			bottom: 5px;
-		}
-
-		@media (min-width: 1900px) {
-			body {
-				font-size: 300%;
-				overflow: hidden;
-			}
-
-			h1 {
-				font-size: 60px;
-			}
-
-			#drinks-notes p {
-				font-size: 17pt;
-			}
-
-			.large-text {
-				font-size: 30pt;
-			}
-
-			.normal-text {
-				font-size: 30pt;
-			}
-			
-			#ticker-row {
-			}
-		}
-	</style>
-
-
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -60,37 +26,61 @@
 	<div class="container-fluid">
 		<div id="stecker"></div>
 
-		<div id="modules">
-			<div data-module="ticker">
-				<!-- Barschluss View -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-pencil"></span> Kurznachricht einreichen</small></h1>
-						</div>
+		<div>
+			<!-- Barschluss View -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="page-header steckerlogo">
+						<h1>HfTL-Club <small><span class="glyphicon glyphicon-pencil"></span> Kurznachricht einreichen</small></h1>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4" style="text-align:center">
-						<div id="barclosing-icon">
-							<h1><span class="glyphicon glyphicon-off" style="font-size:4em;"></span></h1>
-						</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel">
+					<div class="panel-body">
+						<form role="form" id="send-form">
+							<div class="form-group">
+								<label>Name</label>
+								<input name="name" class="form-control" required="true">
+							</div>
+							<div class="form-group">
+								<label>Text</label>
+								<textarea name="text" class="form-control" required="true"></textarea>
+							</div>
+							<input class="btn btn-default" type="submit" value="Absenden">
+						</form>
 					</div>
-					<div class="col-md-6">
-						<div id="barclosing-content">
-							<h1>
-								Leider ist es schon wieder so weit!<br /><br />
-								Bestellt euch euer letztes Getränk und denkt daran, euren Pfand rechtzeitig zurückzugeben.<br /><br />
-								<span class="text-warning">Um <span data-bind="time">22:00</span> Uhr ist Barschluss.</span>
-							</h1>
-						</div>
-					</div>
-					<div class="col-md-2"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<script type="application/javascript">
+		$(function(){
+			$('#send-form').submit(function(e){
+				var $form = $('#send-form');
+				var $name = $form.find('[name="name"]');
+				var $text = $form.find('[name="text"]');
+
+				var dout = {
+					name: $name.val(),
+					text: $text.val(),
+				};
+
+				e.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					url: 'json.php?mode=addShortMessage',
+					data: JSON.stringify(dout),
+					contentType: 'application/json',
+				});
+			});
+		});
+	</script>
 
 </body>
 </html>

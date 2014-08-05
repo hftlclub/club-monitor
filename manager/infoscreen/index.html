@@ -33,6 +33,10 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+	<script type="text/ng-template" id="modalBarclosingForm.html">
+		blubber
+	</script>
+
 </head>
 <body>
     <div class="container-fluid">
@@ -113,7 +117,10 @@
 
 		var steckerApp = angular.module('steckerApp', ['ui.sortable']);
 
-		steckerApp.controller('InfoscreenMngrCtrl', function($scope, $http) {
+		var BarclosingFormCtrl = function($scope) {
+		};
+
+		steckerApp.controller('InfoscreenMngrCtrl', function($scope, $http, $q) {
 			$scope.active = { id: 0 };
 			$scope.hasTouch = isTouchSupported();
 
@@ -144,6 +151,16 @@
 				$scope.submitOrder();
 			};
 
+			$scope.add = function(type) {
+				$http.post('json.php?mode=addItem', {
+					type: type,
+					order: $scope.timeline.length
+				}).success(function(data){
+					$scope.refresh().then(function(data){
+					});
+				});
+			};
+
 			$scope.submitOrder = function() {
 				var dout = [];
 
@@ -152,6 +169,7 @@
 				});
 
 				$http.post('json.php?mode=reorderTimeline', dout).success($scope.refresh);
+
 			};
 
 			$scope.disable = function(id) {
@@ -162,19 +180,27 @@
 				$http.post('json.php?mode=activateItem', [{id:id}]).success($scope.refresh);
 			};
 
-			$scope.remove= function(id) {
+			$scope.remove = function(id) {
 				$http.post('json.php?mode=deleteItem', [{id:id}]).success($scope.refresh);
 			};
 
 			$scope.refresh = function() {
+				var deferred = $q.defer();
+
 				$http.get('json.php?mode=retrieve').success(function(data){
 					$scope.timeline = data;
+					deferred.resolve(data);
 				});
+
+				return deferred.promise;
+
 			};
+
 			$scope.refresh();
 
 
 		});
+
 
     </script>
 

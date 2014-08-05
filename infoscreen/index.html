@@ -371,7 +371,7 @@
 			var tickerTimeout = null;
 			var somethingToShow = false;
 			
-			$(showTicker);
+			showTicker();
 
 			function showTicker()
 			{
@@ -398,12 +398,6 @@
 					$('[data-ticker]').show();
 					somethingToShow = true;
 					$('[data-ticker="bottomticker"] [data-bind="text"]').text('('+data[0].posted+' Uhr) ' + data[0].author + ': ' + data[0].text);
-					
-					//var tickerHeight = $("#ticker-row").height();
-					//var tickerFromTop = $("#ticker-row").offset();
-					//var margin =  (windowHeight() - tickerFromTop.top - tickerHeight);
-
-					//$("#ticker-row").css("margin-top", margin+"px");
 				}
 
 				tickerTimeout = window.setTimeout(showTicker, 10000);

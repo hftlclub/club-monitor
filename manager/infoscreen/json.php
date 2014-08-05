@@ -111,8 +111,14 @@ function addItemDrinks ($order)
 
 function addItemBarclosing ($order)
 {
-	$id = myuniqid();
-	
+	$moduleId = myuniqid();
+	mysql_query("INSERT INTO `module_barclosing` (
+		`id`
+		)
+		VALUES ( '".$moduleId."');
+		");
+		
+	$timelineId = myuniqid();
 	mysql_query("INSERT INTO `infoscreen_timeline` (
 		`id` ,
 		`duration` ,
@@ -121,10 +127,10 @@ function addItemBarclosing ($order)
 		`order` ,
 		`active` 
 		)
-		VALUES ( '".$id."', '10', 'barclosing', NULL , '".(int)$order."', '0' );
+		VALUES ( '".$timelineId."', '10', 'barclosing', ".$moduleId." , '".(int)$order."', '0' );
 		");
 	
-	return $id;
+	return $timelineId;
 }
 
 function addItemText ($data)

@@ -27,7 +27,6 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 		})
 })
 
-
 .controller('MainController', function($scope, $route, $routeParams, $location) {
 	$scope.$route = $route;
 	$scope.$location = $location;
@@ -35,11 +34,26 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 })
 
 
-.controller('FormController', function ($scope) {
+.controller('FormController', function ($scope, $http, $routeParams, $location) {
+	// load data
+	$scope.active = {id: $routeParams.id};
+	$http.get('json.php?mode=retrieve').success(function (data) {
+		data.forEach(function(module){
+			if(module.id == $scope.active.id)
+				$scope.module = module;
+		});
+	});
+
+	// ---
+	$scope.submit = function() {
+		$http.post('json.php?mode=editItem', $scope.module).success(function(data){
+			$location.path('/');
+		});
+	};
 })
 
 
-.controller('ListController', function ($scope, $http, $q) {
+.controller('ListController', function ($scope, $http, $q, $location) {
 	$scope.active = { id: 0 };
 	$scope.hasTouch = isTouchSupported();
 
@@ -75,8 +89,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute'])
 			type: type,
 			order: $scope.timeline.length
 		}).success(function (data) {
-			$scope.refresh().then(function (data) {
-			});
+			$location.path('/edit/'+data.id);
 		});
 	};
 

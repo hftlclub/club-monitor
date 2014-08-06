@@ -25,7 +25,7 @@ if($mode == 'addShortMessage') {
 		`text`
 		)
 		VALUES (
-			'".myuniqid()."', '".$contents->author."', '".$contents->text."'
+			'".myuniqid()."', '".mysql_real_escape_string($contents->author)."', '".mysql_real_escape_string($contents->text)."'
 		);
 	");
 }

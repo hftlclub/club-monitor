@@ -16,57 +16,127 @@ if(!$mode){
 	die();
 }
 
-if($mode == 'reorderTimeline') {
+
+###
+### Mode: reorderTimeline
+### Method: POST
+###
+
+if($mode == "reorderTimeline") {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("BEGIN");
 	foreach($contents as $data)
 	{
-		mysql_query("UPDATE `infoscreen_timeline` SET `order`='".(int)($data->order)."' WHERE `id`='".$data->id."'");
+		mysql_query("UPDATE `infoscreen_timeline` SET `order`='".(int)($data->order)."' WHERE `id`='".mysql_real_escape_string($data->id)."';");
 	}
 	mysql_query("COMMIT");
 }
 
-if($mode == 'activateItem') {
+
+
+###
+### Mode: activateItem
+### Method: POST
+###
+
+if($mode == "activateItem") {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("BEGIN");
 	foreach($contents as $data)
 	{
-		mysql_query("UPDATE `infoscreen_timeline` SET `active`='1' WHERE `id`='".$data->id."'");
+		mysql_query("UPDATE `infoscreen_timeline` SET `active`='1' WHERE `id`='".mysql_real_escape_string($data->id)."';");
 	}
 	mysql_query("COMMIT");
 }
 
-if($mode == 'disableItem') {
+
+###
+### Mode: activateItem
+### Method: POST
+###
+
+if($mode == "disableItem") {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("BEGIN");
 	foreach($contents as $data)
 	{
-		mysql_query("UPDATE `infoscreen_timeline` SET `active`='0' WHERE `id`='".$data->id."'");
+		mysql_query("UPDATE `infoscreen_timeline` SET `active`='0' WHERE `id`='".mysql_real_escape_string($data->id)."';");
 	}
 	mysql_query("COMMIT");
 }
 
-if($mode == 'deleteItem') {
+
+###
+### Mode: activateItem
+### Method: POST
+###
+
+if($mode == "deleteItem") {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("BEGIN");
 	foreach($contents as $data)
 	{
-		mysql_query("DELETE FROM `infoscreen_timeline` WHERE `id`='".$data->id."'");
+		mysql_query("DELETE FROM `infoscreen_timeline` WHERE `id`='".mysql_real_escape_string($data->id)."';");
 	}
 	mysql_query("COMMIT");
 }
 
-if($mode == 'addItem') {
+
+
+###
+### Mode: retrieve
+### Method: GET
+###
+
+if($mode == "retrieve") {
+
+	//get timeline elements and output them in their correct order, including module specific settings
+	$timeline_sql = mysql_query("SELECT * FROM infoscreen_timeline ORDER BY `order` ASC;");
+
+	//go through timeline elements
+	while($row = mysql_fetch_assoc($timeline_sql)){
+		
+		//does this have module specific settings?
+		if($row['moduleid']) {
+			$module_sql = mysql_query("SELECT * FROM module_".$row["type"]." WHERE id='".$row['moduleid']."' LIMIT 1;");
+			$settings = mysql_fetch_object($module_sql);
+		} else {
+			$settings = NULL;
+		}
+
+		//write to output array
+		$output[] = array(
+			"id" => $row["id"],
+			"type" => $row["type"],
+			"duration" => $row["duration"],
+			"active" => ($row["active"] == 1),
+			"settings" => $settings,
+		);
+	}
+}
+
+
+
+
+
+
+###
+### Mode: addItem
+### Method: POST
+###
+
+if($mode == "addItem") {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("BEGIN");
 	
 	$returnId = null;
 	
+	//call module specific edit function
 	switch ($contents->type) {
 		case 'drinks':
 			$returnId = addItemDrinks($contents->order);
@@ -84,10 +154,12 @@ if($mode == 'addItem') {
 	
 	mysql_query("COMMIT");
 	
+	//output the ID of the newly created element
 	$output = array(
 		"id" => $returnId
 	);
 }
+
 
 function addItemDrinks ($order)
 {
@@ -108,6 +180,7 @@ function addItemDrinks ($order)
 	
 	return $id;
 }
+
 
 function addItemBarclosing ($order)
 {
@@ -133,6 +206,7 @@ function addItemBarclosing ($order)
 	return $timelineId;
 }
 
+
 function addItemText ($data)
 {
 	$moduleId = myuniqid();
@@ -156,6 +230,7 @@ function addItemText ($data)
 	
 	return $timelineId;
 }
+
 
 function addItemHighlights ($data)
 {
@@ -181,45 +256,21 @@ function addItemHighlights ($data)
 	return $timelineId;
 }
 
-if($mode == 'retrieve') {
-
-	//get additives and write them to array $adds
-	$timeline_result = mysql_query("SELECT * FROM infoscreen_timeline ORDER BY `order` ASC;");
-	while($row = mysql_fetch_assoc($timeline_result)){
-		
-		if($row['moduleid']) {
-			$module_result = mysql_query("SELECT * FROM module_".$row["type"]." WHERE id='".$row['moduleid']."';");
-			$settings = mysql_fetch_object($module_result);
-		} else {
-			$settings = NULL;
-		}
-
-		$output[] = array(
-			"id" => $row["id"],
-			"type" => $row["type"],
-			"duration" => $row["duration"],
-			"active" => ($row["active"]==1),
-			"settings" => $settings,
-		);
-	}
-}
 
 
+###
+### Mode: editItem
+### Method: POST
+###
 
-
-
-
-if($mode == 'editItem') {
+if($mode == "editItem") {
 	$data = json_decode( file_get_contents('php://input') );
-	
-	//print_r($contents); exit;
-	
 	
 	mysql_query("BEGIN");
 	
 	//update duration and active state
 	$act = ($data->active) ? 1 : 0;
-	mysql_query("UPDATE infoscreen_timeline SET duration = ".(int)($data->duration).", active = ".$act." WHERE id = '".$data->id."';");
+	mysql_query("UPDATE infoscreen_timeline SET duration = ".(int)($data->duration).", active = ".$act." WHERE id = '".mysql_real_escape_string($data->id)."';");
 
 
 	switch ($data->type) {
@@ -238,27 +289,28 @@ if($mode == 'editItem') {
 }
 
 
-
 function editItemBarclosing($data) {
-	$query = "UPDATE module_barclosing SET time = '".$data->settings->time."' WHERE id = '".getModuleIdFromTimeline($data->id)."';";
+	$query = "UPDATE module_barclosing SET time = '".mysql_real_escape_string($data->settings->time)."' WHERE id = '".getModuleIdFromTimeline($data->id)."';";
 	
 	mysql_query($query);
 }
 
+
 function editItemText($data) {
 	$query = "UPDATE module_text SET
-				headline = '".$data->settings->headline."',
-				body     = '".$data->settings->body."'
+				headline = '".mysql_real_escape_string($data->settings->headline)."',
+				body     = '".mysql_real_escape_string($data->settings->body)."'
 			WHERE id = '".getModuleIdFromTimeline($data->id)."';";
 	
 	mysql_query($query);
 }
 
+
 function editItemHighlights($data) {
 	$query = "UPDATE module_highlights SET
-				description = '".$data->settings->description."',
-				url         = '".$data->settings->url."',
-				headline	= '".$data->settings->headline."'
+				description = '".mysql_real_escape_string($data->settings->description)."',
+				url         = '".mysql_real_escape_string($data->settings->url)."',
+				headline	= '".mysql_real_escape_string($data->settings->headline)."'
 			WHERE id = '".getModuleIdFromTimeline($data->id)."';";
 	
 	mysql_query($query);
@@ -266,7 +318,7 @@ function editItemHighlights($data) {
 
 
 function getModuleIdFromTimeline($tid){
-	$sql = mysql_query("SELECT moduleid FROM infoscreen_timeline WHERE id = '".$tid."';");
+	$sql = mysql_query("SELECT moduleid FROM infoscreen_timeline WHERE id = '".mysql_real_escape_string($tid)."';");
 	
 	if(mysql_num_rows($sql) == 1){
 		$row = mysql_fetch_assoc($sql);
@@ -283,21 +335,28 @@ function getModuleIdFromTimeline($tid){
 
 
 
+###
+### Mode: fileUpload
+### Method: POST
+###
 
+if($mode == "fileUpload") {
+	$file = $_FILES['file'];
 
-if($mode == 'fileUpload') {
-	$file     = $_FILES['file'];
-	$pathinfo = pathinfo($file['name']);
-	
+	//check for MIME type (must be "image/*")
 	$mime = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file['tmp_name']);
-
 	if(preg_match("/image/", $mime)){
 		$webpath = "/common/uploads/";
-		$relpath = getcwd()."/../../".$webpath;
+		$abspath = getcwd()."/../..".$webpath;
  
-		$filename  = myuniqid()."_".mysql_real_escape_string($file['name']);
-       	if(move_uploaded_file($file['tmp_name'], $relpath.$filename)){
-	    	error_log($webpath.$filename); //debug
+		//build filename
+		$filename  = myuniqid()."_".$file['name'];
+		
+		//upload file
+       	if(move_uploaded_file($file['tmp_name'], $abspath.$filename)){
+	    	//error_log($webpath.$filename); //debug
+			
+			//output web url of uploaded image
 			$output = array(
 				'url' => $webpath.$filename,
 			);

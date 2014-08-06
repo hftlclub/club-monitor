@@ -16,7 +16,13 @@ if(!$mode){
 	die();
 }
 
-if($mode == 'addShortMessage') {
+
+###
+### Mode: addShortMessage
+### Method: POST
+###
+
+if($mode == "addShortMessage") {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("INSERT INTO `infoscreen_ticker` (
@@ -25,11 +31,12 @@ if($mode == 'addShortMessage') {
 		`text`
 		)
 		VALUES (
-			'".myuniqid()."', '".mysql_real_escape_string($contents->author)."', '".mysql_real_escape_string($contents->text)."'
+			'".myuniqid()."',
+			'".mysql_real_escape_string($contents->author)."',
+			'".mysql_real_escape_string($contents->text)."'
 		);
 	");
 }
-
 
 
 

@@ -17,17 +17,22 @@ if(!$mode){
 	die();
 }
 
+
+
 ###
 ### Mode: drinks
+### Method: GET
 ###
 
 
 if($mode == "drinks"){
 
-	$dtout = array();
-	$cats  = array();
-	$adds  = array();
-	
+	//init
+	$output = array();
+	$cats   = array();
+	$adds   = array();
+
+
 	//get additives and write them to array $adds
 	$query = "SELECT * FROM drinks_additives";
 	$sql = mysql_query($query);
@@ -42,19 +47,16 @@ if($mode == "drinks"){
 	
 
 	//get categories
-	$query = "SELECT id, name FROM drinks_categories ORDER BY position ASC;";
-	$sql   = mysql_query($query);
+	$cat_sql = mysql_query("SELECT id, name FROM drinks_categories;");
 
-	//only proceed if there are results
-	if(mysql_num_rows($sql)){
+	if(mysql_num_rows($cat_sql)){ //only proceed if there are results
 		//go through categories
-		while($row = mysql_fetch_assoc($sql)){
-			$drinks_query = "SELECT id, name, price, size, `group` FROM drinks_drinks WHERE category = '".$row['id']."';";
-			$drinks_sql = mysql_query($drinks_query);
+		while($cat_row = mysql_fetch_assoc($cat_sql)){
+			$drinks_sql = mysql_query("SELECT id, name, price, size, `group` FROM drinks_drinks WHERE category = '".$cat_row['id']."';");
 			
 			//only add this category if it contains any drinks
 			if(mysql_num_rows($drinks_sql)){
-				$row['drinks'] = array();
+				$cat_row['drinks'] = array();
 				
 				//go through drinks
 				while($drinks_row = mysql_fetch_assoc($drinks_sql)){
@@ -79,68 +81,82 @@ if($mode == "drinks"){
 						sort($drinks_row['additives']);
 					}
 					
-					//write drink to list
-					$row['drinks'][] = $drinks_row;
+					//write drink to category
+					$cat_row['drinks'][] = $drinks_row;
 				}
 				
 				//write category to list
-				$cats[] = $row;
+				$cats[] = $cat_row;
 			}
 		}
 		
 		//write categories to output array
-		$dtout['categories'] = $cats;
+		$output['categories'] = $cats;
 			
 	}
 	
 	//write additives to output array
-	$dtout['additives'] = array_values($adds);
+	$output['additives'] = array_values($adds);
 }
 
 
-if($mode == "timeline"){
-	$dtout = array();
 
-	//get additives and write them to array $adds
-	$timeline_result = mysql_query("SELECT * FROM infoscreen_timeline WHERE `active` = '1' ORDER BY `order` ASC;");
-	while($row = mysql_fetch_assoc($timeline_result)){
+
+###
+### Mode: timeline
+### Method: GET
+###
+
+if($mode == "timeline"){
+	$output = array();
+
+	
+	$tl_sql = mysql_query("SELECT * FROM infoscreen_timeline WHERE active = 1 ORDER BY `order` ASC;");
+	while($tl_row = mysql_fetch_assoc($tl_sql)){
 		
-		if($row['moduleid']) {
-			$module_result = mysql_query("SELECT * FROM module_".$row["type"]." WHERE id='".$row['moduleid']."';");
-			$settings = mysql_fetch_assoc($module_result);
+		if($tl_row['moduleid']) {
+			$mod_sql = mysql_query("SELECT * FROM module_".$tl_row['type']." WHERE id = '".$tl_row['moduleid']."' LIMIT 1;");
+			$settings = mysql_fetch_assoc($mod_sql);
 		} else {
 			$settings = array();
 		}
 
-		$dtout[] = array(
-			"id" => $row["id"],
-			"type" => $row["type"],
-			"duration" => $row["duration"],
+		$output[] = array(
+			"id"       => $tl_row['id'],
+			"type"     => $tl_row['type'],
+			"duration" => $tl_row['duration'],
 			"settings" => $settings,
 		);
 	}
 }
 
 
-if($mode == "ticker"){
-	$dtout = array();
 
-	//get additives and write them to array $adds
-	$ticker_result = mysql_query("SELECT * FROM infoscreen_ticker WHERE `views` < '26' ORDER BY `views` ASC, `posted` ASC LIMIT 1;");
-	while($row = mysql_fetch_assoc($ticker_result)){
-		$dtout[] = array(
-			"id" => $row["id"],
+
+###
+### Mode: ticker
+### Method: GET
+###
+
+if($mode == "ticker"){
+	$output = array();
+
+	$sql = mysql_query("SELECT id, author, text, posted FROM infoscreen_ticker WHERE views < 26 ORDER BY views ASC, posted ASC LIMIT 1;");
+	while($row = mysql_fetch_assoc($sql)){
+		$output[] = array(
+			"id"     => $row["id"],
 			"author" => $row["author"],
-			"text" => $row["text"],
+			"text"   => $row["text"],
 			"posted" => date('H:i', strtotime($row["posted"]))
 		);
-		mysql_query("UPDATE infoscreen_ticker SET `views` = `views`+1 WHERE `id`='".$row["id"]."';");
+		mysql_query("UPDATE infoscreen_ticker SET `views` = `views`+1 WHERE `id`='".$row['id']."';");
 	}
 }
 
 //////////////////////////////
 
 //show output
-echo json_encode($dtout);
+if(!empty($output))
+	echo json_encode($output);
 
 ?>

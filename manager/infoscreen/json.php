@@ -257,7 +257,8 @@ function editItemText($data) {
 function editItemHighlights($data) {
 	$query = "UPDATE module_highlights SET
 				description = '".$data->settings->description."',
-				url         = '".$data->settings->url."'
+				url         = '".$data->settings->url."',
+				headline	= '".$data->settings->headline."'
 			WHERE id = '".getModuleIdFromTimeline($data->id)."';";
 	
 	mysql_query($query);

@@ -44,7 +44,9 @@
 					<small>{{ module.settings.time }} Uhr</small>
 				</span>
 				<span ng-if="module.type == 'highlights'">
-					<span class="glyphicon glyphicon-star"></span> Highlights
+					<span class="glyphicon glyphicon-star"></span> 
+					<span ng-if="!module.settings.headline"> Highlights</span>
+					<span ng-if="module.settings.headline"> {{ module.settings.headline }}</span>
 					<small>{{ module.settings.description | limitTo : 30 }}...</small>
 				</span>
 			</h4>

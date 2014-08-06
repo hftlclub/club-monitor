@@ -20,15 +20,23 @@
 			padding: 10px;
 		}
 
-	/*	#ticker-row::before {
+		/*	#ticker-row::before {
 			background: black;
 			opacity: 0.5;
 			height: 50px;
 
 		}*/
 
+		.glyphicon.header {
+			color: #22B10C;
+		}
+
+		.page-header {
+			border-bottom-color: #22B10C;
+		}
+
 		@media (min-width: 1900px) {
-			body {
+			body; {
 				font-size: 300%;
 				overflow: hidden;
 			}
@@ -48,7 +56,7 @@
 			.normal-text {
 				font-size: 30pt;
 			}
-			
+
 			#ticker-row {
 			}
 		}
@@ -76,7 +84,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-glass"></span> Getränkekarte</small></h1>
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-glass header"></span> Getränkekarte</small></h1>
 						</div>
 					</div>
 				</div>
@@ -97,7 +105,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-bullhorn"></span> Informationen</small></h1>
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-bullhorn header"></span> Informationen</small></h1>
 						</div>
 					</div>
 				</div>
@@ -121,7 +129,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-bullhorn"></span> Barschluss</small></h1>
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-bullhorn header"></span> Barschluss</small></h1>
 						</div>
 					</div>
 				</div>
@@ -150,7 +158,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star"></span> <span data-bind="headline">Highlights</span></small></h1>
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star header"></span> <span data-bind="headline">Highlights</span></small></h1>
 						</div>
 					</div>
 				</div>
@@ -378,7 +386,7 @@
 		$(function tickerLogic() {
 			var tickerTimeout = null;
 			var somethingToShow = false;
-			
+
 			showTicker();
 
 			function showTicker()

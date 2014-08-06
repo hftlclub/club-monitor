@@ -126,7 +126,7 @@ if($mode == "ticker"){
 	$dtout = array();
 
 	//get additives and write them to array $adds
-	$ticker_result = mysql_query("SELECT * FROM infoscreen_ticker WHERE `views` < '111' ORDER BY `views` ASC, `posted` ASC LIMIT 1;");
+	$ticker_result = mysql_query("SELECT * FROM infoscreen_ticker WHERE `views` < '26' ORDER BY `views` ASC, `posted` ASC LIMIT 1;");
 	while($row = mysql_fetch_assoc($ticker_result)){
 		$dtout[] = array(
 			"id" => $row["id"],

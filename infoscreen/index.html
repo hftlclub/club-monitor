@@ -117,9 +117,9 @@
 				<div class="row">
 					<div class="col-md-12 text-center">
 						<div id="text-row">
-							<h1 data-bind="headline">Hello, world!</h1>
+							<h1 data-binding="headline">Hello, world!</h1>
 							<br>
-							<p data-bind="body" class="large-text" id="text-body">
+							<p data-binding="body" class="large-text" id="text-body">
 								This is a simple hero unit, a
 								simple jumbotron-style component for calling extra
 								attention to featured content or information...
@@ -149,7 +149,7 @@
 							<h1>
 								Leider ist es schon wieder so weit!<br /><br />
 								Bestellt euch euer letztes Getränk und denkt daran, euren Pfand rechtzeitig zurückzugeben.<br /><br />
-								<span class="text-warning">Um <span data-bind="time">22:00</span> Uhr ist Barschluss.</span>
+								<span class="text-warning">Um <span data-binding="time">22:00</span> Uhr ist Barschluss.</span>
 							</h1>
 						</div>
 					</div>
@@ -163,18 +163,18 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="page-header steckerlogo">
-							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star header"></span> <span data-bind="headline">Highlights</span></small></h1>
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star header"></span> <span data-binding="headline">Highlights</span></small></h1>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12" id="highlights-picture-row">
 						<div style="text-align:center;">
-							<img data-bind="picture" src="" height="" />
+							<img data-binding="picture" src="" height="" />
 						</div>
 					</div>
 					<div class="col-md-6" id="highlights-description-row">
-						<p data-bind="description" class="large-text">
+						<p data-binding="description" class="large-text">
 							This is a simple hero
 							unit, a simple jumbotron-style component for
 							calling extra attention to featured content or
@@ -188,7 +188,7 @@
 				<div class="row">
 					<div class="col-md-12" id="ticker-row">
 						<div class="normal-text" style="text-align:center;">
-							+++ <span data-bind="text"></span> +++
+							+++ <span data-binding="text"></span> +++
 						</div>
 					</div>
 				</div>
@@ -371,7 +371,7 @@
 		});
 
 		function getBindElement(module, name) {
-			return $('[data-module="'+module+'"] [data-bind="'+name+'"]');
+			return $('[data-module="'+module+'"] [data-binding="'+name+'"]');
 		}
 
 		function switchToModule(moduleName)
@@ -418,7 +418,7 @@
 				{
 					$('[data-ticker]').show();
 					somethingToShow = true;
-					$('[data-ticker="bottomticker"] [data-bind="text"]').text('('+data[0].posted+' Uhr) ' + data[0].author + ': ' + data[0].text);
+					$('[data-ticker="bottomticker"] [data-binding="text"]').text('('+data[0].posted+' Uhr) ' + data[0].author + ': ' + data[0].text);
 				}
 
 				tickerTimeout = window.setTimeout(showTicker, 15000);

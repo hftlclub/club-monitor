@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 	<meta charset="utf-8">
@@ -21,6 +21,9 @@
 	<script type="text/javascript" src="../common/js/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="../common/js/bootstrap.min.js"></script>
 
+    <!-- superior Angular -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+
 </head>
 <body>
 	<div class="container-fluid">
@@ -39,18 +42,28 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<div class="panel">
+				<div class="panel" ng-app="countAndValidate">
 					<div class="panel-body">
-						<form role="form" id="send-form">
+						<form role="form" id="send-form" name="shortMessageForm">
 							<div class="form-group">
 								<label>Name</label>
 								<input name="author" class="form-control" required="true">
 							</div>
-							<div class="form-group">
-								<label>Text</label>
-								<textarea name="text" class="form-control" required="true"></textarea>
-							</div>
-							<input class="btn btn-default" type="submit" value="Absenden">
+							<div class="form-group" ng-controller="CountCtrl">
+                                <div class="row">
+			                         <div class="col-md-8 col-xs-4">
+								        <label>Text</label>
+                                     </div>
+                                     <div class="col-md-4 col-xs-8">
+                                        <p class="text-right">
+                                            <span class="label label-danger" ng-show="shortMessageForm.$error.maxlength">Du hast zu viele Zeichen eingegeben</span>
+                                            <span class="label label-default" ng-show="!shortMessageForm.$error.maxlength">{{ message.length }} von 140 Zeichen</span>
+                                        </p>
+								     </div>
+                                </div>
+                                <textarea name="text" class="form-control" required="true" ng-model="message" ng-maxlength="140"></textarea>
+                            </div>
+							<input class="btn btn-default" type="submit" value="Absenden" ng-show="!shortMessageForm.$error.maxlength">
 						</form>
 					</div>
 				</div>
@@ -87,5 +100,12 @@
 		});
 	</script>
 
+    <!-- counting chars -->
+    <script>
+        angular.module('countAndValidate',[])
+            .controller('CountCtrl', ['$scope', function($scope){
+                $scope.message = '';
+            }]);
+    </script>
 </body>
 </html>

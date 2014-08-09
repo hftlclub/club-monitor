@@ -1,5 +1,6 @@
 <?php
 require_once("../common/config.php");
+require_once("../common/functions.php");
 
 //this is JSON!
 header("Content-Type: application/json");
@@ -43,7 +44,9 @@ if($mode == "login") {
 	
 	if($authenticated)
 	{
-    $token = md5(myuniqid()); //TODO: save this token to DB
+    $token = md5(myuniqid());
+    
+    mysql_query("INSERT INTO `authentication_tokens` (`id`, `token`, `lastused`) VALUES ('".myuniqid()."', '".$token."', CURRENT_TIMESTAMP());");
     
     $output = array(
 			"type" => 'success',
@@ -57,7 +60,6 @@ if($mode == "login") {
 		); 
 	}
 }
-
 
 
 //////////////////////////////

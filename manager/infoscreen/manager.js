@@ -10,12 +10,23 @@
 
 }
 
+function getToken() {
+	return localStorage.getItem('accessToken');
+}
+
+function logout(data, status, headers, config) {
+	if(status == 401)
+	{
+		localStorage.removeItem('accessToken');
+		window.location.href = '../'
+	}
+}
 
 /* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
 
 angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
-.config(function($routeProvider, $locationProvider) {
+.config(function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: 'list-tpl.html',
@@ -27,7 +38,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 		})
 })
 
-.controller('MainController', function($scope, $route, $routeParams, $location) {
+.controller('MainController', function ($scope, $route, $routeParams, $location) {
 	$scope.$route = $route;
 	$scope.$location = $location;
 	$scope.$routeParams = $routeParams;
@@ -36,30 +47,30 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
 .controller('FormController', function ($scope, $http, $routeParams, $location, $upload) {
 	// load data
-	$scope.active = {id: $routeParams.id};
-	$http.get('json.php?mode=retrieve').success(function (data) {
-		data.forEach(function(module){
-			if(module.id == $scope.active.id)
+	$scope.active = { id: $routeParams.id };
+	$http.get('json.php?mode=retrieve&token=' + getToken()).success(function (data) {
+		data.forEach(function (module) {
+			if (module.id == $scope.active.id)
 				$scope.module = module;
 		});
-	});
+	}).error(logout);
 
 	// --- submit ---
-	$scope.submit = function() {
-		$http.post('json.php?mode=editItem', $scope.module).success(function(data){
+	$scope.submit = function () {
+		$http.post('json.php?mode=editItem&token=' + getToken(), $scope.module).success(function (data) {
 			$location.path('/');
-		});
+		}).error(logout);
 	};
 
 	// --- upload ---
-	$scope.upload = function($files) {
+	$scope.upload = function ($files) {
 		$upload.upload({
-			url: 'json.php?mode=fileUpload',
+			url: 'json.php?mode=fileUpload&token=' + getToken(),
 			file: $files[0],
-		}).success(function(data){
+		}).success(function (data) {
 			$scope.module.settings.url = data.url;
-			$http.post('json.php?mode=editItem', $scope.module);
-		});
+			$http.post('json.php?mode=editItem&token=' + getToken(), $scope.module);
+		}).error(logout);
 	};
 
 })
@@ -97,12 +108,12 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	};
 
 	$scope.add = function (type) {
-		$http.post('json.php?mode=addItem', {
+		$http.post('json.php?mode=addItem&token=' + getToken(), {
 			type: type,
 			order: $scope.timeline.length
 		}).success(function (data) {
-			$location.path('/edit/'+data.id);
-		});
+			$location.path('/edit/' + data.id);
+		}).error(logout);
 	};
 
 	$scope.submitOrder = function () {
@@ -112,29 +123,29 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 			dout.push({ order: i, id: obj.id });
 		});
 
-		$http.post('json.php?mode=reorderTimeline', dout).success($scope.refresh);
+		$http.post('json.php?mode=reorderTimeline&token=' + getToken(), dout).success($scope.refresh).error(logout);
 
 	};
 
 	$scope.disable = function (id) {
-		$http.post('json.php?mode=disableItem', [{ id: id }]).success($scope.refresh);
+		$http.post('json.php?mode=disableItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
 	};
 
 	$scope.activate = function (id) {
-		$http.post('json.php?mode=activateItem', [{ id: id }]).success($scope.refresh);
+		$http.post('json.php?mode=activateItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
 	};
 
 	$scope.remove = function (id) {
-		$http.post('json.php?mode=deleteItem', [{ id: id }]).success($scope.refresh);
+		$http.post('json.php?mode=deleteItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
 	};
 
 	$scope.refresh = function () {
 		var deferred = $q.defer();
 
-		$http.get('json.php?mode=retrieve').success(function (data) {
+		$http.get('json.php?mode=retrieve&token=' + getToken()).success(function (data) {
 			$scope.timeline = data;
 			deferred.resolve(data);
-		});
+		}).error(logout);
 
 		return deferred.promise;
 

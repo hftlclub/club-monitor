@@ -8,14 +8,21 @@ header("Content-Type: application/json");
 //and it should not be cached by browsers like IE
 header("Expires: ".gmdate("D, d M Y H:i:s \G\M\T", time() - 3600));
 
-$output = array();
-
 $mode = mysql_real_escape_string($_GET['mode']);
+$token = mysql_real_escape_string($_GET['token']);
 
 //exit if no mode given
 if(!$mode){
 	die();
 }
+
+//deny access if no token given
+if(!$token || !checkAuthenticationToken($token)){
+	header('HTTP/1.1 401 Unauthorized');
+	die();
+}
+
+$output = array();
 
 
 ###

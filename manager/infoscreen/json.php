@@ -233,7 +233,7 @@ function addItemText ($data)
 		`order` ,
 		`active` 
 		)
-		VALUES ( '".$timelineId."', '10', 'drinks', '".$moduleId."' , '".(int)($data->order)."', '0' );
+		VALUES ( '".$timelineId."', '10', 'text', '".$moduleId."' , '".(int)($data->order)."', '0' );
 		");
 	
 	return $timelineId;

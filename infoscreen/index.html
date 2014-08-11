@@ -409,7 +409,7 @@
 
 			function processTickerData(data)
 			{
-				if(data.length == 0)
+				if(data == null)
 				{
 					somethingToShow = false;
 					$('[data-ticker]').hide();

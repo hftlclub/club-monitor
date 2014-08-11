@@ -1,5 +1,6 @@
 <?php
 require_once("../common/config.php");
+require_once("../common/functions.php");
 
 //this is JSON!
 header("Content-Type: application/json");

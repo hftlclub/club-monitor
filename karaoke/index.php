@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="utf-8">
@@ -28,6 +28,9 @@
     <script type="text/javascript"> 
    		function refresh() {
    			$('#refresh').load('refresh.php?'+ 1*new Date());
+            $('#loading_state').fadeOut();
+            $('#song_table').fadeIn();
+            $('#song_table').css('visibility','visible').fadeIn().removeClass('hidden');
   		}
    		var auto_refresh = setInterval(function() { refresh() }, 1000);
    		refresh();
@@ -45,8 +48,14 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-md-8">
-                <table class="table table-striped"  id=refresh>
-                
+                <h2 id="loading_state" class="text-center">... loading ...</h2>
+                <table class="table table-striped invisible" id="song_table">
+                    <thead>
+                        <th>#</th>
+                        <th>nächster Song</th>
+                        <th>Sänger</th>
+                    </thead>
+                    <tbody id="refresh"></tbody>
                 	<!-- script calls table in refresh.php -->
               
                 </table>

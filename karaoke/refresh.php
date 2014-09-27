@@ -1,8 +1,4 @@
-<tr>
-                        <th>#</th>
-                        <th>nächster Song</th>
-                        <th>Sänger</th>
-                    </tr>
+
 <?php
                     require("../common/config.php");
 

@@ -2,7 +2,7 @@
 require("../common/config.php");
 
 //max number of entries
-$limit = 7;
+$limit = 1000;
 
 header("Content-Type: application/json");
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="utf-8">
@@ -161,7 +161,7 @@
 
         function showResults(data) {
             // data is a javascript object with songs, each with "Id" and "Value"
-            var html = $('<div id="search-results" class="list-group"></div>');
+            var html = $('<div class="list-group scrollable-list-group" id="search-results"></div>');
             for (var i in data) {
                 var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].value + "</a>");
                 html.append(li);
@@ -211,9 +211,6 @@
 				$("#Text2").attr("placeholder", "z.B. " + data[0].value);
 			};
 		});
-
-
-        
     </script>
 </body>
 </html>

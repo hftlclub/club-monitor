@@ -41,3 +41,8 @@ span.largeicon {
 		background-position-x: 98%;
 	}
 }
+
+#search-results{
+    max-height: 490px;
+    overflow-y: scroll;
+}

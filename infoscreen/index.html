@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 	<meta charset="utf-8">
@@ -155,6 +155,11 @@
 					</div>
 					<div class="col-md-2"></div>
 				</div>
+                <div class="row">
+                    <div class="col-md-4" style="text-align:center">
+                        <p></p>
+                    </div>
+                </div>
 			</div>
 
 
@@ -217,8 +222,7 @@
 				error: function (o, c, m) { throw(m); }
 			});
 
-			function processTimelineData(data)
-			{
+			function processTimelineData(data){
 				var timeoutTimer = null;
 
 				function next() {
@@ -325,6 +329,24 @@
 						next();
 					}
 				}
+
+                //navigate with arrow keys throught the modules
+                $(document).keydown(function(e) {
+                    switch(e.which) {
+                    case 37: // left
+                        break;
+                    case 38: // up
+                        break;
+                    case 39:
+                        switchToNextModule();// right
+                        break;
+                    case 40: // down
+                        break;
+                    default:
+                        return; // exit this handler for other keys
+                    }
+                    e.preventDefault(); // prevent the default action (scroll / move caret)
+                });
 
 				function togglePause()
 				{
@@ -594,6 +616,7 @@
 
 
 		});
+
 	</script>
 
 	<script type="text/javascript">

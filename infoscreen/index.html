@@ -330,24 +330,6 @@
 					}
 				}
 
-                //navigate with arrow keys throught the modules
-                $(document).keydown(function(e) {
-                    switch(e.which) {
-                    case 37: // left
-                        break;
-                    case 38: // up
-                        break;
-                    case 39:
-                        switchToNextModule();// right
-                        break;
-                    case 40: // down
-                        break;
-                    default:
-                        return; // exit this handler for other keys
-                    }
-                    e.preventDefault(); // prevent the default action (scroll / move caret)
-                });
-
 				function togglePause()
 				{
 					if(timeoutTimer != null)
@@ -361,12 +343,13 @@
 					}
 				}
 
+                //key events for modules
 				$(document).keypress(function(e) {
-					if(e.which == 32) {
-						switchToNextModule()
+					if(e.which == 32) { //space-key
+						switchToNextModule();
 					}
 					else if((e.which == 80) || (e.which == 112)) {
-						togglePause()
+						togglePause(); //p-key
 					}
 				});
 			}

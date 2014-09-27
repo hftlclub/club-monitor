@@ -25,6 +25,9 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../common/js/bootstrap.min.js"></script>
 
+    <!-- Disable mark text -->
+    <script src="../common/js/disable_mark_text.js"></script>
+
     <script type="text/javascript"> 
    		function refresh() {
    			$('#refresh').load('refresh.php?'+ 1*new Date());

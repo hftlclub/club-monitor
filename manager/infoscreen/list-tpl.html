@@ -1,33 +1,33 @@
-﻿<div class="col-md-12" ng-model="timeline" ui-sortable="sortableOptions">
+<div class="col-md-12" ng-model="timeline" ui-sortable="sortableOptions">
 	<div ng-class="{'panel-success': module.active, 'panel-warning': !module.active}"
 		 class="panel" ng-repeat="module in timeline" ng-click="active.id = module.id">
 		<div class="panel-body">
 			<span class="pull-right" style="font-size: large">
 				<a class="btn btn-default" ng-disabled="$first"
-				   ng-click="moveUp($index)">
+				   ng-click="moveUp($index)" title="nach oben">
 					<span class="glyphicon glyphicon-chevron-up"></span>
 				</a>
 				<a class="btn btn-default" ng-disabled="$last"
-				   ng-click="moveDown($index)">
+				   ng-click="moveDown($index)"  title="nach unten">
 					<span class="glyphicon glyphicon-chevron-down"></span>
 				</a>
 				<a class="btn btn-default"
-				   ng-href="#/edit/{{module.id}}">
+				   ng-href="#/edit/{{module.id}}"  title="Modul bearbeiten">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</a>
 				<a class="btn btn-default" ng-if="module.active"
-				   ng-click="disable(module.id)">
-					<span class="glyphicon glyphicon-volume-up"></span>
+				   ng-click="disable(module.id)" title="Modul deaktivieren">
+					<span class="glyphicon glyphicon glyphicon glyphicon-eye-open"></span>
 				</a>
 				<a class="btn btn-default" ng-if="!module.active"
-				   ng-click="activate(module.id)">
-					<span class="glyphicon glyphicon-volume-off"></span>
+				   ng-click="activate(module.id)"  title="Modul aktivieren">
+					<span class="glyphicon glyphicon glyphicon glyphicon-eye-close"></span>
 				</a>
 				<a class="btn btn-default"
-				   ng-click="remove(module.id)">
+				   ng-click="remove(module.id)"  title="Modul entfernen">
 					<span class="glyphicon glyphicon-trash"></span>
 				</a>
-				<a ng-if="!hasTouch"class="btn btn-default module-order-handle active">
+				<a ng-if="!hasTouch"class="btn btn-default module-order-handle active"  title="Modul verschieben">
 					<span class="glyphicon glyphicon-resize-vertical"></span>
 				</a>
 			</span>

@@ -1,4 +1,4 @@
-﻿function isTouchSupported() {
+function isTouchSupported() {
 	var msTouchEnabled = window.navigator.msMaxTouchPoints;
 	var generalTouchEnabled = "ontouchstart" in document.createElement("div");
 
@@ -90,7 +90,6 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
 	$scope.remove = function (index) {
 		$scope.timeline.splice(index, 1);
-
 	};
 
 	$scope.moveDown = function (index) {
@@ -136,7 +135,14 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	};
 
 	$scope.remove = function (id) {
-		$http.post('json.php?mode=deleteItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
+        var txt;
+        var r = confirm("Wirklich löschen?");
+        if (r == true) {
+            $http.post('json.php?mode=deleteItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
+        } else {
+            alert("Aktion abgebrochen!");
+        }
+
 	};
 
 	$scope.refresh = function () {

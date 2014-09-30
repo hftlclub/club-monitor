@@ -59,7 +59,7 @@
                                 <div class="list-group" id="cart-items">
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-success btn-lg btn-block" value="Jetzt zahlungspflichtig bestellen">
+                            <input id="pay_btn" type="submit" class="btn btn-success btn-lg btn-block disabled" value="Jetzt zahlungspflichtig bestellen">
                         </form>
                     </div>
                 </div>
@@ -172,6 +172,8 @@
             var dataUrl = "json.php?mode=all_pizzas&service=platzhalter";
             var orderUrl = "post_order.php";
             var orders = [];
+            var price_all = 0;
+            var pizza_price = 5;
 
             $.ajax({
                 type: "get",
@@ -275,6 +277,13 @@
 
                 $("#cart-items").append($entry);
 
+                update_price();
+            };
+
+            function update_price(){
+                $("#pay_btn").removeClass("disabled");
+                price_all += pizza_price;
+                $("#pay_btn").val("Jetzt zahlungspflichtig für "+price_all+" EUR bestellen");
             };
 
             function submitOrder() {
@@ -287,12 +296,22 @@
                     url: orderUrl,
                     data: JSON.stringify(data),
                     contentType: "application/json",
-                    success: function () { alert("Bitte geh zur Bar bezahlen.") },
+                    success: function () {
+                        alert("Bitte geh zur Bar bezahlen.");
+                        reset_price();
+                    },
                     error: function (o, c, m) { alert(m); },
                 });
 
+                price_all = 0;
                 return false;
 
+            };
+
+            function reset_price(){
+                $("#pay_btn").addClass("disabled");
+                price_all = 0;
+                $("#pay_btn").val("Jetzt zahlungspflichtig bestellen");
             };
 
         });

@@ -22,7 +22,7 @@ if(!$mode){
 $service = mysql_real_escape_string($_GET['service']);
 
 //SIMPLIFICATION, delete later!
-$service = "535c198491490"; //Bittus pizza
+//$service = "535c198491490"; //Bittus pizza
 
 
 if($mode == "all_pizzas" && $service){

@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="pizza_logic_output">
             <div class="col-sm-6">
                 <div class="panel panel-default panel-pizza">
                     <div class="panel-heading">Auswahl</div>
@@ -169,11 +169,30 @@
         });
 
         $(function orderLogic() {
-            var dataUrl = "json.php?mode=all_pizzas&service=platzhalter";
+            var dataUrl = "json.php?mode=all_pizzas&service=";
             var orderUrl = "post_order.php";
             var orders = [];
             var price_all = 0;
             var pizza_price = 5;
+            var today = new Date();
+            var week_day_num = today.getDay();
+            var week_day = new Array("Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag");
+            var pizza_id = "";
+
+            switch(week_day_num){
+                    case 2: //monday
+                        pizza_id = ""; //Placeholder for the moday delivery service
+                        //Please delete the next line if monday delivery service is implemented
+                        $("#pizza_logic_output").replaceWith("<h3>Die Bestellung für die Pizza am "+week_day[week_day_num]+" über den Touchscreen ist erst in Kürze möglich!</h3>");
+                        break;
+                    case 3: // wednesday
+                        pizza_id = "535c198491490"; //ID for Bittus Pizza Service
+                        break;
+                    default: //other days
+                        $("#pizza_logic_output").replaceWith("<h3>Am "+week_day[week_day_num]+" gibt es hier leider nichts. Pizza Bestellungen werden immer am Montag und Mittwoch angenommen.</h3>");
+                        break;
+            }
+            dataUrl += pizza_id;
 
             $.ajax({
                 type: "get",

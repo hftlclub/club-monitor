@@ -28,19 +28,19 @@ $insertsql = array();
 
 //go through ordered pizzas
 foreach($data['pizzas'] AS $pizza){
-	
+
 	//MySQL escapes
 	$pizza['id']      = mysql_real_escape_string($pizza['id']);
 	$pizza['comment'] = mysql_real_escape_string($pizza['comment']);
-	
-	
+
+
 	//check if pizza ID is valid
 	$sql = mysql_query("SELECT id FROM pizza_pizzas WHERE id = '".$pizza['id']."';");
 	if(mysql_num_rows($sql) != 1){
 		//error_log("ID ".$pizza['id']." invalid");
 		doerror();
 	}
-	
+
 	//if valid, generate SQL command for insert - and stack it for later execution
 	$insertsql[] = "INSERT INTO pizza_orders	(id, timestamp, name, pizza, comment)
 		VALUES(
@@ -57,14 +57,14 @@ foreach($data['pizzas'] AS $pizza){
 foreach($insertsql AS $query){
 	if(!mysql_query($query)){
 		doerror();
-	}	
+	}
 }
 
 
 
 //SUCCESS!
 header("HTTP/1.1 200 OK");
-echo "{ \"message\" : \"Vielen Dank für Deine Bestellung, ".$data['name']."!\n Bitte bezahle ".count($pizzas) * PIZZA_PRICE." EUR an der Bar.\" }";
+echo "{ \"message\" : \"Vielen Dank f√ºr Deine Bestellung, ".$data['name']."!\n Bitte bezahle ".count($pizzas) * PIZZA_PRICE." EUR an der Bar.\" }";
 exit();
 
 

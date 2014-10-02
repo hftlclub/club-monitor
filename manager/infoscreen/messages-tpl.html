@@ -1,0 +1,63 @@
+<div class="col-md-12" ng-model="messages" ui-sortable="sortableOptions">
+	<div ng-class="panel-default" class="panel" ng-repeat="message in messages" ng-click="active.id = message.id">
+		<div class="panel-body">
+			<span class="pull-right" style="font-size: large">
+				<a class="btn btn-default" ng-disabled="$first"
+				   ng-click="moveUp($index)" title="nach oben">
+					<span class="glyphicon glyphicon-chevron-up"></span>
+				</a>
+				<a class="btn btn-default" ng-disabled="$last"
+				   ng-click="moveDown($index)"  title="nach unten">
+					<span class="glyphicon glyphicon-chevron-down"></span>
+				</a>
+				<a class="btn btn-default"
+				   ng-href="#/edit/{{module.id}}"  title="Modul bearbeiten">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</a>
+				<a class="btn btn-default" ng-if="module.active"
+				   ng-click="disable(module.id)" title="Modul deaktivieren">
+					<span class="glyphicon glyphicon glyphicon glyphicon-eye-open"></span>
+				</a>
+				<a class="btn btn-default" ng-if="!module.active"
+				   ng-click="activate(module.id)"  title="Modul aktivieren">
+					<span class="glyphicon glyphicon glyphicon glyphicon-eye-close"></span>
+				</a>
+				<a class="btn btn-default"
+				   ng-click="remove(module.id)"  title="Modul entfernen">
+					<span class="glyphicon glyphicon-trash"></span>
+				</a>
+				<a ng-if="!hasTouch"class="btn btn-default module-order-handle active"  title="Modul verschieben">
+					<span class="glyphicon glyphicon-resize-vertical"></span>
+				</a>
+			</span>
+			<h4>
+				<span ng-if="module.type == 'drinks'">
+					<span class="glyphicon glyphicon-glass"></span> Drinks
+				</span>
+				<span ng-if="module.type == 'text'">
+					<span class="glyphicon glyphicon-bullhorn"></span> Text
+					<small ng-bind="module.settings.headline"></small>
+				</span>
+				<span ng-if="module.type == 'barclosing'">
+					<span class="glyphicon glyphicon-bullhorn"></span> Barschluss
+					<small>{{ module.settings.time }} Uhr</small>
+				</span>
+				<span ng-if="module.type == 'highlights'">
+					<span class="glyphicon glyphicon-star"></span> 
+					<span ng-if="!module.settings.headline"> Highlights</span>
+					<span ng-if="module.settings.headline"> {{ module.settings.headline }}</span>
+					<small>{{ module.settings.description | limitTo : 30 }}...</small>
+				</span>
+			</h4>
+		</div>
+	</div>
+
+	<p>
+		<a class="btn btn-default" ng-click="add('drinks')"><span class="glyphicon glyphicon-plus"></span> Drinks</a>
+		<a class="btn btn-default" ng-click="add('text')"><span class="glyphicon glyphicon-plus"></span> Text</a>
+		<a class="btn btn-default" ng-click="add('barclosing')"><span class="glyphicon glyphicon-plus"></span> Barschluss</a>
+		<a class="btn btn-default" ng-click="add('highlights')"><span class="glyphicon glyphicon-plus"></span> Highlights</a>
+	</p>
+
+
+</div>

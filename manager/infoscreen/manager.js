@@ -29,12 +29,20 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 .config(function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: 'list-tpl.html',
-			controller: 'ListController',
+			templateUrl: 'timeline-tpl.html',
+			controller: 'TimelineController',
 		})
-		.when('/edit/:id', {
-			templateUrl: 'form-tpl.html',
-			controller: 'FormController',
+		.when('/timeline/', {
+			templateUrl: 'timeline-tpl.html',
+			controller: 'TimelineController',
+		})
+		.when('/timeline/edit/:id', {
+			templateUrl: 'timeline-edit-tpl.html',
+			controller: 'TimelineEditController',
+		})
+		.when('/messages/', {
+			templateUrl: 'messages-tpl.html',
+			controller: 'MessagesController',
 		})
 })
 
@@ -45,10 +53,28 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 })
 
 
-.controller('FormController', function ($scope, $http, $routeParams, $location, $upload) {
+.controller('MessagesController', function ($scope, $http, $q, $location) {
+	// load data
+	$scope.refreshMessages = function () {
+		var deferred = $q.defer();
+
+		$http.get('json.messages.php?mode=retrieve&token=' + getToken()).success(function (data) {
+			$scope.messages = data;
+			deferred.resolve(data);
+		}).error(logout);
+
+		return deferred.promise;
+
+	};
+
+	$scope.refreshMessages();
+})
+
+
+.controller('TimelineEditController', function ($scope, $http, $routeParams, $location, $upload) {
 	// load data
 	$scope.active = { id: $routeParams.id };
-	$http.get('json.php?mode=retrieve&token=' + getToken()).success(function (data) {
+	$http.get('json.timeline.php?mode=retrieve&token=' + getToken()).success(function (data) {
 		data.forEach(function (module) {
 			if (module.id == $scope.active.id)
 				$scope.module = module;
@@ -57,7 +83,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
 	// --- submit ---
 	$scope.submit = function () {
-		$http.post('json.php?mode=editItem&token=' + getToken(), $scope.module).success(function (data) {
+		$http.post('json.timeline.php?mode=editItem&token=' + getToken(), $scope.module).success(function (data) {
 			$location.path('/');
 		}).error(logout);
 	};
@@ -65,18 +91,18 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	// --- upload ---
 	$scope.upload = function ($files) {
 		$upload.upload({
-			url: 'json.php?mode=fileUpload&token=' + getToken(),
+			url: 'json.timeline.php?mode=fileUpload&token=' + getToken(),
 			file: $files[0],
 		}).success(function (data) {
 			$scope.module.settings.url = data.url;
-			$http.post('json.php?mode=editItem&token=' + getToken(), $scope.module);
+			$http.post('json.timeline.php?mode=editItem&token=' + getToken(), $scope.module);
 		}).error(logout);
 	};
 
 })
 
 
-.controller('ListController', function ($scope, $http, $q, $location) {
+.controller('TimelineController', function ($scope, $http, $q, $location) {
 	$scope.active = { id: 0 };
 	$scope.hasTouch = isTouchSupported();
 
@@ -107,7 +133,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	};
 
 	$scope.add = function (type) {
-		$http.post('json.php?mode=addItem&token=' + getToken(), {
+		$http.post('json.timeline.php?mode=addItem&token=' + getToken(), {
 			type: type,
 			order: $scope.timeline.length
 		}).success(function (data) {
@@ -122,23 +148,23 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 			dout.push({ order: i, id: obj.id });
 		});
 
-		$http.post('json.php?mode=reorderTimeline&token=' + getToken(), dout).success($scope.refresh).error(logout);
+		$http.post('json.timeline.php?mode=reorderTimeline&token=' + getToken(), dout).success($scope.refresh).error(logout);
 
 	};
 
 	$scope.disable = function (id) {
-		$http.post('json.php?mode=disableItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
+		$http.post('json.timeline.php?mode=disableItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
 	};
 
 	$scope.activate = function (id) {
-		$http.post('json.php?mode=activateItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
+		$http.post('json.timeline.php?mode=activateItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
 	};
 
 	$scope.remove = function (id) {
         var txt;
         var r = confirm("Wirklich löschen?");
         if (r == true) {
-            $http.post('json.php?mode=deleteItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
+            $http.post('json.timeline.php?mode=deleteItem&token=' + getToken(), [{ id: id }]).success($scope.refresh).error(logout);
         } else {
             alert("Aktion abgebrochen!");
         }
@@ -148,7 +174,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	$scope.refresh = function () {
 		var deferred = $q.defer();
 
-		$http.get('json.php?mode=retrieve&token=' + getToken()).success(function (data) {
+		$http.get('json.timeline.php?mode=retrieve&token=' + getToken()).success(function (data) {
 			$scope.timeline = data;
 			deferred.resolve(data);
 		}).error(logout);

@@ -41,9 +41,13 @@ if($mode == "retrieve") {
 	//entries per page
 	$perpage = 100;
 	
-	
-	//start entry
-	$page = intval($_GET['page']);
+	//
+	if(!isset($_GET['page'])){
+		$page = 1;
+	}else{
+		$page = intval($_GET['page']);
+	}
+
 	$page--; //first page is 1, but we need 0 for first page
 	
 	if($page > 0){
@@ -66,7 +70,7 @@ if($mode == "retrieve") {
 	
 	//count all messages
 	$sql = mysql_query("SELECT COUNT(*) FROM infoscreen_ticker");
-	$output['msgcount'] = mysql_result($sql, 0);
+	$output['msgcount'] = intval(mysql_result($sql, 0));
 	
 	//pagecount
 	$output['pagecount'] = ceil($output['msgcount'] / $perpage);

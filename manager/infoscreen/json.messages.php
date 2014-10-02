@@ -57,18 +57,24 @@ if($mode == "retrieve") {
 	}
 	
 
-	//get messages fort this page
+	//get messages for this page
 	$query = "SELECT * FROM infoscreen_ticker ORDER BY posted DESC LIMIT ".$start.",".$perpage.";";
 	$sql = mysql_query($query);
-	
-	error_log($query);
 
 	while($row = mysql_fetch_assoc($sql)){
+		//decide whether entry is active or not, depending on number of views
+		if($row['views'] < TICKER_MAXVIEWS){
+			$row['active'] = TRUE;
+		}else{
+			$row['active'] = FALSE;
+		}
+		
+		//output row
 		$output['messages'][] = $row;		
 	}
 	
 	
-	//count all messages
+	//msgcount
 	$sql = mysql_query("SELECT COUNT(*) FROM infoscreen_ticker");
 	$output['msgcount'] = intval(mysql_result($sql, 0));
 	
@@ -84,9 +90,10 @@ if($mode == "retrieve") {
 ###
 ### Mode: resetViews
 ### Method: GET
+### Parameter: msgid (ID of message)
 ###
 
-if($mode == "editItem") {
+if($mode == "resetViews") {
 	//$query = "UPDATE ..."
 }
 

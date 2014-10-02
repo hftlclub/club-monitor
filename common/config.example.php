@@ -12,6 +12,9 @@ define("DATABASE_NAME",       "club");
 //Pizza
 define("PIZZA_PRICE", 5);
 
+//Infoscreen
+define("TICKER_MAXVIEWS", 26);
+
 
 //connect to MySQLServer
 $dbc = mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD);

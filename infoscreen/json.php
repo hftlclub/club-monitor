@@ -141,7 +141,7 @@ if($mode == "timeline"){
 if($mode == "ticker"){
 	$output = array();
 
-	$sql = mysql_query("SELECT id, author, text, posted FROM infoscreen_ticker WHERE views < 26 ORDER BY views ASC, posted ASC LIMIT 1;");
+	$sql = mysql_query("SELECT id, author, text, posted FROM infoscreen_ticker WHERE views < ".TICKER_MAXVIEWS." ORDER BY views ASC, posted ASC LIMIT 1;");
 	while($row = mysql_fetch_assoc($sql)){
 		$output[] = array(
 			"id"     => $row["id"],

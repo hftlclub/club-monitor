@@ -24,7 +24,7 @@ function logout(data, status, headers, config) {
 
 /* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
 
-angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
+angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload', 'ngAnimate'])
 
 .config(function ($routeProvider, $locationProvider) {
 	$routeProvider

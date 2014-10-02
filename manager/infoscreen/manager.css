@@ -26,3 +26,14 @@
 	cursor: inherit;
 	display: block;
 }
+
+
+
+.panel.ng-enter {
+	-webkit-transition: 1s linear all;
+	transition: 1s linear all;
+	opacity: 0;
+}
+.panel.ng-enter-active {
+	opacity: 1;
+}

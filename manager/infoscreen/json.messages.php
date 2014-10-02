@@ -34,8 +34,6 @@ $output = array();
 ### Parameter: page (page number)
 ###
 
-
-
 if($mode == "retrieve") {
 	$output['messages'] = array();
 	//entries per page
@@ -69,6 +67,9 @@ if($mode == "retrieve") {
 			$row['active'] = FALSE;
 		}
 		
+		//convert time to UNIX timestamp
+		$row['posted'] = strtotime($row['posted']);
+		
 		//output row
 		$output['messages'][] = $row;		
 	}
@@ -93,8 +94,9 @@ if($mode == "retrieve") {
 ### Parameter: msgid (ID of message)
 ###
 
-if($mode == "resetViews") {
-	//$query = "UPDATE ..."
+if($mode == "resetViews" AND $_GET['msgid']) {
+	$query = "UPDATE infoscreen_ticker SET views = 0 WHERE id = '".mysql_real_escape_string($_GET['msgid'])."';";
+	mysql_query($query);
 }
 
 

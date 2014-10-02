@@ -102,11 +102,11 @@ if($mode == "resetViews" AND $_GET['msgid']) {
 
 
 ###
-### Mode: deleteItem
+### Mode: deleteMessage
 ### Method: POST
 ###
 
-if($mode == "deleteItem") {
+if($mode == "deleteMessage") {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("BEGIN");

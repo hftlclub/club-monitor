@@ -101,7 +101,21 @@ if($mode == "resetViews" AND $_GET['msgid']) {
 
 
 
+###
+### Mode: deleteItem
+### Method: POST
+###
 
+if($mode == "deleteItem") {
+	$contents = json_decode( file_get_contents('php://input') );
+	
+	mysql_query("BEGIN");
+	foreach($contents as $data)
+	{
+		mysql_query("DELETE FROM `infoscreen_ticker` WHERE `id`='".mysql_real_escape_string($data->id)."';");
+	}
+	mysql_query("COMMIT");
+}
 
 
 

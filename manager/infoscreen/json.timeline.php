@@ -62,7 +62,7 @@ if($mode == "activateItem") {
 
 
 ###
-### Mode: activateItem
+### Mode: disableItem
 ### Method: POST
 ###
 
@@ -79,7 +79,7 @@ if($mode == "disableItem") {
 
 
 ###
-### Mode: activateItem
+### Mode: deleteItem
 ### Method: POST
 ###
 

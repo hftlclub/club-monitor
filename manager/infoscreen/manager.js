@@ -59,7 +59,8 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 		var deferred = $q.defer();
 
 		$http.get('json.messages.php?mode=retrieve&token=' + getToken()).success(function (data) {
-			$scope.messages = data;
+			$scope.messages = data.messages;
+			$scope.meta = {msgcount:data.msgcount, pagecount:data.pagecount};
 			deferred.resolve(data);
 		}).error(logout);
 

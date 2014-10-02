@@ -38,7 +38,7 @@
 							<strong>Fehler!</strong> Das eingegebene Passwort passt so nicht...
 						</div>
 						
-						<form onSubmit="checkLogin()">
+						<form onSubmit="checkLogin(); return false;">
 							<label for="inputPassword">Passwort</label>
 							<input type="password" class="form-control" id="inputPassword" placeholder="Passwort">
 							<br>

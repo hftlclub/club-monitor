@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="row" id="pizza_logic_output">
+        <div class="row">
             <div class="col-sm-6">
                 <div class="panel panel-default panel-pizza">
                     <div class="panel-heading">Auswahl</div>
@@ -90,6 +90,26 @@
             </form>
         </div>
     </div>
+
+
+<!-- Modal for choose Pizzas -->
+<div class="modal fade" id="pizza_choose_service">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Auswahl des Pizzadienstes</h4>
+            </div>
+            <div class="modal-body">
+                    <p id="pizza_modal_text"></p>
+                    <button type="button" id="olympia" class="btn btn-default btn-lg btn-block">Olympia Pizza</button>
+                    <button type="button" id="bittus" class="btn btn-default btn-lg btn-block">Bittus Pizza Service</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
     <!-- Disable mark text -->
     <script src="../common/js/disable_mark_text.js"></script>
@@ -177,31 +197,41 @@
             var today = new Date();
             var week_day_num = today.getDay();
             var week_day = new Array("Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag");
-            var pizza_id = "";
+            //service IDs for the right pizza service [olympia, bittus]
+            var pizza_service_ids = ["542d14a22b35f","535c198491490"];
 
             switch(week_day_num){
                     case 1: //monday
-                        pizza_id = "542d14a22b35f"; //ID for Bittus Pizza Service
+                        insert_pizza_data(pizza_service_ids[0]);
                         break;
                     case 3: // wednesday
-                        pizza_id = "535c198491490"; //ID for Bittus Pizza Service
+                        insert_pizza_data(pizza_service_ids[1]);
                         break;
                     default: //other days
-
-                        //for the future: Open Modal, selecting pizza service
-                        //select_pizza_manually();
-                        $("#pizza_logic_output").replaceWith("<h3>Am "+week_day[week_day_num]+" gibt es hier leider nichts. Pizza Bestellungen werden immer am Montag und Mittwoch angenommen.</h3>");
+                        $('#pizza_modal_text').append('Heute ist '+week_day[week_day_num]+', bitte wähle einen Pizzadienst aus!');
+                        $('#pizza_choose_service').modal()
+                        $('#pizza_choose_service #olympia').on('click', function () {
+                            insert_pizza_data(pizza_service_ids[0]);
+                            $('#pizza_choose_service').modal('hide');
+                        });
+                        $('#pizza_choose_service #bittus').on('click', function () {
+                            insert_pizza_data(pizza_service_ids[1]);
+                            $('#pizza_choose_service').modal('hide');
+                        });
                         break;
             }
-            dataUrl += pizza_id;
 
-            $.ajax({
-                type: "get",
-                url: dataUrl,
-                dataType: "json",
-                success: processData,
-                error: function (o, c, m) { alert(m); }
-            });
+            function insert_pizza_data(service_id){
+                dataUrl += service_id;
+                    $.ajax({
+                        type: "get",
+                        url: dataUrl,
+                        dataType: "json",
+                        success: processData,
+                        error: function (o, c, m) { alert(m); }
+                    });
+
+            }
 
             $('#order-modal').modal({ show: false });
             $('#order-modal-form').submit(addOrderSubmit);

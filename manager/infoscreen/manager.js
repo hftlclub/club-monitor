@@ -67,6 +67,18 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 		return deferred.promise;
 
 	};
+	
+	$scope.remove = function (id) {
+        var txt;
+        var r = confirm("Wirklich löschen?");
+        if (r == true) {
+            $http.post('json.messages.php?mode=deleteMessage&token=' + getToken(), [{ id: id }]).success($scope.refreshMessages).error(logout);
+        } else {
+            alert("Aktion abgebrochen!");
+        }
+
+	};
+	
 
 	$scope.refreshMessages();
 })

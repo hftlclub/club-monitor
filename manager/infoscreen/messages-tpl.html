@@ -2,10 +2,12 @@
 Einträge gesamt: {{ meta.msgcount }}
 </div>
 <div class="col-md-12" ng-model="messages">
-	<div ng-class="panel-default" class="panel" ng-repeat="message in messages" ng-click="active.id = message.id">
+	<div ng-class="{'panel-success': message.active, 'panel-warning': !message.active}" 
+		class="panel" ng-repeat="message in messages" ng-click="active.id = message.id">
 		<div class="panel-body">
 			<span class="pull-right" style="font-size: large">
 				<a class="btn btn-default" ng-click="resetViews(message.id)" title="Counts zurücksetzen">
+					Views: {{ message.views }} 
 					<span class="glyphicon glyphicon glyphicon-refresh"></span>
 				</a>
 				<a class="btn btn-default" ng-click="remove(message.id)" title="Nachricht löschen">

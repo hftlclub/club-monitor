@@ -29,8 +29,8 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 .config(function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: 'timeline-tpl.html',
-			controller: 'TimelineController',
+			templateUrl: 'start-tpl.html',
+			controller: 'InfoscreenManagerLandingPage',
 		})
 		.when('/timeline/', {
 			templateUrl: 'timeline-tpl.html',

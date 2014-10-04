@@ -18,7 +18,7 @@ function logout(data, status, headers, config) {
 	if(status == 401)
 	{
 		localStorage.removeItem('accessToken');
-		window.location.href = '../'
+		window.location.href = '../?ref=' + encodeURIComponent(window.location.href);
 	}
 }
 

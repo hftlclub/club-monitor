@@ -97,7 +97,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	// --- submit ---
 	$scope.submit = function () {
 		$http.post('json.timeline.php?mode=editItem&token=' + getToken(), $scope.module).success(function (data) {
-			$location.path('/');
+			$location.path('/timeline/');
 		}).error(logout);
 	};
 

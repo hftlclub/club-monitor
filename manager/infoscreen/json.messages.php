@@ -90,12 +90,19 @@ if($mode == "retrieve") {
 
 ###
 ### Mode: resetViews
-### Method: GET
+### Method: POST
 ### Parameter: msgid (ID of message)
 ###
 
-if($mode == "resetViews" AND $_GET['msgid']) {
-	$query = "UPDATE infoscreen_ticker SET views = 0 WHERE id = '".mysql_real_escape_string($_GET['msgid'])."';";
+if($mode == "resetViews") {
+	$contents = json_decode(file_get_contents("php://input"));
+	
+	if(!$contents->id){
+		header("HTTP/1.1 400 Bad Request");
+		exit();
+	}
+	
+	$query = "UPDATE infoscreen_ticker SET views = 0 WHERE id = '".mysql_real_escape_string($contents->id)."';";
 	mysql_query($query);
 }
 

@@ -79,6 +79,13 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
 	};
 	
+	
+	$scope.resetViews = function (id) {
+		$http.post('json.messages.php?mode=resetViews&token=' + getToken(), [{ id: id }])
+			.success($scope.refreshMessages)
+			.error(logout);
+	};
+	
 
 	$scope.refreshMessages();
 })

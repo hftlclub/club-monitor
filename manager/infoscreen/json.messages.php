@@ -97,8 +97,6 @@ if($mode == "retrieve") {
 if($mode == "resetViews") {
 	$contents = json_decode(file_get_contents("php://input"));
 	
-	print_r($contents);
-	
 	mysql_query("BEGIN");
 	foreach($contents as $data){
 		$query = "UPDATE infoscreen_ticker SET views = 0 WHERE id = '".mysql_real_escape_string($data->id)."';";
@@ -114,7 +112,7 @@ if($mode == "resetViews") {
 ###
 
 if($mode == "deleteMessage") {
-	$contents = json_decode( file_get_contents('php://input') );
+	$contents = json_decode(file_get_contents("php://input"));
 	
 	mysql_query("BEGIN");
 	foreach($contents as $data){

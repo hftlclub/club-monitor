@@ -76,8 +76,10 @@ if($mode == "retrieve") {
 	
 	
 	//msgcount
-	$sql = mysql_query("SELECT COUNT(*) FROM infoscreen_ticker");
-	$output['msgcount'] = intval(mysql_result($sql, 0));
+	$sql = mysql_query("SELECT COUNT(*) FROM infoscreen_ticker WHERE `views` < ".TICKER_MAXVIEWS.";");
+	$output['msgcountactive'] = intval(mysql_result($sql, 0));
+	$sql = mysql_query("SELECT COUNT(*) FROM infoscreen_ticker WHERE `views` >= ".TICKER_MAXVIEWS.";");
+	$output['msgcountinactive'] = intval(mysql_result($sql, 0));
 	
 	//pagecount
 	$output['pagecount'] = ceil($output['msgcount'] / $perpage);

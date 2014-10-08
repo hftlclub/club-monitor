@@ -1,11 +1,29 @@
 <div class="col-md-12" ng-model="meta">
-Einträge gesamt: {{ meta.msgcount }}
+	<span class="glyphicon glyphicon-comment"></span> {{ meta.msgcount }}
+</div>
+<div class="col-md-12" ng-model="meta">
+	<form class="form-inline" role="form">
+		<span class="glyphicon glyphicon-filter"></span>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox"> aktiv
+			</label>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox"> inaktiv
+			</label>
+		</div>
+	</form>
+	<hr>
 </div>
 <div class="col-md-12" ng-model="messages">
-	<div ng-class="panel-default" class="panel" ng-repeat="message in messages" ng-click="active.id = message.id">
+	<div ng-class="{'panel-success': message.active, 'panel-warning': !message.active}" 
+		class="panel" ng-repeat="message in messages" ng-click="active.id = message.id">
 		<div class="panel-body">
 			<span class="pull-right" style="font-size: large">
 				<a class="btn btn-default" ng-click="resetViews(message.id)" title="Counts zurücksetzen">
+					Views: {{ message.views }} 
 					<span class="glyphicon glyphicon glyphicon-refresh"></span>
 				</a>
 				<a class="btn btn-default" ng-click="remove(message.id)" title="Nachricht löschen">

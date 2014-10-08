@@ -18,7 +18,7 @@ function logout(data, status, headers, config) {
 	if(status == 401)
 	{
 		localStorage.removeItem('accessToken');
-		window.location.href = '../?ref=' + encodeURIComponent(window.location.href);
+		window.location.href = '../'
 	}
 }
 
@@ -29,8 +29,8 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 .config(function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: 'start-tpl.html',
-			controller: 'InfoscreenManagerLandingPage',
+			templateUrl: 'timeline-tpl.html',
+			controller: 'TimelineController',
 		})
 		.when('/timeline/', {
 			templateUrl: 'timeline-tpl.html',
@@ -54,6 +54,24 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
 
 .controller('MessagesController', function ($scope, $http, $q, $location) {
+
+	//default values for filter checkboxes
+	$scope.checkboxes = {
+		active   : true,
+		inactive : true
+	}
+	
+	$scope.checkboxFilter = function(message){
+		
+		if(($scope.checkboxes.active && message.active) || ($scope.checkboxes.inactive && !message.active)) {
+			return true;
+		}
+
+		return false;
+	}
+
+
+	
 	// load data
 	$scope.refreshMessages = function () {
 		var deferred = $q.defer();
@@ -104,7 +122,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	// --- submit ---
 	$scope.submit = function () {
 		$http.post('json.timeline.php?mode=editItem&token=' + getToken(), $scope.module).success(function (data) {
-			$location.path('/timeline/');
+			$location.path('/');
 		}).error(logout);
 	};
 

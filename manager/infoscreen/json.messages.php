@@ -97,13 +97,13 @@ if($mode == "retrieve") {
 if($mode == "resetViews") {
 	$contents = json_decode(file_get_contents("php://input"));
 	
-	if(!$contents->id){
-		header("HTTP/1.1 400 Bad Request");
-		exit();
-	}
+	print_r($contents);
 	
-	$query = "UPDATE infoscreen_ticker SET views = 0 WHERE id = '".mysql_real_escape_string($contents->id)."';";
-	mysql_query($query);
+	mysql_query("BEGIN");
+	foreach($contents as $data){
+		$query = "UPDATE infoscreen_ticker SET views = 0 WHERE id = '".mysql_real_escape_string($data->id)."';";
+		mysql_query($query);
+	}
 }
 
 
@@ -117,8 +117,7 @@ if($mode == "deleteMessage") {
 	$contents = json_decode( file_get_contents('php://input') );
 	
 	mysql_query("BEGIN");
-	foreach($contents as $data)
-	{
+	foreach($contents as $data){
 		mysql_query("DELETE FROM `infoscreen_ticker` WHERE `id`='".mysql_real_escape_string($data->id)."';");
 	}
 	mysql_query("COMMIT");

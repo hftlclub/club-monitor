@@ -18,7 +18,7 @@ function logout(data, status, headers, config) {
 	if(status == 401)
 	{
 		localStorage.removeItem('accessToken');
-		window.location.href = '../'
+		window.location.href = '../?ref=' + encodeURIComponent(window.location.href);
 	}
 }
 
@@ -29,8 +29,8 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 .config(function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: 'timeline-tpl.html',
-			controller: 'TimelineController',
+			templateUrl: 'start-tpl.html',
+			controller: 'InfoscreenManagerLandingPage',
 		})
 		.when('/timeline/', {
 			templateUrl: 'timeline-tpl.html',
@@ -61,6 +61,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 		inactive : true
 	}
 	
+	//filter for active/inactive checkboxes
 	$scope.checkboxFilter = function(message){
 		
 		if(($scope.checkboxes.active && message.active) || ($scope.checkboxes.inactive && !message.active)) {
@@ -122,7 +123,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	// --- submit ---
 	$scope.submit = function () {
 		$http.post('json.timeline.php?mode=editItem&token=' + getToken(), $scope.module).success(function (data) {
-			$location.path('/');
+			$location.path('/timeline/');
 		}).error(logout);
 	};
 

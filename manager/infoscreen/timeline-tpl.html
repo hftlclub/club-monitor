@@ -1,6 +1,19 @@
+<div class="col-md-12" ng-model="meta">
+		<p class="text-uppercase" style="font-weight: bold">
+		<span class="glyphicon glyphicon-film"></span>
+		Module filtern:
+		</p>
+		<div class="btn-group">
+			
+			<button type="button" style="width:150px" class="btn btn-default" ng-model="checkboxes.active" ng-class="{ 'active btn-success': checkboxes.active }" ng-click="checkboxes.active = (checkboxes.active) ? false : true"><span class="glyphicon" ng-class="{ 'glyphicon-check': checkboxes.active, 'glyphicon-unchecked': !checkboxes.active }"></span> aktive&nbsp;<span class="badge">{{ meta.msgcountactive }}</span></button>
+		
+			<button type="button" style="width:150px" class="btn btn-default" ng-model="checkboxes.inactive" ng-class="{ 'active btn-warning': checkboxes.inactive }" ng-click="checkboxes.inactive = (checkboxes.inactive) ? false : true"><span class="glyphicon" ng-class="{ 'glyphicon-check': checkboxes.inactive, 'glyphicon-unchecked': !checkboxes.inactive }"></span> inaktive&nbsp;<span class="badge">{{ meta.msgcountinactive }}</span></button>
+		</div>
+	<hr>
+</div>
 <div class="col-md-12" ng-model="timeline" ui-sortable="sortableOptions">
 	<div ng-class="{'panel-success': module.active, 'panel-warning': !module.active}"
-		 class="panel" ng-repeat="module in timeline" ng-click="active.id = module.id">
+		 class="panel" ng-repeat="module in timeline | filter:checkboxFilter" ng-click="active.id = module.id">
 		<div class="panel-body">
 			<span class="pull-right" style="font-size: large">
 				<a class="btn btn-default" ng-disabled="$first"

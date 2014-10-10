@@ -58,7 +58,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	//default values for filter checkboxes
 	$scope.checkboxes = {
 		active   : true,
-		inactive : true
+		inactive : false,
 	}
 	
 	//filter for active/inactive checkboxes
@@ -144,6 +144,23 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 .controller('TimelineController', function ($scope, $http, $q, $location) {
 	$scope.active = { id: 0 };
 	$scope.hasTouch = isTouchSupported();
+
+	//default values for filter checkboxes
+	$scope.checkboxes = {
+		active: true,
+		inactive: false,
+	}
+
+	//filter for active/inactive checkboxes
+	$scope.checkboxFilter = function (message) {
+
+		if (($scope.checkboxes.active && message.active) || ($scope.checkboxes.inactive && !message.active)) {
+			return true;
+		}
+
+		return false;
+	}
+
 
 	$scope.sortableOptions = {
 		stop: function (e, ui) {

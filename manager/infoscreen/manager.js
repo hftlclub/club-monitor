@@ -152,13 +152,19 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 	}
 
 	//filter for active/inactive checkboxes
-	$scope.checkboxFilter = function (message) {
+	$scope.filterByCheckboxes = function (message) {
 
 		if (($scope.checkboxes.active && message.active) || ($scope.checkboxes.inactive && !message.active)) {
 			return true;
 		}
 
 		return false;
+	}
+	$scope.filterGetActives = function (message) {
+		if (message.active) { return true; } else { return false };
+	}
+	$scope.filterGetInactives = function (message) {
+		if (!(message.active)) return true; else return false;
 	}
 
 

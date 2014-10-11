@@ -199,7 +199,7 @@ angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 			type: type,
 			order: $scope.timeline.length
 		}).success(function (data) {
-			$location.path('/edit/' + data.id);
+			$location.path('/timeline/edit/' + data.id);
 		}).error(logout);
 	};
 

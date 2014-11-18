@@ -11,14 +11,14 @@ mysql_query("TRUNCATE songlist;");
 
 
 //read file to array
-$file = file("songliste.txt");
+$file = file("http://development.ferdinand-malcher.de/songliste.txt");
 
 foreach($file AS $line){
 	//make array from line
 	$row = explode("|", $line);
 	
 	//trim and escape all values
-	array_walk($row, create_function('&$val', '$val = mytrim($val);'));
+	array_walk($row, create_function('&$val', '$val = trim($val, "\x00..\x1F\x80..\xFF");'));
 	array_walk($row, create_function('&$val', '$val = mysql_escape_string($val);'));
 	$row[0] = intval($row[0]);
 	
@@ -32,12 +32,6 @@ foreach($file AS $line){
 	mysql_query($query);
 	
 	
-}
-
-
-
-function mytrim($string){
-	return preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $string);
 }
 
 ?>

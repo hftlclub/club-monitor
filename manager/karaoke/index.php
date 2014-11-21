@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require("../../common/config.php");
 
 $mode = $_GET['mode'];
@@ -24,6 +24,10 @@ if($mode == "unregister" && !empty($id)){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="3; URL=<?php echo $_SERVER['REQUEST_URI'] ?>">
+
+    <!-- used to start like an app with google chrome on android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
     <title>Karaokemanager - Management</title>
 
     <!-- Bootstrap -->

@@ -43,16 +43,17 @@ function logout(data, status, headers, config) {
 		$scope.refreshQueue = refreshQueue;
 		$scope.intervalFunction = intervalFunction;
 		$scope.setPlayed = setPlayed;
+		$scope.truncateQueue = truncateQueue;
 		
-		$scope.timers = [];
+		$scope.timers = []; //timer objects for setPlayed countdown
+		
 		
 		
 		function refreshQueue(){
 			var deferred = $q.defer();
 
-			$http.get('json.queue.php?mode=getActive&token=' + getToken()).success(function (data) {
-				$scope.queue = data.queue;
-				$scope.count = data.count;
+			$http.get('json.queue.php?mode=getQueue&token=' + getToken()).success(function (data) {
+				$scope.data = data;
 				deferred.resolve(data);
 			}).error(logout);
 	
@@ -81,18 +82,27 @@ function logout(data, status, headers, config) {
 					}, 1000)
 				},
 				stop: function(){
-					$timeout.cancel(this.stopped);
-					$scope.timers[id] = {};
+					$timeout.cancel(this.stopped); //stop timer
+					$scope.timers[id] = {}; //delete this timer object
     			}
 
     		};
     		
+    		//start timer
     		$scope.timers[id].countdown();
 		}
 		
 		
+		function truncateQueue() {
+	        var r = confirm("Die gesamte Warteschlange wird geleert. Wirklich fortfahren?");
+			if(r == true) {
+            	$http.post('json.queue.php?mode=truncateQueue&token=' + getToken(), []).success($scope.refreshQueue).error(logout);
+			}
+		}
 		
-		//Function to replicate setInterval using $timeout service.
+		
+		
+		//periodical queue refresh
 		function intervalFunction(){
 	    	$scope.refreshQueue();
 	    	
@@ -102,7 +112,7 @@ function logout(data, status, headers, config) {
 	    	}, 30000)
 		};
 
-		//Kick off the interval
+		//start periodical refresh
 		$scope.intervalFunction();
 	
 	}

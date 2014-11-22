@@ -1,3 +1,7 @@
 ﻿body {
 	overflow-y: scroll;
 }
+
+.list-group-item-low {
+	opacity: 0.7;
+}

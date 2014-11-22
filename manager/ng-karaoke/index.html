@@ -53,10 +53,35 @@
 
 		<div ng-controller="QueueController">
 			
+			
+			
+			
 			<div class="col-md-12">
-				<div class="panel" ng-repeat="song in queue" ng-click="active.id = song.id">
-					<div class="panel-body">
+				
+				<div class="well well-sm">
+				<a class="btn btn-success disabled">
+					ausstehend <span class="badge">{{ data.count }}</span>
+				</a>
+				
+				<a class="btn btn-primary disabled">
+					alle <span class="badge">{{ data.countall }}</span>
+				</a>
+				
+				<span class="pull-right">
+					<a ng-class="{ 'disabled' : !data.countall }" class="btn btn-danger" ng-click="truncateQueue()" title="Warteschlange leeren">
+						<span class="glyphicon glyphicon-remove"></span>
+						Warteschlange leeren
+					</a>
+				</span>
+				
+				
+				</div>
+				
+				<ul class="list-group">
+					<li ng-repeat="song in data.queue" ng-click="active.id = song.id" ng-class="{ 'list-group-item-low' : timers[song.id].timer }" class="list-group-item">
 						<span class="pull-right" style="font-size: large">
+							<small>{{ song.singer }}</small>
+							
 							<a ng-if="!timers[song.id].timer" class="btn btn-success" ng-click="setPlayed(song.id)" title="Als gespielt markieren">
 								<span class="glyphicon glyphicon-ok"></span>
 							</a>
@@ -72,8 +97,8 @@
 								<span>{{ song.interpret }} - {{ song.title }}</span> 
 							</span>
 						</h4>
-					</div>
-				</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 

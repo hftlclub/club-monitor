@@ -29,12 +29,12 @@ $output = array();
 
 
 ###
-### Mode: getActive
+### Mode: getQueue
 ### Method: GET
 ### Description: return all active queue elements (active = not played yet)
 ###
 
-if($mode == "getActive") {
+if($mode == "getQueue") {
 	$out['queue'] = array();
 
 	$query = "SELECT queue.id, queue.singer, queue.timestamp, songlist.interpret, songlist.title FROM queue, songlist WHERE songlist.id = queue.songid AND queue.played = 0 ORDER BY queue.timestamp ASC;";
@@ -45,6 +45,11 @@ if($mode == "getActive") {
 	while($row = mysql_fetch_assoc($sql)){
 		$out['queue'][] = $row;
 	}
+	
+	
+	//overall count
+	$sql = mysql_query("SELECT COUNT(*) FROM queue;");
+	$out['countall'] = intval(mysql_result($sql, 0));
 }
 
 
@@ -63,6 +68,20 @@ if($mode == "setPlayed") {
 		mysql_query("UPDATE queue SET played = 1 WHERE id = '".mysql_real_escape_string($data->id)."';");
 	}
 	mysql_query("COMMIT");
+}
+
+
+
+###
+### Mode: truncateQueue
+### Method: POST
+### Description: truncate the whole queue 
+###
+
+if($mode == "truncateQueue") {
+
+	mysql_query("DELETE FROM queue;");
+
 }
 
 

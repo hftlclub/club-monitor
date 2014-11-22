@@ -193,37 +193,28 @@
                         var songURI = data.tracks.items[i].uri;
                         var requestURI = "https://api.spotify.com/v1/users/"+ spotify_user +"/playlists/"+ playlistID +"/tracks?uris="+songURI;
 
-                        // Spotify
-
-                        var oauth_key = btoa("8f1bbdc11b73471c8d2b73947b26e9e9:4760531b0793422fbc4fea2ea59848b8");
+                        // get authentication key for playlist access
                         $.ajax({
-                            url: "https://accounts.spotify.com/api/token",
-                            type: 'post',
-                            headers: {
-                                "grant_type": "client_credentials",
-                                "Authorization" : "Basic "+oauth_key,
-                                //If your header name has spaces or any other char not appropriate
-                            },
+                            url: "oauth.php?mode=getToken",
+                            type: 'get',
                             dataType: 'json',
                             success: insertInPlaylist
                         });
 
+                        //inset song into spotify-playlist
                         function insertInPlaylist(data) {
                                 $.ajax({
                                     url: requestURI,
                                     type: 'post',
                                     headers: {
-                                        Authorization : data.token_type +" "+data.access_token,
-
-                                        //If your header name has spaces or any other char not appropriate
+                                        Authorization : "bearer "+data.token,
                                     },
                                     dataType: 'json',
-                                    success: function (data) {
-                                        console.info(data);
+                                    success: function (snap) {
+                                        console.info(snap);
                                     }
                                 });
                         }
-
                         return false;
                     })
 

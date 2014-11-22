@@ -28,7 +28,7 @@ function logout(data, status, headers, config) {
 	'use strict';
 	
 	
-	angular.module('karaokeManager', []);
+	angular.module('karaokeManager', ['ui.bootstrap', 'ui.bootstrap.modal']);
 	
 	
 	angular
@@ -36,9 +36,9 @@ function logout(data, status, headers, config) {
 		.controller('QueueController', queueController);
 	
 	
-	queueController.$inject = ['$scope','$http','$q','$timeout'];
+	queueController.$inject = ['$scope', '$http', '$q', '$timeout', '$modal'];
 	
-	function queueController($scope, $http, $q, $timeout){
+	function queueController($scope, $http, $q, $timeout, $modal){
 		
 		$scope.refreshQueue = refreshQueue;
 		$scope.intervalFunction = intervalFunction;
@@ -93,11 +93,19 @@ function logout(data, status, headers, config) {
 		}
 		
 		
+		
 		function truncateQueue() {
-	        var r = confirm("Die gesamte Warteschlange wird geleert. Wirklich fortfahren?");
-			if(r == true) {
-            	$http.post('json.queue.php?mode=truncateQueue&token=' + getToken(), []).success($scope.refreshQueue).error(logout);
-			}
+	        var modal = $modal.open({
+				templateUrl: 'tpl-modal-truncatequeue.html'
+			});
+
+			modal.result.then(function(){
+				$http
+					.post('json.queue.php?mode=truncateQueue&token=' + getToken())
+					.success($scope.refreshQueue)
+					.error(logout);
+			});
+	        
 		}
 		
 		

@@ -37,8 +37,7 @@ $output = array();
 if($mode == "getActive") {
 	$out['queue'] = array();
 
-	//get queue
-	$query = "SELECT queue.singer, queue.timestamp, songlist.interpret, songlist.title FROM queue, songlist WHERE songlist.id = queue.songid AND queue.played = 0 ORDER BY queue.timestamp ASC;";
+	$query = "SELECT queue.id, queue.singer, queue.timestamp, songlist.interpret, songlist.title FROM queue, songlist WHERE songlist.id = queue.songid AND queue.played = 0 ORDER BY queue.timestamp ASC;";
 	$sql = mysql_query($query);
 
 	$out['count'] = mysql_num_rows($sql);
@@ -46,6 +45,24 @@ if($mode == "getActive") {
 	while($row = mysql_fetch_assoc($sql)){
 		$out['queue'][] = $row;
 	}
+}
+
+
+
+###
+### Mode: setPlayed
+### Method: POST
+### Description: set "played" state to 1 for a specific 
+###
+
+if($mode == "setPlayed") {
+	$contents = json_decode(file_get_contents("php://input"));
+	
+	mysql_query("BEGIN");
+	foreach($contents as $data){
+		mysql_query("UPDATE queue SET played = 1 WHERE id = '".mysql_real_escape_string($data->id)."';");
+	}
+	mysql_query("COMMIT");
 }
 
 

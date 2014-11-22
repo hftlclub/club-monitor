@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="karaokeManager">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- used to start like an app with google chrome on android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+	<title>Karaoke-Manager</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="../../common/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/css/bootstrap.cyborg.min.css">
+	<link rel="stylesheet" href="../../common/css/style.css">
+	<link rel="stylesheet" href="karaoke.css">
+
+	<!-- jQuery: Dependency for sortable-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+
+	<!-- superior Angular -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-route.js"></script>
+
+
+	<script src="karaoke.js"></script>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="page-header steckerlogo">
+					<h1>
+						HfTL-Club
+						<small>
+							<span class="glyphicon glyphicon-music"></span>
+							Karaoke-Manager
+						</small>
+					</h1>
+				</div>
+			</div>
+		</div>
+
+		<div ng-controller="QueueController">
+			
+			<div class="col-md-12">
+				<div class="panel" ng-repeat="song in queue" ng-click="active.id = song.id">
+					<div class="panel-body">
+						<span class="pull-right" style="font-size: large">
+							<a ng-if="!timers[song.id].timer" class="btn btn-success" ng-click="setPlayed(song.id)" title="Als gespielt markieren">
+								<span class="glyphicon glyphicon-ok"></span>
+							</a>
+							
+							<a ng-if="timers[song.id].timer" class="btn btn-warning" ng-click="timers[song.id].stop()" title="STOP">
+								<span class="glyphicon glyphicon-remove"></span>
+								<span style="font-weight: bold">{{ timers[song.id].timer }}</span>
+							</a>
+						</span>
+						<h4>
+							<span>
+								<span class="glyphicon glyphicon-music"></span> 
+								<span>{{ song.interpret }} - {{ song.title }}</span> 
+							</span>
+						</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+
+</div>
+
+</body>
+</html>

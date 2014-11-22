@@ -155,7 +155,7 @@
 
         function triggerGetResults(search) {
 			$.ajax({
-				url: "get_suggestions.php?search=" + search,
+				url: "json.php?mode=getSuggestions&search=" + search,
 				success: dataReceived
 			});
 
@@ -195,7 +195,7 @@
         
         function newRandomSong() {
 			$.ajax({
-				url: "random_song.php?limit=1",
+				url: "json.php?mode=randomSong&limit=1",
 				success: dataReceived
 			});
 
@@ -209,7 +209,7 @@
 		//sets a random placeholder - and do this at startup
 		$(function randomPlaceholder() {
 			$.ajax({
-				url: "random_song.php?limit=1",
+				url: "json.php?mode=randomSong&limit=1",
 				success: dataReceived
 			});
 

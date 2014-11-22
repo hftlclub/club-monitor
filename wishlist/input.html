@@ -133,8 +133,9 @@
 
         function triggerGetResults(search) {
             $.ajax({
-                //test: url: "https://ws.spotify.com/search/1/track.json?q=Frittenbude",
-                url: "https://ws.spotify.com/search/1/track.json?q=" + search,
+                // API: https://developer.spotify.com/web-api/search-item/
+                // https://ws.spotify.com/search/1/album.json?q=test
+                url: "https://api.spotify.com/v1/search?q="+search+"&type=track&market=DE",
                 success: dataReceived
             });
 
@@ -148,11 +149,24 @@
             // data is a javascript object with songs, each with "Id" and "Value"
             var html = $('<div id="search-results" class="list-group"></div>');
 
-            for (var i in data.tracks) {
-                for (var j in data.tracks[i].artists) {
+                for (var i in data.tracks.items) {
                     // var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].value + "</a>");
-                    var li = $("<a class=\"list-group-item\" songname=\"" + data.tracks[i].name + "\" interpret=\"" + data.tracks[i].artists[j].name + "\" album=\"" + data.tracks[i].album.name + "\" href=\"" + data.tracks[i].href + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-plus\"></span></span>" + data.tracks[i].artists[j].name + " - " + data.tracks[i].name + " (" + data.tracks[i].album.name + " - " + data.tracks[i].album.released + " )" + "</a>");
-                    html.append(li);
+
+
+                    var artists = joinArtists(data.tracks.items[i].artists);
+
+                    function joinArtists(allArtists){
+                        var joinedArtists = [];
+                        for (var j in allArtists) {
+                            joinedArtists.push(allArtists[j].name);
+                        }
+                        joinedArtists
+
+                        return joinedArtists.join(", ");
+                    }
+
+                    var li = $("<li class=\"list-group-item\" songname=\"" + data.tracks.items[i].name + "\" interpret=\"" + artists + "\" album=\"" + data.tracks.items[i].album.name + "\" href=\"" + data.tracks.items[i].href + "\"><div class=\"media\"><a class=\"media-left\"  href=\"#\"><img src=" + data.tracks.items[i].album.images[2].url + " height=\"40px\" width=\"40px\" /></a><div class=\"media-body\">" + "<h5>"+ artists + " - " + data.tracks.items[i].name + " (" + data.tracks.items[i].album.name + ") <span class=\"badge pull-right\"><span class=\"glyphicon glyphicon-plus\"></span></span></h5>" + "</div></div></li>");
+                        html.append(li);
                     li.click(function () {
                         //remove all active elements
                         $("#search-results").children().removeClass("list-group-item-success");
@@ -173,9 +187,46 @@
                         //write activated song to textfield
                         $('#SongInput').val($(this).text());
 
+                        //send spotify song data to club-playlist
+                        var spotify_user = "hftlclub";
+                        var playlistID = "6bLSFDJjzTfEkfMKs9Y6by";
+                        var songURI = data.tracks.items[i].uri;
+                        var requestURI = "https://api.spotify.com/v1/users/"+ spotify_user +"/playlists/"+ playlistID +"/tracks?uris="+songURI;
+
+                        // Spotify
+
+                        var oauth_key = btoa("8f1bbdc11b73471c8d2b73947b26e9e9:4760531b0793422fbc4fea2ea59848b8");
+                        $.ajax({
+                            url: "https://accounts.spotify.com/api/token",
+                            type: 'post',
+                            headers: {
+                                "grant_type": "client_credentials",
+                                "Authorization" : "Basic "+oauth_key,
+                                //If your header name has spaces or any other char not appropriate
+                            },
+                            dataType: 'json',
+                            success: insertInPlaylist
+                        });
+
+                        function insertInPlaylist(data) {
+                                $.ajax({
+                                    url: requestURI,
+                                    type: 'post',
+                                    headers: {
+                                        Authorization : data.token_type +" "+data.access_token,
+
+                                        //If your header name has spaces or any other char not appropriate
+                                    },
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        console.info(data);
+                                    }
+                                });
+                        }
+
                         return false;
                     })
-                }
+
             }
             $("#song-search").find("div#search-results").remove();
             $("#song-search").append(html);

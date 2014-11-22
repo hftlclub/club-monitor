@@ -89,8 +89,6 @@
 				<ul class="list-group">
 					<li ng-repeat="song in data.queue" ng-click="active.id = song.id" ng-class="{ 'list-group-item-low' : timers[song.id].timer }" class="list-group-item">
 						<span class="pull-right" style="font-size: large">
-							<small></small>
-							
 							<a ng-if="!timers[song.id].timer" class="btn btn-success" ng-click="setPlayed(song.id)" title="Als gespielt markieren">
 								<span class="glyphicon glyphicon-ok"></span>
 								<span>Entfernen</span>
@@ -101,6 +99,7 @@
 								<span style="font-weight: bold">{{ timers[song.id].timer }}</span>
 							</a>
 						</span>
+						
 						<h4>
 							<span>
 								<span class="glyphicon glyphicon-music"></span> 
@@ -108,7 +107,7 @@
 							</span>
 						</h4>
 						
-						<small>
+						<small ng-if="song.singer">
 							<span class="glyphicon glyphicon-user"></span>
 							<span>{{ song.singer }}</span>
 						</small>

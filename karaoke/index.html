@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="karaokeApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- used to start like an app with google chrome on android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+	<title>Karaoke</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="../../common/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../common/css/bootstrap.cyborg.min.css">
+	<link rel="stylesheet" href="../../common/css/style.css">
+	<link rel="stylesheet" href="karaoke.css">
+
+
+	<!-- superior Angular -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-route.js"></script>
+
+		
+	<script src="karaoke.js"></script>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="page-header steckerlogo">
+					<h1>						
+						HfTL-Club
+						<small>
+							<span class="glyphicon glyphicon-music"></span>
+							Karaoke
+						</small>
+					</h1>
+				</div>
+			</div>
+		</div>
+
+		<div ng-controller="QueueController">
+
+	        <div class="row">
+	            <div class="col-xs-12 col-md-8">
+	                
+	                
+	                <div class="panel panel-default">
+  
+						<div class="panel-heading">
+							<span class="glyphicon glyphicon-music"></span>
+							&nbsp;
+							<b>Warteschlange</b>
+							
+							<span class="pull-right">
+								<span>Sänger</span>
+								<span class="glyphicon glyphicon-user"></span>
+							</span>
+						</div>
+		                
+			            <ul class="list-group">
+							
+							<li ng-repeat="song in data.queue" class="list-group-item">
+								<span class="pull-right">
+									
+									<small ng-if="song.singer">
+										<span>{{ song.singer }}</span>
+										<span class="glyphicon glyphicon-user"></span>
+									</small>
+									
+								</span>
+								
+								<span>
+									<span class="badge">{{ $index + 1 }}</span>
+									&nbsp;
+									<span>{{ song.interpret }} &ndash; {{ song.title }}</span> 
+								</span>
+								
+							</li>
+						</ul>
+	                </div>
+
+	            </div>
+	            <div class="col-xs-12 col-md-4">
+	                <div class="center-block" style="text-align:center;">
+	                    <button type="button" class="btn btn-default btn-lg" onclick="window.location.href='./input.html'">
+	                        <span class="glyphicon glyphicon-plus largeicon"></span><br />Song reservieren
+	                    </button>
+	                </div>
+	            </div>
+	        </div>
+
+
+
+
+
+		</div>
+
+</div>
+
+</body>
+</html>
+
+
+

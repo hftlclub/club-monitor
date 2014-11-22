@@ -41,6 +41,10 @@
 			<div class="col-md-12">
 				<div class="page-header steckerlogo">
 					<h1>
+						<a type="button" class="btn btn-default" href="../">
+							<span class="glyphicon glyphicon-arrow-left"></span>
+						</a>
+						
 						HfTL-Club
 						<small>
 							<span class="glyphicon glyphicon-music"></span>
@@ -80,10 +84,11 @@
 				<ul class="list-group">
 					<li ng-repeat="song in data.queue" ng-click="active.id = song.id" ng-class="{ 'list-group-item-low' : timers[song.id].timer }" class="list-group-item">
 						<span class="pull-right" style="font-size: large">
-							<small>{{ song.singer }}</small>
+							<small></small>
 							
 							<a ng-if="!timers[song.id].timer" class="btn btn-success" ng-click="setPlayed(song.id)" title="Als gespielt markieren">
 								<span class="glyphicon glyphicon-ok"></span>
+								<span>Entfernen</span>
 							</a>
 							
 							<a ng-if="timers[song.id].timer" class="btn btn-warning" ng-click="timers[song.id].stop()" title="STOP">
@@ -97,6 +102,12 @@
 								<span>{{ song.interpret }} - {{ song.title }}</span> 
 							</span>
 						</h4>
+						
+						<small>
+							<span class="glyphicon glyphicon-user"></span>
+							<span>{{ song.singer }}</span>
+						</small>
+						
 					</li>
 				</ul>
 			</div>

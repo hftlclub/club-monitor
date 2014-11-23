@@ -11,27 +11,29 @@ $mode = mysql_escape_string($_GET['mode']);
 
 
 
-
-//exit if no mode given
+//error if no mode given
 if(!$mode){
-	die();
+	header("HTTP/1.1 400 Bad Request");
+	exit();
 }
 
-
-$out = array();
 
 
 ###
 ### Mode: getToken
 ### Method: GET
+### Params: code (the auth code), redirect_uri
+### Description: initial authorization in order to obtain access_token (authorization_code)
 ###
 
-if($mode == "getToken") {
-	$array = array(
-            "grant_type" => "authorization_code",
-            "code" => $_GET["code"],
-            "redirect_uri" => "http://localhost/wishlist/"
-    );
+if($mode == "getToken" AND $_GET['code'] AND $_GET['redirect_uri']) {
+	
+	$postfields = array(
+            "grant_type"   => "authorization_code",
+            "code"         => $_GET['code'],
+            "redirect_uri" => $_GET['redirect_uri']
+	);
+    
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
 		CURLOPT_SSL_VERIFYPEER => 0,
@@ -43,23 +45,32 @@ if($mode == "getToken") {
 	    CURLOPT_HTTPHEADER => array(
 			"Authorization: Basic ".base64_encode(CLIENT_ID.":".CLIENT_SECRET)
 		),
-        CURLOPT_POSTFIELDS => http_build_query($array)
+        CURLOPT_POSTFIELDS => http_build_query($postfields)
 	));
+
 	$resp = curl_exec($curl);
     curl_close($curl);
-	echo $resp;
+    
+    echo $resp;
+    
 }
+
+
 
 ###
 ### Mode: refreshToken
 ### Method: GET
+### Params: refresh (the refresh_token)
+### Description: get new accessToken based on refreshToken from initial authorization (refresh_token)
 ###
 
-if($mode == "refreshToken") {
-	$array = array(
-            "grant_type" => "refresh_token",
-            "refresh_token" => $_GET["refresh"],
+if($mode == "refreshToken" && $_GET['refresh']) {
+	
+	$postfields = array(
+		"grant_type"    => "refresh_token",
+		"refresh_token" => $_GET['refresh'],
     );
+	
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
 		CURLOPT_SSL_VERIFYPEER => 0,
@@ -71,17 +82,22 @@ if($mode == "refreshToken") {
 	    CURLOPT_HTTPHEADER => array(
 			"Authorization: Basic ".base64_encode(CLIENT_ID.":".CLIENT_SECRET)
 		),
-        CURLOPT_POSTFIELDS => http_build_query($array)
+        CURLOPT_POSTFIELDS => http_build_query($postfields)
 	));
+	
 	$resp = curl_exec($curl);
     curl_close($curl);
-	echo $resp;
+    
+    echo $resp;
+	
 }
-//////////////////////////////
 
-//show output
-if(!empty($out))
-	echo json_encode($out);
+
+
+
+
+
+
 
 
 ?>

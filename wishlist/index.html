@@ -95,50 +95,7 @@
         if (keyboardEnabled == "true") {
             document.write("<div id=\"virtualKeyboard\"></div>");
         }
-    </script>
-
-    <script type="text/javascript" src="../common/js/jsKeyboard.js"></script>
-
-    <script type="text/javascript">
-        var accessToken = localStorage.getItem("accessToken");
-        var refreshToken = localStorage.getItem("refreshToken");
-        var tokenType = localStorage.getItem("tokenType");
-        var code = GetURLParameter("code");
-
-        if (!accessToken && !code) {
-            var redirect_uri = "http://localhost/wishlist/";
-            var request_uri = "https://accounts.spotify.com/authorize/?client_id=8f1bbdc11b73471c8d2b73947b26e9e9&response_type=code&scope=playlist-modify&redirect_uri=" + redirect_uri;
-            window.location.href = request_uri;
-        }
-
-        if (!accessToken && code) {
-            // get authentication key for playlist access
-            $.ajax({
-                url: "oauth.php?mode=getToken&code=" + code,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    localStorage.setItem("accessToken", data.access_token);
-                    localStorage.setItem("refreshToken", data.refresh_token);
-                    localStorage.setItem("tokenType", data.token_type);
-                    location.reload();
-                }
-            });
-        }
-
-        function refreshAccessToken(rToken) {
-            $.ajax({
-                url: "oauth.php?mode=refreshToken&refresh=" + rToken,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    localStorage.setItem("accessToken", data.access_token);
-                    accessToken = data.access_token;
-                }
-            });
-        }
-
-
+        
         $(function () {
             jsKeyboard.init("virtualKeyboard");
             $("#txtContent").val(initText);
@@ -164,7 +121,58 @@
             }
         }
         var initText = "click to here to start writing...";
+        
+    </script>
 
+    <script type="text/javascript" src="../common/js/jsKeyboard.js"></script>
+
+
+
+    <script type="text/javascript">
+        var clientID = "8f1bbdc11b73471c8d2b73947b26e9e9";
+        
+        var accessToken = localStorage.getItem("spotifyAccessToken");
+        var refreshToken = localStorage.getItem("spotifyRefreshToken");
+        var code = GetURLParameter("code");
+        var redirectUri = location.toString().replace(location.search, ""); //return to this page (but without query string)
+
+		//if neither accessToken nor auth code are given
+        if (!accessToken && !code) {
+            var requestUri = "https://accounts.spotify.com/authorize/?client_id=" + clientID + "&response_type=code&scope=playlist-modify&redirect_uri=" + redirectUri;
+            window.location.href = requestUri;
+        }
+
+		//if no access_token is given but auth code
+        if (!accessToken && code) {
+            $.ajax({
+                url: "json.oauth.php?mode=getToken&code=" + code + "&redirect_uri=" + redirectUri,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    localStorage.setItem("spotifyAccessToken", data.access_token);
+                    localStorage.setItem("spotifyRefreshToken", data.refresh_token);
+                    location.href = redirectUri;
+                }
+            });
+        }
+
+		
+        function refreshAccessToken(rToken) {
+            $.ajax({
+                url: "json.oauth.php?mode=refreshToken&refresh=" + rToken,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    localStorage.setItem("spotifyAccessToken", data.access_token);
+                    accessToken = data.access_token;
+                }
+            });
+        }
+
+
+
+
+		
 
         function showRequestForm() {
             $("#requestForm").css("display", "block");
@@ -182,37 +190,33 @@
                 // API: https://developer.spotify.com/web-api/search-item/
                 // https://ws.spotify.com/search/1/album.json?q=test
                 url: "https://api.spotify.com/v1/search?q=" + search + "&type=track&market=DE",
-                success: dataReceived
+                success: showResults
             });
 
-            function dataReceived(data) {
-                showResults(data);
-            };
         }
 
 
         function showResults(data) {
-            // data is a javascript object with songs, each with "Id" and "Value"
             var html = $('<div id="search-results" class="list-group"></div>');
 
             for (var i in data.tracks.items) {
-                // var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].value + "</a>");
-
-
-                var artists = joinArtists(data.tracks.items[i].artists);
 
                 function joinArtists(allArtists) {
                     var joinedArtists = [];
                     for (var j in allArtists) {
                         joinedArtists.push(allArtists[j].name);
                     }
-                    joinedArtists
 
                     return joinedArtists.join(", ");
-                }
+                }                
+                
+                
+                var artists = joinArtists(data.tracks.items[i].artists);
 
                 var li = $("<li class=\"list-group-item\" songname=\"" + data.tracks.items[i].name + "\" interpret=\"" + artists + "\" album=\"" + data.tracks.items[i].album.name + "\" uri=\"" + data.tracks.items[i].uri + "\"><div class=\"media\"><a class=\"media-left\"  href=\"#\"><img src=" + data.tracks.items[i].album.images[2].url + " height=\"40px\" width=\"40px\" /></a><div class=\"media-body\">" + "<h5>" + artists + " - " + data.tracks.items[i].name + " (" + data.tracks.items[i].album.name + ") <span class=\"badge pull-right\"><span class=\"glyphicon glyphicon-plus\"></span></span></h5>" + "</div></div></li>");
+                
                 html.append(li);
+                
                 li.click(function () {
                     //remove all active elements
                     $("#search-results").children().removeClass("list-group-item-success");
@@ -243,32 +247,43 @@
             triggerGetResults(data[0].value);
         };
 
+
         $("#submitButton").click(function () {
             //send spotify song data to club-playlist
             var spotify_user = "hftlclub";
             var playlistID = "6bLSFDJjzTfEkfMKs9Y6by";
+            
             var songURI = $("#hiddenUri").val();
             var requestURI = "https://api.spotify.com/v1/users/" + spotify_user + "/playlists/" + playlistID + "/tracks?uris=" + songURI;
-            //inset song into spotify-playlist
+            
+            
+            //insert song into spotify-playlist
             $.ajax({
                 url: requestURI,
                 type: 'post',
                 headers: {
-                    Authorization: tokenType + " " + accessToken,
-                    //Authorization : "Bearer "+data,
+                    Authorization: "Bearer " + accessToken,
                 },
                 dataType: 'json',
-                success: function (snap) {
-                    console.info(snap);
-                    refreshAccessToken(refreshToken);
-                }
+                success: insertSuccess
             });
-            $('#successAlert').fadeIn("slow").removeClass('hidden');
-            $("#search-results").empty();
-            $('#SongInput').val('');
-            $('#submitButton').addClass('disabled');
-            $('#successAlert').delay(2000).fadeOut("slow");
+            
+            
+            function insertSuccess(snap){
+	            console.info(snap);
+				
+				//we need a new accessToken
+				refreshAccessToken(refreshToken);
+	            
+	            //show success message
+	            $('#successAlert').fadeIn("slow").removeClass('hidden');
+	            $("#search-results").empty();
+	            $('#SongInput').val('');
+	            $('#submitButton').addClass('disabled');
+	            $('#successAlert').delay(2000).fadeOut("slow");
+			}
         });
+
 
         function GetURLParameter(sParam) {
             var sPageURL = window.location.search.substring(1);

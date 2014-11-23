@@ -29,7 +29,7 @@ if(mysql_num_rows($sql) != 1){
 
 //do something if error occured
 if($error){
-	header("Location: index.php");
+	header("Location: /karaoke/");
 	//echo "Please give valid information.";
 	
 	exit();
@@ -42,7 +42,7 @@ $sql = "INSERT INTO queue (id, songid, singer, timestamp, played) VALUES ('".uni
 mysql_query($sql);
 
 //forward to overview page
-header("Location: index.php");
+header("Location: /karaoke/");
 
 
 

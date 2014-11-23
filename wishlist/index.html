@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HfTL Club - Wunschsong</title>
+
+    <!-- used to start like an app with google chrome on android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Bootstrap -->
+    <link href="../common/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../common/css/bootstrap.cyborg.min.css" rel="stylesheet">
+    <link href="../common/css/style.css" rel="stylesheet">
+    <link href="../common/css/jsKeyboard.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body onload="$('#SongInput').focus();">
+    <div class="container">
+        <form class="form-horizontal" role="form">
+            <div class="row">
+                <div class="page-header">
+                    <h1>Wünsch dir deinen Song!</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="center-block" style="text-align:center;">
+                        <input type="hidden" id="hiddenUri" name="uri" value="" />
+                        <button type="button" id="submitButton" class="btn btn-default btn-lg disabled">
+                            <span class="glyphicon glyphicon-play-circle largeicon"></span>
+                            <br />Song wünschen
+                        </button>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label for="inputSong" class="col-sm-1 control-label">
+                            <h4>Song</h4>
+                        </label>
+                        <div class="col-sm-11" id="Div1">
+                            <div class="input-group input-group-lg">
+                                <!-- class="form-control typeahead" -->
+
+                                <input type="text" class="form-control input-lg" id="SongInput" name="inputSong" onfocus="jsKeyboard.focus(this);clean(this);" ontouchstart="jsKeyboard.focus(this);clean(this);placeholder=''" autocomplete="off" placeholder="Bitte hier einen Song eintragen">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" onclick="$('#SongInput').val('');">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                                </span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="song-search">
+                        <div id="search-results" class="list-group"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="alert alert-success hidden" role="alert" id="successAlert">
+            <p class="text-center">Dein Song wurde erfolgreich eingetragen!</p>
+        </div>
+    </div>
+    <!-- for Keyboard -->
+    <!-- show keyboard  -->
+    <div id="keyboardIcon" onclick="showKeyboard('txtContent');"></div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../common/js/bootstrap.min.js"></script>
+
+
+
+    <!-- Keyboard -->
+    <script type="text/javascript">
+        // check wether to enable onscreeenkeyboard or not
+        var keyboardEnabled = localStorage.getItem("EnableOnscreenKeyboard");
+        if (keyboardEnabled == "true") {
+            document.write("<div id=\"virtualKeyboard\"></div>");
+        }
+        
+        $(function () {
+            jsKeyboard.init("virtualKeyboard");
+            $("#txtContent").val(initText);
+        });
+
+        function focusIt(t) {
+            // define where the cursor is to write character clicked.
+            jsKeyboard.currentElement = $(t);
+            jsKeyboard.show();
+        }
+
+        function showKeyboard(id) {
+            clean($("#" + id));
+            jsKeyboard.currentElement = $("#" + id);
+            jsKeyboard.show();
+        }
+        var isCleaned = false;
+
+        function clean(t) {
+            if (!isCleaned) {
+                $(t).text("");
+                isCleaned = true;
+            }
+        }
+        var initText = "click to here to start writing...";
+        
+    </script>
+
+    <script type="text/javascript" src="../common/js/jsKeyboard.js"></script>
+
+
+
+    <script type="text/javascript">
+        var clientID = "8f1bbdc11b73471c8d2b73947b26e9e9";
+        
+        var accessToken = localStorage.getItem("spotifyAccessToken");
+        var refreshToken = localStorage.getItem("spotifyRefreshToken");
+        var code = GetURLParameter("code");
+        var redirectUri = location.toString().replace(location.search, ""); //return to this page (but without query string)
+
+		//if neither accessToken nor auth code are given
+        if (!accessToken && !code) {
+            var requestUri = "https://accounts.spotify.com/authorize/?client_id=" + clientID + "&response_type=code&scope=playlist-modify&redirect_uri=" + redirectUri;
+            window.location.href = requestUri;
+        }
+
+		//if no access_token is given but auth code
+        if (!accessToken && code) {
+            $.ajax({
+                url: "json.oauth.php?mode=getToken&code=" + code + "&redirect_uri=" + redirectUri,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    localStorage.setItem("spotifyAccessToken", data.access_token);
+                    localStorage.setItem("spotifyRefreshToken", data.refresh_token);
+                    location.href = redirectUri;
+                }
+            });
+        }
+
+		
+        function refreshAccessToken(rToken) {
+            $.ajax({
+                url: "json.oauth.php?mode=refreshToken&refresh=" + rToken,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    localStorage.setItem("spotifyAccessToken", data.access_token);
+                    accessToken = data.access_token;
+                }
+            });
+        }
+
+
+
+
+		
+
+        function showRequestForm() {
+            $("#requestForm").css("display", "block");
+            $("#feedback").css("display", "none");
+            $("#feedback").html("");
+        }
+
+        $("#SongInput").bind('keyup', function (e) {
+            //keyup event des eingabefeldes löst eine triggerGetResults abfrage aus
+            triggerGetResults($("#SongInput").val());
+        });
+
+        function triggerGetResults(search) {
+            $.ajax({
+                // API: https://developer.spotify.com/web-api/search-item/
+                // https://ws.spotify.com/search/1/album.json?q=test
+                url: "https://api.spotify.com/v1/search?q=" + search + "&type=track&market=DE",
+                success: showResults
+            });
+
+        }
+
+
+        function showResults(data) {
+            var html = $('<div id="search-results" class="list-group"></div>');
+
+            for (var i in data.tracks.items) {
+
+                function joinArtists(allArtists) {
+                    var joinedArtists = [];
+                    for (var j in allArtists) {
+                        joinedArtists.push(allArtists[j].name);
+                    }
+
+                    return joinedArtists.join(", ");
+                }                
+                
+                
+                var artists = joinArtists(data.tracks.items[i].artists);
+
+                var li = $("<li class=\"list-group-item\" songname=\"" + data.tracks.items[i].name + "\" interpret=\"" + artists + "\" album=\"" + data.tracks.items[i].album.name + "\" uri=\"" + data.tracks.items[i].uri + "\"><div class=\"media\"><a class=\"media-left\"  href=\"#\"><img src=" + data.tracks.items[i].album.images[2].url + " height=\"40px\" width=\"40px\" /></a><div class=\"media-body\">" + "<h5>" + artists + " - " + data.tracks.items[i].name + " (" + data.tracks.items[i].album.name + ") <span class=\"badge pull-right\"><span class=\"glyphicon glyphicon-plus\"></span></span></h5>" + "</div></div></li>");
+                
+                html.append(li);
+                
+                li.click(function () {
+                    //remove all active elements
+                    $("#search-results").children().removeClass("list-group-item-success");
+                    $("#search-results").children().children(".badge").children(".glyphicon").removeClass("glyphicon-ok");
+                    $("#search-results").children().children(".badge").children(".glyphicon").addClass("glyphicon-plus");
+                    //activate this
+                    $(this).addClass("list-group-item-success");
+                    $(this).children(".badge").children(".glyphicon").addClass("glyphicon-ok");
+
+                    //einzele daten in versteckte felder packen zur Übergabe:
+                    $('input[name=uri]').val($(this).attr("uri"));
+
+                    $('#submitButton').removeClass("disabled");
+
+                    //write activated song to textfield
+                    $('#SongInput').val($(this).text());
+
+                    return false;
+                })
+
+            }
+            $("#song-search").find("div#search-results").remove();
+            $("#song-search").append(html);
+        }
+
+        function dataReceived(data) {
+            $("#SongInput").val(data[0].value);
+            triggerGetResults(data[0].value);
+        };
+
+
+        $("#submitButton").click(function () {
+            //send spotify song data to club-playlist
+            var spotify_user = "hftlclub";
+            var playlistID = "6bLSFDJjzTfEkfMKs9Y6by";
+            
+            var songURI = $("#hiddenUri").val();
+            var requestURI = "https://api.spotify.com/v1/users/" + spotify_user + "/playlists/" + playlistID + "/tracks?uris=" + songURI;
+            
+            
+            //insert song into spotify-playlist
+            $.ajax({
+                url: requestURI,
+                type: 'post',
+                headers: {
+                    Authorization: "Bearer " + accessToken,
+                },
+                dataType: 'json',
+                success: insertSuccess
+            });
+            
+            
+            function insertSuccess(snap){
+	            console.info(snap);
+				
+				//we need a new accessToken
+				refreshAccessToken(refreshToken);
+	            
+	            //show success message
+	            $('#successAlert').fadeIn("slow").removeClass('hidden');
+	            $("#search-results").empty();
+	            $('#SongInput').val('');
+	            $('#submitButton').addClass('disabled');
+	            $('#successAlert').delay(2000).fadeOut("slow");
+			}
+        });
+
+
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

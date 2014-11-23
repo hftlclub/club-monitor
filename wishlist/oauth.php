@@ -24,11 +24,14 @@ $out = array();
 ###
 ### Mode: getToken
 ### Method: GET
-### Description: return all active queue elements (active = not played yet)
 ###
 
 if($mode == "getToken") {
-	
+	$array = array(
+            "grant_type" => "authorization_code",
+            "code" => $_GET["code"],
+            "redirect_uri" => "http://localhost/wishlist/input.html"
+    );
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
 		CURLOPT_SSL_VERIFYPEER => 0,
@@ -40,17 +43,40 @@ if($mode == "getToken") {
 	    CURLOPT_HTTPHEADER => array(
 			"Authorization: Basic ".base64_encode(CLIENT_ID.":".CLIENT_SECRET)
 		),
-		CURLOPT_POSTFIELDS => "grant_type=client_credentials"
+        CURLOPT_POSTFIELDS => http_build_query($array)
 	));
-	
 	$resp = curl_exec($curl);
-	curl_close($curl);
-	
+    curl_close($curl);
 	echo $resp;
-	
 }
 
+###
+### Mode: refreshToken
+### Method: GET
+###
 
+if($mode == "refreshToken") {
+	$array = array(
+            "grant_type" => "refresh_token",
+            "refresh_token" => $_GET["refresh"],
+    );
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+		CURLOPT_SSL_VERIFYPEER => 0,
+		CURLOPT_SSL_VERIFYHOST => 0,
+		CURLOPT_HTTPAUTH => CURLAUTH_ANY,
+    	CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_URL => "https://accounts.spotify.com/api/token",
+	    CURLOPT_POST => 1,
+	    CURLOPT_HTTPHEADER => array(
+			"Authorization: Basic ".base64_encode(CLIENT_ID.":".CLIENT_SECRET)
+		),
+        CURLOPT_POSTFIELDS => http_build_query($array)
+	));
+	$resp = curl_exec($curl);
+    curl_close($curl);
+	echo $resp;
+}
 //////////////////////////////
 
 //show output

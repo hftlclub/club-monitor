@@ -26,7 +26,7 @@
 
 <body onload="$('#SongInput').focus();">
     <div class="container">
-        <form class="form-horizontal" role="form" action="./post_input.php" method="post">
+        <form class="form-horizontal" role="form">
             <div class="row">
                 <div class="page-header">
                     <h1>Wünsch dir deinen Song!</h1>
@@ -36,7 +36,7 @@
                 <div class="col-sm-4">
                     <div class="center-block" style="text-align:center;">
                         <input type="hidden" id="hiddenUri" name="uri" value="" />
-                        <button type="submit" id="submitButton" class="btn btn-default btn-lg disabled">
+                        <button type="button" id="submitButton" class="btn btn-default btn-lg disabled">
                             <span class="glyphicon glyphicon-play-circle largeicon"></span>
                             <br />Song wünschen
                         </button>
@@ -72,10 +72,6 @@
                 </div>
             </div>
         </form>
-        <button class="btn btn-default btn-lg" id="SpotifyLoginBtn">
-            <span class="glyphicon glyphicon-login largeicon"></span>
-            <br />Login
-        </button>
     </div>
     <!-- for Keyboard -->
     <!-- show keyboard  -->
@@ -107,7 +103,7 @@
         var code = GetURLParameter("code");
 
         if (!accessToken && !code) {
-            var redirect_uri = "http://localhost/wishlist/input.html";
+            var redirect_uri = "http://localhost/wishlist/";
             var request_uri = "https://accounts.spotify.com/authorize/?client_id=8f1bbdc11b73471c8d2b73947b26e9e9&response_type=code&scope=playlist-modify&redirect_uri=" + redirect_uri;
             window.location.href = request_uri;
         }

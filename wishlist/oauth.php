@@ -30,7 +30,7 @@ if($mode == "getToken") {
 	$array = array(
             "grant_type" => "authorization_code",
             "code" => $_GET["code"],
-            "redirect_uri" => "http://localhost/wishlist/input.html"
+            "redirect_uri" => "http://localhost/wishlist/"
     );
 	$curl = curl_init();
 	curl_setopt_array($curl, array(

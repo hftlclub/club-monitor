@@ -72,6 +72,9 @@
                 </div>
             </div>
         </form>
+        <div class="alert alert-success hidden" role="alert" id="successAlert">
+            <p class="text-center">Dein Song wurde erfolgreich eingetragen!</p>
+        </div>
     </div>
     <!-- for Keyboard -->
     <!-- show keyboard  -->
@@ -260,6 +263,11 @@
                     refreshAccessToken(refreshToken);
                 }
             });
+            $('#successAlert').fadeIn("slow").removeClass('hidden');
+            $("#search-results").empty();
+            $('#SongInput').val('');
+            $('#submitButton').addClass('disabled');
+            $('#successAlert').delay(2000).fadeOut("slow");
         });
 
         function GetURLParameter(sParam) {

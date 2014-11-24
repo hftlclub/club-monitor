@@ -134,8 +134,7 @@
 
 		//if neither accessToken nor auth code are given
         if (!accessToken && !code) {
-            var requestUri = "https://accounts.spotify.com/authorize/?client_id=" + clientID + "&response_type=code&scope=playlist-modify&redirect_uri=" + redirectUri;
-            window.location.href = requestUri;
+            getAccessToken(clientID, redirectUri);
         }
 
 		//if no access_token is given but auth code
@@ -152,6 +151,20 @@
             });
         }
 
+		
+		function getAccessToken(clientID, redirectUri) {
+			localStorage.removeItem("spotifyAccessToken");
+			accessToken = null;
+			
+            localStorage.removeItem("spotifyRefreshToken");
+            refreshToken = null;
+	            
+            var requestUri = "https://accounts.spotify.com/authorize/?client_id=" + clientID + "&response_type=code&scope=playlist-modify%20playlist-modify-public%20playlist-modify-private&redirect_uri=" + redirectUri;
+            window.location.href = requestUri;
+		}
+		
+		
+		
 		
         function refreshAccessToken(rToken) {
             $.ajax({
@@ -261,7 +274,10 @@
                     Authorization: "Bearer " + accessToken,
                 },
                 dataType: 'json',
-                success: insertSuccess
+                success: insertSuccess,
+                statusCode: {
+                	401: insertError401
+                }
             });
             
             
@@ -278,6 +294,15 @@
 	            $('#submitButton').addClass('disabled');
 	            $('#successAlert').delay(2000).fadeOut("slow");
 			}
+			
+			
+			
+			function insertError401(data) {
+				//unaothorized - token probably expired
+				console.log(JSON.stringify(data));
+				getAccessToken(clientID, redirectUri);
+			}
+			
         });
 
 

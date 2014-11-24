@@ -48,7 +48,7 @@
 		<div ng-controller="QueueController">
 
 	        <div class="row">
-	            <div class="col-xs-12 col-md-8">
+	            <div class="col-xs-12 col-md-8" id="leftColumn">
 	                
 	                
 	                <div class="panel panel-default">
@@ -87,7 +87,7 @@
 	                </div>
 
 	            </div>
-	            <div class="col-xs-12 col-md-4">
+	            <div class="col-xs-12 col-md-4" id="rightColumn">
 	                <div class="center-block" style="text-align:center;">
 	                    <button type="button" class="btn btn-default btn-lg" onclick="window.location.href='./input.html'">
 	                        <span class="glyphicon glyphicon-plus largeicon"></span><br />Song reservieren
@@ -103,6 +103,32 @@
 		</div>
 
 </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<script>
+/*
+open the URL with "?hide=button" to hide the song-select button
+this could be useful for a second non-touch screen (only show next songs)
+*/
+if (GetURLParameter("hide")==="button"){
+    $("#rightColumn").addClass("hidden");
+    $("#leftColumn").removeClass("col-md-8");
+    $("#leftColumn").addClass("col-md-12");
+}
+
+function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+</script>
 
 </body>
 </html>

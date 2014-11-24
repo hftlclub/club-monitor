@@ -46,3 +46,8 @@ span.largeicon {
     max-height: 490px;
     overflow-y: scroll;
 }
+
+
+.page-header {
+    border-bottom-color: #22B10C;
+}

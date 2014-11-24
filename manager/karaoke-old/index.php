@@ -45,7 +45,7 @@ if($mode == "unregister" && !empty($id)){
 <body>
     <div class="container">
         <div class="row">
-            <div class="page-header">
+            <div class="page-header steckerlogo">
                 <h1><button type="button" class="btn btn-default"  onclick="window.location.href='../index.html'">
 						<span class="glyphicon glyphicon-arrow-left"></span>
 					</button> Karaoke <small>Verwaltung</small></h1>

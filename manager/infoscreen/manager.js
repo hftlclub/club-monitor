@@ -22,9 +22,10 @@ function logout(data, status, headers, config) {
 	}
 }
 
-/* Ja, ich benutze jetzt was ganz anderes. Heul doch. */
 
-angular.module('steckerApp', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
+
+
+angular.module('clubScreen', ['ui.sortable', 'ngRoute', 'angularFileUpload'])
 
 .config(function ($routeProvider, $locationProvider) {
 	$routeProvider

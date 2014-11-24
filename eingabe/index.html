@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" ng-app="clubScreen">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,7 +46,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<div class="panel" ng-app="countAndValidate">
+				<div class="panel">
 					<div class="panel-body">
 						<form role="form" id="send-form" name="shortMessageForm">
 							<div class="form-group">
@@ -106,7 +106,7 @@
 
     <!-- counting chars -->
     <script>
-        angular.module('countAndValidate',[])
+        angular.module('clubScreen',[])
             .controller('CountCtrl', ['$scope', function($scope){
                 $scope.message = '';
             }]);

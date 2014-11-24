@@ -2,11 +2,11 @@
 	'use strict';
 	
 	
-	angular.module('karaokeApp', []);
+	angular.module('clubScreen', []);
 	
 	
 	angular
-		.module('karaokeApp')
+		.module('clubScreen')
 		.controller('QueueController', queueController);
 	
 	

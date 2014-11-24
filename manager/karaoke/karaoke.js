@@ -28,11 +28,11 @@ function logout(data, status, headers, config) {
 	'use strict';
 	
 	
-	angular.module('karaokeManager', ['ui.bootstrap', 'ui.bootstrap.modal']);
+	angular.module('clubScreen', ['ui.bootstrap', 'ui.bootstrap.modal']);
 	
 	
 	angular
-		.module('karaokeManager')
+		.module('clubScreen')
 		.controller('QueueController', queueController);
 	
 	

@@ -116,6 +116,7 @@
 
     <script type="text/javascript">
         $(function () {
+	        jsKeyboard.settings.onclick += "triggerGetResults($('#Text2').val());"; //event to be triggered on key click
             jsKeyboard.init("virtualKeyboard");
             $("#txtContent").val(initText);
         });

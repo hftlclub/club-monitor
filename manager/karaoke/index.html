@@ -23,6 +23,9 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-route.js"></script>
 
+	<!-- for Drag and drop -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.12.8/sortable.min.js"></script>
+
 	<!-- additional Angular -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
 	
@@ -85,9 +88,10 @@
 				
 				</div>
 				
-				<ul class="list-group">
-					<li ng-repeat="song in data.queue" ng-click="active.id = song.id" ng-class="{ 'list-group-item-low' : timers[song.id].timer }" class="list-group-item">
+				<ul ng-model="queue" class="list-group" ui-sortable="sortableOptions">
+					<li ng-repeat="song in queue" ng-click="active.id = song.id" ng-class="{ 'list-group-item-low' : timers[song.id].timer }" class="list-group-item">
 						<span class="pull-right" style="font-size: large">
+							
 							<a ng-if="!timers[song.id].timer" class="btn btn-success" ng-click="setPlayed(song.id)" title="Als gespielt markieren">
 								<span class="glyphicon glyphicon-ok"></span>
 								<span>Entfernen</span>
@@ -96,6 +100,18 @@
 							<a ng-if="timers[song.id].timer" class="btn btn-warning" ng-click="timers[song.id].stop()" title="STOP">
 								<span class="glyphicon glyphicon-remove"></span>
 								<span style="font-weight: bold">{{ timers[song.id].timer }}</span>
+							</a>
+							
+							<a class="btn btn-default" ng-disabled="$first" ng-click="moveUpItem($index)" title="nach oben">
+								<span class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+							
+							<a class="btn btn-default" ng-disabled="$last" ng-click="moveDownItem($index)"  title="nach unten">
+								<span class="glyphicon glyphicon-chevron-down"></span>
+							</a>
+							
+							<a ng-if="!hasTouch" class="btn btn-default song-order-handle active" title="Song verschieben">
+								<span class="glyphicon glyphicon-resize-vertical"></span>
 							</a>
 						</span>
 						

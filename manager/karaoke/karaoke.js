@@ -28,7 +28,7 @@ function logout(data, status, headers, config) {
 	'use strict';
 	
 	
-	angular.module('clubScreen', ['ui.bootstrap', 'ui.bootstrap.modal']);
+	angular.module('clubScreen', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.sortable']);
 	
 	
 	angular
@@ -40,10 +40,17 @@ function logout(data, status, headers, config) {
 	
 	function queueController($scope, $http, $q, $timeout, $modal){
 		
+		$scope.hasTouch = isTouchSupported();
+		
 		$scope.refreshQueue = refreshQueue;
 		$scope.intervalFunction = intervalFunction;
 		$scope.setPlayed = setPlayed;
 		$scope.truncateQueue = truncateQueue;
+		
+		$scope.moveDownItem = moveDownItem;
+		$scope.moveUpItem = moveUpItem;
+		$scope.swapItem = swapItem;
+		$scope.submitItemOrder = submitItemOrder;
 		
 		$scope.timers = []; //timer objects for setPlayed countdown
 		
@@ -53,7 +60,7 @@ function logout(data, status, headers, config) {
 			var deferred = $q.defer();
 
 			$http.get('json.queue.php?mode=getQueue&token=' + getToken()).success(function (data) {
-				$scope.data = data;
+				$scope.queue = data.queue;
 				deferred.resolve(data);
 			}).error(logout);
 	
@@ -122,6 +129,52 @@ function logout(data, status, headers, config) {
 
 		//start periodical refresh
 		$scope.intervalFunction();
+		
+		
+		
+		
+		
+		$scope.sortableOptions = {
+			stop: function (e, ui) {
+				$scope.submitItemOrder();
+			},
+			handle: '.song-order-handle',
+			axis: 'y',
+		};
+
+		function moveDownItem(index) {
+			$scope.swapItem(index, index + 1);
+		};
+	
+		function moveUpItem(index) {
+			$scope.swapItem(index, index - 1);
+		};
+	
+		function swapItem(a, b) {
+			var l = $scope.queue;
+			l[a] = l.splice(b, 1, l[a])[0];
+			$scope.submitItemOrder();
+		};
+	
+		function submitItemOrder() {
+			var dout = [];
+	
+			$scope.queue.forEach(function (obj, i) {
+				dout.push({ order: i, id: obj.id });
+			});
+			
+			console.log(JSON.stringify(dout));
+	
+			$http.post('json.queue.php?mode=reorderQueue&token=' + getToken(), dout).success($scope.refreshQueue).error(logout);
+	
+		};
+		
+		
+		
+		
+		
+		
+		
 	
 	}
 	

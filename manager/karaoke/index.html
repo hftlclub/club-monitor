@@ -75,8 +75,8 @@
 				</span>
 				</div>
 				
-				<ul ng-model="queue" class="list-group" ui-sortable="sortableOptions">
-					<li ng-repeat="song in queue" ng-click="active.id = song.id" ng-class="{ 'list-group-item-low' : timers[song.id].timer }" class="list-group-item">
+				<ul ng-model="data.queue" class="list-group" ui-sortable="sortableOptions">
+					<li ng-repeat="song in data.queue" ng-click="active.id = song.id" ng-class="{ 'list-group-item-low' : timers[song.id].timer }" class="list-group-item">
 
 						<span class="pull-right" style="font-size: large">
 							

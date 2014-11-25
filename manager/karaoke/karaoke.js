@@ -60,7 +60,7 @@ function logout(data, status, headers, config) {
 			var deferred = $q.defer();
 
 			$http.get('json.queue.php?mode=getQueue&token=' + getToken()).success(function (data) {
-				$scope.queue = data.queue;
+				$scope.data = data;
 				deferred.resolve(data);
 			}).error(logout);
 	
@@ -151,7 +151,7 @@ function logout(data, status, headers, config) {
 		};
 	
 		function swapItem(a, b) {
-			var l = $scope.queue;
+			var l = $scope.data.queue;
 			l[a] = l.splice(b, 1, l[a])[0];
 			$scope.submitItemOrder();
 		};
@@ -159,11 +159,10 @@ function logout(data, status, headers, config) {
 		function submitItemOrder() {
 			var dout = [];
 	
-			$scope.queue.forEach(function (obj, i) {
+			$scope.data.queue.forEach(function (obj, i) {
 				dout.push({ order: i, id: obj.id });
 			});
-			
-			console.log(JSON.stringify(dout));
+
 	
 			$http.post('json.queue.php?mode=reorderQueue&token=' + getToken(), dout).success($scope.refreshQueue).error(logout);
 	

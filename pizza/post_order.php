@@ -21,8 +21,6 @@ if(!$data['name']){
 	doerror();
 }
 
-
-
 $data['name'] = mysql_real_escape_string($data['name']);
 $insertsql = array();
 

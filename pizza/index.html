@@ -114,6 +114,22 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- Modal for choose Pizzas -->
+<div class="modal fade" id="successModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Bestellung erfolgreich</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Bitte geh zur Bar bezahlen.</h4>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
     <!-- Disable mark text -->
     <script src="../common/js/disable_mark_text.js"></script>
@@ -345,13 +361,18 @@
                 data.pizzas = orders;
                 data.name = $('#input-cart-name').val();
 
+                jsKeyboard.hide();
                 $.ajax({
                     type: "post",
                     url: orderUrl,
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function () {
-                        alert("Bitte geh zur Bar bezahlen.");
+                        $("#successModal").modal();
+                        setTimeout(function() {
+                            $('#successModal').modal('hide');
+                        }, 4000);
+
                         reset_price();
                     },
                     error: function (o, c, m) { alert(m); },
@@ -367,7 +388,6 @@
                 price_all = 0;
                 $("#pay_btn").val("Jetzt zahlungspflichtig bestellen");
             };
-
         });
 
         /*

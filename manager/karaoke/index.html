@@ -25,9 +25,6 @@
 
 	<!-- additional Angular -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
-	
-	
-	
 
 	<script src="karaoke.js"></script>
 
@@ -58,33 +55,22 @@
 				</div>
 			</div>
 		</div>
-
 		<div ng-controller="QueueController">
-			
-			
-			
-			
 			<div class="col-md-12">
-				
 				<div class="well well-sm">
 				<a class="btn btn-success disabled">
 					ausstehend <span class="badge">{{ data.count }}</span>
 				</a>
-				
 				<a class="btn btn-primary disabled">
 					alle <span class="badge">{{ data.countall }}</span>
 				</a>
-				
 				<span class="pull-right">
 					<a ng-class="{ 'disabled' : !data.countall }" class="btn btn-danger" ng-click="truncateQueue()" title="Warteschlange leeren">
 						<span class="glyphicon glyphicon-remove"></span>
 						Warteschlange leeren
 					</a>
 				</span>
-				
-				
 				</div>
-				
 				<ul class="list-group">
 					<li ng-repeat="song in data.queue" ng-click="active.id = song.id" ng-class="{ 'list-group-item-low' : timers[song.id].timer }" class="list-group-item">
 						<span class="pull-right" style="font-size: large">
@@ -92,25 +78,21 @@
 								<span class="glyphicon glyphicon-ok"></span>
 								<span>Entfernen</span>
 							</a>
-							
 							<a ng-if="timers[song.id].timer" class="btn btn-warning" ng-click="timers[song.id].stop()" title="STOP">
 								<span class="glyphicon glyphicon-remove"></span>
 								<span style="font-weight: bold">{{ timers[song.id].timer }}</span>
 							</a>
 						</span>
-						
 						<h4>
 							<span>
 								<span class="glyphicon glyphicon-music"></span> 
 								<span>{{ song.interpret }} - {{ song.title }}</span> 
 							</span>
 						</h4>
-						
 						<small ng-if="song.singer">
 							<span class="glyphicon glyphicon-user"></span>
 							<span>{{ song.singer }}</span>
 						</small>
-						
 					</li>
 				</ul>
 			</div>

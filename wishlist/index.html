@@ -222,7 +222,7 @@
                 
                 var artists = joinArtists(data.tracks.items[i].artists);
 
-                var li = $("<li class=\"list-group-item\" songname=\"" + data.tracks.items[i].name + "\" interpret=\"" + artists + "\" album=\"" + data.tracks.items[i].album.name + "\" uri=\"" + data.tracks.items[i].uri + "\"><div class=\"media\"><a class=\"media-left\"  href=\"#\"><img src=" + data.tracks.items[i].album.images[2].url + " height=\"40px\" width=\"40px\" /></a><div class=\"media-body\">" + "<h5>" + artists + " - " + data.tracks.items[i].name + " (" + data.tracks.items[i].album.name + ") <span class=\"badge pull-right\"><span class=\"glyphicon glyphicon-plus\"></span></span></h5>" + "</div></div></li>");
+                var li = $("<li class=\"list-group-item\" songname=\"" + data.tracks.items[i].name + "\" interpret=\"" + artists + "\" album=\"" + data.tracks.items[i].album.name + "\" uri=\"" + data.tracks.items[i].uri + "\"><div class=\"media\"><a class=\"media-left media-middle pull-left\"  href=\"#\"><img src=" + data.tracks.items[i].album.images[2].url + " height=\"45px\" width=\"45px\" /></a><div class=\"media-body\">" + "<h5>" + artists + " - " + data.tracks.items[i].name + " (" + data.tracks.items[i].album.name + ") <span class=\"badge pull-right\"><span class=\"glyphicon glyphicon-plus\"></span></span></h5>" + "</div></div></li>");
                 
                 html.append(li);
                 

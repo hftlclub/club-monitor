@@ -80,7 +80,7 @@ var jsKeyboard = {
 
             text = (key.isChar != undefined || key.isChar == false) ? key.value : String.fromCharCode(key.value);
 
-            s += "<div class=\"" + bClass + "\" onclick=\"" + onclick + ";triggerGetResults($('#Text2').val());\"><div class=\"" + kClass + "\">" + text + "</div></div>";
+            s += "<div class=\"" + bClass + "\" onclick=\"" + onclick + "\"><div class=\"" + kClass + "\">" + text + "</div></div>";
 
             bClass = ""; kClass = ""; onclick = ""; text = "";
         }

@@ -95,6 +95,7 @@
         }
         
         $(function () {
+            jsKeyboard.settings.onclick += "triggerGetResults($('#SongInput').val());"; //event to be triggered on key click
             jsKeyboard.init("virtualKeyboard");
             $("#txtContent").val(initText);
         });

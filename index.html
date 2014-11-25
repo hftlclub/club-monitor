@@ -120,8 +120,12 @@
             }, 1000);
             renewTimeout();
         }
-         if (GetURLParameter("keyboard") === "on") {
+
+        if (GetURLParameter("keyboard") === "on" || GetURLParameter("keyboard") === "enable") {
             localStorage.setItem("EnableOnscreenKeyboard", "true");
+        }
+        if (GetURLParameter("keyboard") === "off" || GetURLParameter("keyboard") === "disable") {
+            localStorage.setItem("EnableOnscreenKeyboard", "false");
         }
 
         function GetURLParameter(sParam) {

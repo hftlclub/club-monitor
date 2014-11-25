@@ -18,6 +18,13 @@ var jsKeyboard = {
             jsKeyboard.generateKeyboard("default");
 
         jsKeyboard.addKeyDownEvent();
+
+        $(".button").click(function () {
+            if( ($(this).parent("keyboardCapitalLetter")) && (!($(this).hasClass("button_capitalletterleft"))) && (!($(this).hasClass("button_symbolsright")))  && (!($(this).hasClass("button_numberleft")))){
+                console.log("Test");
+                jsKeyboard.changeToSmallLetter();
+            }
+        });
     },
     focus: function(t) {
         jsKeyboard.currentElement = $(t);
@@ -208,4 +215,7 @@ var jsKeyboard = {
             { value: "123", isChar: "false", buttonClass: "button button_numberright", onclick: "jsKeyboard.changeToNumber();", keyClass: "key key_number" }
          ]
     }
-}
+};
+
+
+

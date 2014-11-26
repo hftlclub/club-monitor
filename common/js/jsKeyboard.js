@@ -129,9 +129,11 @@ var jsKeyboard = {
     },
     show: function() {
         $("#keyboard").animate({ "bottom": "0" }, "slow", function() { });
+        $("#keyboard").removeClass("hidden");
     },
     hide: function() {
-        $("#keyboard").animate({ "bottom": "-380px" }, "slow", function() { });
+        //$("#keyboard").animate({ "bottom": "-380px" }, "slow", function() { });
+        $("#keyboard").addClass("hidden");
     },
     defaultKeyboard: {
         capitalLetter:
@@ -175,14 +177,14 @@ var jsKeyboard = {
                 { value: "123", isChar: "false", buttonClass: "button button_numberleft", onclick: "jsKeyboard.changeToNumber();", keyClass: "key key_number" },
             ],
         number: [
-        // 1st row       
+        // 1st row
                 { value: 49 },{ value: 50 },{ value: 51 },{ value: 52 },{ value: 53 },{ value: 54 },
                 { value: 55 },{ value: 56 },{ value: 57 },{ value: 48 },{ value: 124 },
                 { value: "del", isChar: "false", onclick: "jsKeyboard.del()", buttonClass: "button button_del", keyClass: "key key_del" },
         // 2nd row
                 { value: 45, buttonClass: "button button_dash" },{ value: 47 },{ value: 58 },{ value: 59 },
                 { value: 40 },{ value: 41 },{ value: 36 },{ value: 38 },{ value: 64 },
-        
+
                 { value: "ABC", isChar: "false", buttonClass: "button button_capitalletterleft", onclick: "jsKeyboard.changeToCapitalLetter()", keyClass: "key key_capitalletterleft" },
                 { value: 63 },
                 { value: "Enter", isChar: "false", buttonClass: "button button_enter", onclick: "jsKeyboard.enter();", keyClass: "key key_enter" },

@@ -25,7 +25,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body onload="$('#Text2').focus();" >
+<body onload="$('#Text2').focus();" class="hide-scrollbar">
     <div class="container">
         <form class="form-horizontal" role="form" action="./post_input.php" method="post">
             <div class="row">
@@ -169,11 +169,12 @@
 
         function showResults(data) {
             // data is a javascript object with songs, each with "Id" and "Value"
-            var html = $('<div class="list-group scrollable-list-group" id="search-results"></div>');
+            var html = $('<div class="list-group hide-scrollbar" id="search-results"></div>');
             for (var i in data) {
-                var li = $("<a class=\"list-group-item\" trackid=\"" + data[i].id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].value + "</a>");
+                var li = $("<li class=\"list-group-item\" trackid=\"" + data[i].id + "\"><span class=\"badge\"><span class=\"glyphicon glyphicon-ok\"></span></span>" + data[i].value + "</li>");
                 html.append(li);
                 li.click(function () {
+                    jsKeyboard.hide();
                     //remove all active elements
                     $("#search-results").children().removeClass("list-group-item-success");
                     //activate this

@@ -3,7 +3,7 @@
 
 
 //MySQL settings
-define("DATABASE_HOST",       "srv2.malcher-server.de");
+define("DATABASE_HOST",       "srv3.malcher-server.de");
 define("DATABASE_USER",       "club");
 define("DATABASE_PASSWORD",   "");
 define("DATABASE_NAME",       "club");

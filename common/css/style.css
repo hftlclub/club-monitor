@@ -43,10 +43,9 @@ span.largeicon {
 }
 
 #search-results{
-    max-height: 490px;
+    max-height: 327px;
     overflow-y: scroll;
 }
-
 
 .page-header {
     border-bottom-color: #22B10C;

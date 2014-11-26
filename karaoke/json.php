@@ -82,10 +82,8 @@ if($mode == "randomSong") {
 
 if($mode == "getSuggestions" AND $_GET['search']) {
 
-
 	//max number of entries
 	$limit = 100;
-
 
 	$getsearch = mysql_real_escape_string($_GET['search']);
 	$search = explode(" ", $getsearch);

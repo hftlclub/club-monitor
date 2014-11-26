@@ -37,9 +37,23 @@ if($error){
 
 ////////////////////////////
 
+//next order number
+$order = 0;
 
-$sql = "INSERT INTO queue (id, songid, singer, timestamp, played) VALUES ('".uniqid("")."', '".$songid."', '".$singer."', UNIX_TIMESTAMP(), 0);";
-mysql_query($sql);
+$sql = mysql_query("SELECT `order` FROM queue WHERE played = 0 ORDER BY `order` DESC LIMIT 1;");
+error_log("lalalala ".mysql_num_rows($sql));
+if(mysql_num_rows($sql)){
+	$row = mysql_fetch_assoc($sql);
+	if(isset($row['order'])) $order = ($row['order'] + 1);
+	error_log("dfdsfds ".$row['order']);
+}
+
+
+$query = "INSERT INTO queue (id, songid, singer, timestamp, `order`, played) VALUES ('".uniqid("")."', '".$songid."', '".$singer."', UNIX_TIMESTAMP(), ".$order.", 0);";
+
+error_log($query);
+
+mysql_query($query);
 
 //forward to overview page
 header("Location: /karaoke/");

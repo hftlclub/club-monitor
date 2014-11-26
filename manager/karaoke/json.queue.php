@@ -37,7 +37,7 @@ $output = array();
 if($mode == "getQueue") {
 	$out['queue'] = array();
 
-	$query = "SELECT queue.id, queue.singer, queue.timestamp, songlist.interpret, songlist.title FROM queue, songlist WHERE songlist.id = queue.songid AND queue.played = 0 ORDER BY queue.order, queue.timestamp ASC;";
+	$query = "SELECT queue.id, queue.singer, queue.timestamp, songlist.interpret, songlist.title FROM queue, songlist WHERE songlist.id = queue.songid AND queue.played = 0 ORDER BY queue.order ASC;";
 	$sql = mysql_query($query);
 
 	$out['count'] = mysql_num_rows($sql);

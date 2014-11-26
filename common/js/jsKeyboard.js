@@ -128,8 +128,8 @@ var jsKeyboard = {
         jsKeyboard.currentElement.val(t);
     },
     show: function() {
-        $("#keyboard").animate({ "bottom": "0" }, "slow", function() { });
-        $("#keyboard").removeClass("hidden");
+        //$("#keyboard").animate({ "bottom": "5" }, "slow", function() { });
+        $("#keyboard").fadeIn("slow").removeClass("hidden");
     },
     hide: function() {
         //$("#keyboard").animate({ "bottom": "-380px" }, "slow", function() { });

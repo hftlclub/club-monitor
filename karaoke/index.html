@@ -92,9 +92,11 @@
 	                        <span class="glyphicon glyphicon-plus largeicon"></span><br />Song reservieren
 	                    </button>
                         <div class="center-block text-center">
+                        <p class="text-center">
                             <div id="qrcode">
-                                <h4 class="text-left hidden" id="qrHeadline">Jetzt einen Song per <nobr>Smartphone wünschen:</nobr></h4>
+                                <h4 class="text-left" id="qrHeadline">Song per Smartphone wünschen:</h4>
                             </div>
+                        </p>
                         </div>
 	                </div>
 	            </div>
@@ -120,6 +122,8 @@ if (GetURLParameter("hide")==="button"){
     $("#qrHeadline").removeClass("hidden");
     $("#leftColumn").removeClass("col-md-8").addClass("col-md-9");
     $("#rightColumn").removeClass("col-md-4").addClass("col-md-3");
+}
+
 
     var qrcode = new QRCode(document.getElementById("qrcode"), {
         width : 240,
@@ -133,7 +137,6 @@ if (GetURLParameter("hide")==="button"){
 	   qrcode.makeCode(elText);
     }
     makeCode();
-}
 
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);

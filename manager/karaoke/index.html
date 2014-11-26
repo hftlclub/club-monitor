@@ -70,6 +70,11 @@
 					alle <span class="badge">{{ data.countall }}</span>
 				</a>
 				<span class="pull-right">
+					
+					<a class="btn btn-default" ng-click="refreshQueue()" title="Warteschlange aktualisieren">
+								<span class="glyphicon glyphicon-refresh"></span>
+							</a>
+					
 					<a ng-class="{ 'disabled' : !data.countall }" class="btn btn-danger" ng-click="truncateQueue()" title="Warteschlange leeren">
 						<span class="glyphicon glyphicon-remove"></span>
 						Warteschlange leeren

@@ -36,9 +36,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="page-header steckerlogo">
-					<h1>						
+					<h1>
 						HfTL-Club
-						<small>
+						<small onClick="countClicks()">
 							<span class="glyphicon glyphicon-music"></span>
 							Karaoke
 						</small>
@@ -52,7 +52,7 @@
 	        <div class="row">
 	            <div class="col-xs-12 col-md-8" id="leftColumn" style="color:#ffffff">
 	                <div class="panel panel-default">
-  
+
 						<div class="panel-heading">
 							<span class="glyphicon glyphicon-music"></span>
 							&nbsp;
@@ -62,25 +62,25 @@
 								<span class="glyphicon glyphicon-user"></span>
 							</span>
 						</div>
-		                
+
 			            <ul class="list-group">
-							
+
 							<li ng-repeat="song in data.queue" class="list-group-item">
 								<span class="pull-right">
-									
+
 									<small ng-if="song.singer">
 										<span>{{ song.singer }}</span>
 										<span class="glyphicon glyphicon-user"></span>
 									</small>
-									
+
 								</span>
-								
+
 								<span>
 									<span class="badge">{{ $index + 1 }}</span>
 									&nbsp;
-									<span>{{ song.interpret }} &ndash; {{ song.title }}</span> 
+									<span>{{ song.interpret }} &ndash; {{ song.title }}</span>
 								</span>
-								
+
 							</li>
 						</ul>
 	                </div>
@@ -146,10 +146,17 @@ function GetURLParameter(sParam) {
         }
     }
 }
+
+/* go back if span is clicked 5 times */
+var counter = 0;
+function countClicks(){
+	counter +=1;
+	if (counter == 5) {
+		counter = 0;
+		location.href = "../";
+	}
+}
 </script>
 
 </body>
 </html>
-
-
-

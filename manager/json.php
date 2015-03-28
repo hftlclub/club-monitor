@@ -26,36 +26,48 @@ if(!$mode){
 if($mode == "login") {
 	$data = json_decode( file_get_contents('php://input') );
 	
-	$query = mysql_query("SELECT * FROM `options` WHERE `key`='passwords';");
+	$send = json_encode(array(
+		"username" => $data->username,
+		"password" => $data->password,
+	));
+
 	
-	$row = mysql_fetch_assoc ($query);
-	$possiblePasswords = json_decode($row['value']);
+	$ch = curl_init(EXTAUTHURL);
+	curl_setopt($ch, CURLOPT_HEADER, true);
+	curl_setopt($ch, CURLOPT_NOBODY, true);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $send);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+		'Content-Type: application/json',                                                                                
+		'Content-Length: ' . strlen($send))                                                                       
+	);
+	
+	$output = curl_exec($ch);
+	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	curl_close($ch);
+
 	
 	$authenticated = false;
 	
-	foreach($possiblePasswords as $pass)
-	{	
-    if(md5($data->password) == $pass->password)
-    {
-      $authenticated = true;
-      break;
-    }
+	if($httpcode == 200){
+		$authenticated = true;
 	}
 	
-	if($authenticated)
-	{
-    $token = md5(myuniqid());
+	////////////////////////
+	
+	if($authenticated){
+    	$token = md5(myuniqid());
     
-    mysql_query("INSERT INTO `authentication_tokens` (`id`, `token`, `lastused`) VALUES ('".myuniqid()."', '".$token."', CURRENT_TIMESTAMP());");
+		mysql_query("INSERT INTO `authentication_tokens` (`id`, `token`, `lastused`) VALUES ('".myuniqid()."', '".$token."', CURRENT_TIMESTAMP());");
     
-    $output = array(
+		$output = array(
 			"type" => 'success',
 			"token" => $token,
 		); 
 	}
-	else
-	{
-    $output = array(
+	else{
+    	$output = array(
 			"type" => 'failure',
 		); 
 	}

@@ -41,10 +41,13 @@
 				<div class="col-md-12">
 					<div class="form-group">
 						<div class="alert alert-danger" role="alert" id="warningPassword" style="display:none;">
-							<strong>Fehler!</strong> Das eingegebene Passwort passt so nicht...
+							<strong>Fehler!</strong> Login fehlgeschlagen...
 						</div>
 						
 						<form onSubmit="checkLogin(); return false;">
+							<label for="inputUsername">Benutzername</label>
+							<input type="text" class="form-control" id="inputUsername" placeholder="Benutzername">
+							<br>
 							<label for="inputPassword">Passwort</label>
 							<input type="password" class="form-control" id="inputPassword" placeholder="Passwort">
 							<br>
@@ -136,12 +139,13 @@
 		function checkLogin() {
 			var checkUrl = "json.php?mode=login";
 			var pass = $("#inputPassword").val();
+			var user = $("#inputUsername").val();
 
 			$.ajax({
 				type: "POST",
 				url: checkUrl,
 				dataType: "json",
-				data: JSON.stringify({ password: pass }),
+				data: JSON.stringify({ password: pass, username: user}),
 				success: processLogin,
 				error: function (o, c, m) { throw (m); }
 			});

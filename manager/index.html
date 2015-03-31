@@ -43,7 +43,11 @@
 						<div class="alert alert-danger" role="alert" id="warningPassword" style="display:none;">
 							<strong>Fehler!</strong> Login fehlgeschlagen...
 						</div>
-						
+
+            <div class="alert alert-warning" role="alert">
+							<strong>Achtung!</strong> Ab sofort benötigst du deine persönlichen Zugangsdaten (siehe E-Mail)
+						</div>
+
 						<form onSubmit="checkLogin(); return false;">
 							<label for="inputUsername">Benutzername</label>
 							<input type="text" class="form-control" id="inputUsername" placeholder="Benutzername">
@@ -166,7 +170,7 @@
 			var result = "NotFound",
 				tmp = [];
 			location.search
-			//.replace ( "?", "" ) 
+			//.replace ( "?", "" )
 			// this is better, there might be a question mark inside
 			.substr(1)
 				.split("&")

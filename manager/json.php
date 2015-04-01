@@ -31,29 +31,30 @@ if($mode == "login") {
 		"password" => $data->password,
 	));
 
-	
 	$ch = curl_init(EXTAUTHURL);
 	curl_setopt($ch, CURLOPT_HEADER, true);
-	curl_setopt($ch, CURLOPT_NOBODY, true);
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $send);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-		'Content-Type: application/json',                                                                                
-		'Content-Length: ' . strlen($send))                                                                       
-	);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+    curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json' 
+	//	'Content-Length: ' . strlen($send))
+    ));
+
 	
 	$output = curl_exec($ch);
 	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	curl_close($ch);
+    curl_close($ch);
 
+    error_log($httpcode);
 	
 	$authenticated = false;
 	
 	if($httpcode == 200){
 		$authenticated = true;
-	}
-	
+    }
+
 	////////////////////////
 	
 	if($authenticated){

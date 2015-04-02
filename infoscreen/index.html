@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
 	<meta charset="utf-8">
@@ -167,7 +167,7 @@
 
 			<div data-module="highlights">
 				<!-- Image/Next Highlights View -->
-				<div class="row">
+				<div class="row" id="row-header-highlights">
 					<div class="col-md-12">
 						<div class="page-header steckerlogo">
 							<h1>HfTL-Club <small><span class="glyphicon glyphicon-star header"></span> <span data-binding="headline">Highlights</span></small></h1>
@@ -175,9 +175,9 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12" id="highlights-picture-row">
-						<div style="text-align:center;">
-							<img data-binding="picture" src="" height="" />
+					<div class="col-md-12" id="highlights-picture-row"> 
+						<div style="text-align:center;" id="highlights-picture-container">
+							<img data-binding="picture" src="" />
 						</div>
 					</div>
 					<div class="col-md-6" id="highlights-description-row">
@@ -280,11 +280,12 @@
 						case 'highlights':
 							$(document).trigger("tickerResume");
 
+							setHighlightsDivByWindowsize();
+
 							getBindElement('highlights', 'description').html(frame.settings.description);
 							getBindElement('highlights', 'picture')
 								.attr('src', '')
-								.attr('src', '..'+frame.settings.url)
-								.attr('height', windowHeight()-160);
+								.attr('src', '..'+frame.settings.url);
 
 							if(frame.settings.headline) {
 								getBindElement('highlights', 'headline').text(frame.settings.headline);
@@ -616,6 +617,11 @@
 				return 0;
 			}
 
+		}
+
+		function setHighlightsDivByWindowsize() {
+			var heightAvail = windowHeight() - $("#row-header-highlights").height() - 20;
+			$("#highlights-picture-container").css("width", "100%").css("height", heightAvail + "px");
 		}
 	</script>
 

@@ -395,24 +395,25 @@
 
 	<script type="text/javascript">
 		// JS Block for ticker handling
-
+		
 		$(function tickerLogic() {
 			var tickerTimeout = null;
 			var somethingToShow = false;
 
-			showTicker();
-
 			function showTicker()
 			{
-				var tickerUrl = "json.php?mode=ticker";
+			    if(windowWidth() >= 1680) {
+				
+					var tickerUrl = "json.php?mode=ticker";
 
-				$.ajax({
-					type: "get",
-					url: tickerUrl,
-					dataType: "json",
-					success: processTickerData,
-					error: function (o, c, m) { throw(m); }
-				});
+					$.ajax({
+						type: "get",
+						url: tickerUrl,
+						dataType: "json",
+						success: processTickerData,
+						error: function (o, c, m) { throw(m); }
+					});
+				}
 			}
 
 			function processTickerData(data)
@@ -616,7 +617,16 @@
 			} else {
 				return 0;
 			}
-
+		}
+		
+		function windowWidth () {
+			if (window.innerWidth) {
+				return window.innerWidth;
+			} else if (document.body && document.body.offsetWidth) {
+				return document.body.offsetWidth;
+			} else {
+				return 0;
+			}
 		}
 
 		function setHighlightsDivByWindowsize() {

@@ -292,7 +292,15 @@
 							getBindElement('highlights', 'description').html(frame.settings.description);
 							getBindElement('highlights', 'picture')
 								.attr('src', '')
-								.attr('src', '..'+frame.settings.url);
+								.attr('src', '..' + frame.settings.url);
+
+							var img = document.getElementById('highlights-picture-container').firstChild;
+							img.onload = function () {
+								if (img.height > img.width) {
+									img.height = '100%';
+									img.width = 'auto';
+								}
+							};
 
 							if(frame.settings.headline) {
 								getBindElement('highlights', 'headline').text(frame.settings.headline);

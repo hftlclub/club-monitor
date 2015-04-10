@@ -295,6 +295,7 @@
 									var aspectRatioContainer = $('#highlights-picture-container').width() / $('#highlights-picture-container').height();
 									var aspectRatioPicture = $('#highlights-picture-container').find('img').first().width() / $('#highlights-picture-container').find('img').first().height();
 									if (aspectRatioContainer > aspectRatioPicture) {
+										var img = $('#highlights-picture-container').find('img').first();
 										img.height = '100%';
 										img.width = 'auto';
 									}

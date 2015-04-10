@@ -291,18 +291,15 @@
 
 							getBindElement('highlights', 'description').html(frame.settings.description);
 							getBindElement('highlights', 'picture')
-								.attr('src', '')
+								.attr('src', '').one("load", function () {
+									var aspectRatioContainer = $('#highlights-picture-container').width() / $('#highlights-picture-container').height();
+									var aspectRatioPicture = $('#highlights-picture-container').find('img').first().width() / $('#highlights-picture-container').find('img').first().height();
+									if (aspectRatioContainer > aspectRatioPicture) {
+										img.height = '100%';
+										img.width = 'auto';
+									}
+								})
 								.attr('src', '..' + frame.settings.url);
-
-							var img = document.getElementById('highlights-picture-container').firstChild;
-							img.onload = function () {
-								var aspectRatioContainer = $('#highlights-picture-container').width() / $('#highlights-picture-container').height();
-								var aspectRatioPicture = $('#highlights-picture-container').find('img').first().width() / $('#highlights-picture-container').find('img').first().height();
-								if (aspectRatioContainer > aspectRatioPicture) {
-									img.height = '100%';
-									img.width = 'auto';
-								}
-							};
 
 							if(frame.settings.headline) {
 								getBindElement('highlights', 'headline').text(frame.settings.headline);

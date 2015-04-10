@@ -296,7 +296,9 @@
 
 							var img = document.getElementById('highlights-picture-container').firstChild;
 							img.onload = function () {
-								if (img.height > img.width) {
+								var aspectRatioContainer = $('#highlights-picture-container').width() / $('#highlights-picture-container').height();
+								var aspectRatioPicture = $('#highlights-picture-container').find('img').first().width() / $('#highlights-picture-container').find('img').first().height();
+								if (aspectRatioContainer > aspectRatioPicture) {
 									img.height = '100%';
 									img.width = 'auto';
 								}

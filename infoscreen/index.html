@@ -296,11 +296,11 @@
 									var aspectRatioPicture = $('#highlights-picture-container').find('img').first().width() / $('#highlights-picture-container').find('img').first().height();
 									var img = $('#highlights-picture-container').find('img').first();
 									if (aspectRatioContainer > aspectRatioPicture) {
-										img.height = '100%';
-										img.width = 'auto';
+										img.height('100%');
+										img.width('auto');
 									} else {
-										img.width = '100%';
-										img.height = 'auto';
+										img.width('100%');
+										img.height('auto');
 									}
 								})
 								.attr('src', '..' + frame.settings.url);

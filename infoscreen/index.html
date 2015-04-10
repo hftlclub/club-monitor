@@ -38,6 +38,13 @@
 			padding: 0px 10px;
 		}
 
+		@media (min-width: 1000px) {
+
+			#drinks-notes p {
+				font-size: 10pt;
+			}
+		}
+
 		@media (min-width: 1900px) {
 			body {
 				font-size: 300%;
@@ -100,7 +107,7 @@
 
 
 				<div id="drinks-notes">
-					<p style="font-size: 17pt;">
+					<p>
 						Für unsere Gläser erheben wir 1 EUR Pfand, für Weizengläser sind es 2 EUR.<br>
 						Zusatzstoffe: <span id="additives"></span>
 					</p>
@@ -413,7 +420,10 @@
 						success: processTickerData,
 						error: function (o, c, m) { throw(m); }
 					});
-				}
+			    }
+			    else {
+			    	pauseTicker();
+			    }
 			}
 
 			function processTickerData(data)

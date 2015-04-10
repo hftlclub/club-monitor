@@ -294,10 +294,13 @@
 								.attr('src', '').one("load", function () {
 									var aspectRatioContainer = $('#highlights-picture-container').width() / $('#highlights-picture-container').height();
 									var aspectRatioPicture = $('#highlights-picture-container').find('img').first().width() / $('#highlights-picture-container').find('img').first().height();
+									var img = $('#highlights-picture-container').find('img').first();
 									if (aspectRatioContainer > aspectRatioPicture) {
-										var img = $('#highlights-picture-container').find('img').first();
 										img.height = '100%';
 										img.width = 'auto';
+									} else {
+										img.width = '100%';
+										img.height = 'auto';
 									}
 								})
 								.attr('src', '..' + frame.settings.url);

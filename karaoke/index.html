@@ -51,7 +51,7 @@
 
 	        <div class="row">
 	            <div class="col-xs-12 col-md-8" id="leftColumn" style="color:#ffffff">
-	                <div class="panel panel-default">
+	                <div class="panel panel-default" id="songContainer">
 
 						<div class="panel-heading">
 							<span class="glyphicon glyphicon-music"></span>
@@ -61,7 +61,11 @@
 								<span>Sänger</span>
 								<span class="glyphicon glyphicon-user"></span>
 							</span>
+
+
 						</div>
+
+
 
 			            <ul class="list-group">
 
@@ -84,8 +88,8 @@
 							</li>
 						</ul>
 	                </div>
-
 	            </div>
+
 	            <div class="col-xs-12 col-md-4" id="rightColumn">
 	                <div class="center-block" style="text-align:center;">
 	                    <button type="button" class="btn btn-default btn-lg" id="addNewSong" onclick="window.location.href='./input.html'">
@@ -100,6 +104,15 @@
 	            </div>
 	        </div>
 		</div>
+</div>
+
+<div id="scrollButtons">
+	<a class="btn btn-default pull-right" style="position: fixed; bottom: 50px; right: 10px;" onclick="window.scrollBy(0, -300);">
+		<span class="glyphicon glyphicon-chevron-up"></span>
+	</a>
+	<a class="btn btn-default pull-right" style="position: fixed; bottom: 10px; right: 10px;" onclick="window.scrollBy(0, 300);">
+		<span class="glyphicon glyphicon-chevron-down"></span>
+	</a>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

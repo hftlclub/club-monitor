@@ -27,7 +27,7 @@
 </head>
 <body onload="$('#Text2').focus();" class="hide-scrollbar">
     <div class="container">
-        <form class="form-horizontal" role="form" action="./post_input.php" method="post">
+        <form class="form-horizontal" role="form" onsubmit="return checkForm();" action="./post_input.php" method="post">
             <div class="row">
                 <div class="page-header steckerlogo">
                     <h1>Song reservieren</h1>
@@ -118,7 +118,7 @@
 
     <script type="text/javascript">
         $(function () {
-	        jsKeyboard.settings.onclick += "triggerGetResults($('#Text2').val());"; //event to be triggered on key click
+            jsKeyboard.settings.onclick += "triggerGetResults($('#Text2').val());"; //event to be triggered on key click
             jsKeyboard.init("virtualKeyboard");
             $("#txtContent").val(initText);
         });
@@ -142,8 +142,19 @@
             }
         }
         var initText = "click to here to start writing...";
-
-
+        
+        function checkForm() {
+            if($('#Text1').val().length < 3)
+            {
+                $('#Text1').parent().parent().parent().addClass('has-warning');
+                $('#Text1').attr('placeholder','Wer will denn singen???').val('');
+                return false;
+            } else {
+                $('#Text1').parent().parent().parent().removeClass('has-warning');
+                return true;
+            }
+        }
+        
         function showRequestForm() {
             $("#requestForm").css("display", "block");
             $("#feedback").css("display", "none");

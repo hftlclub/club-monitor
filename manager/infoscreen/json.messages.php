@@ -82,7 +82,12 @@ if($mode == "retrieve") {
 	$output['msgcountinactive'] = intval(mysql_result($sql, 0));
 	
 	//pagecount
-	$output['pagecount'] = ceil($output['msgcount'] / $perpage);
+	$output['pagecount'] = ceil(count($output['messages']) / $perpage); 
+	// also das macht hier noch keinen richtigen Sinn.
+	// das schwierige ist, man braucht eine andere Query 
+	// je nach ausgewählten Filtern um die Gesamtzahl an 
+	// Einträgen ermitteln zu können...
+	// Aber im Frontend scheint eine Pagination ja sowieso noch nicht eingebaut zu sein :D
 }
 
 

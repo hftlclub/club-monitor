@@ -117,6 +117,9 @@ if($mode == "timeline"){
 		if($tl_row['moduleid']) {
 			$mod_sql = mysql_query("SELECT * FROM module_".$tl_row['type']." WHERE id = '".$tl_row['moduleid']."' LIMIT 1;");
 			$settings = mysql_fetch_assoc($mod_sql);
+			if($tl_row['type'] == 'highlights'){
+				$settings['url'] = UPLOADED_RESSOURCES_URLPREFIX . $settings['url'];
+			}
 		} else {
 			$settings = array();
 		}

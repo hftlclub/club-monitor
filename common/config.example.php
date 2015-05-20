@@ -14,7 +14,8 @@ define("PIZZA_PRICE", 5);
 
 //Infoscreen
 define("TICKER_MAXVIEWS", 26);
-
+define("UPLOADED_RESSOURCES_URLPREFIX", "");
+//define("UPLOADED_RESSOURCES_URLPREFIX", "https://screen.hftl.club");
 
 //connect to MySQLServer
 $dbc = mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD);

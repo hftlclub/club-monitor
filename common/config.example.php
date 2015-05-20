@@ -17,6 +17,9 @@ define("TICKER_MAXVIEWS", 26);
 define("UPLOADED_RESSOURCES_URLPREFIX", "");
 //define("UPLOADED_RESSOURCES_URLPREFIX", "https://screen.hftl.club");
 
+//External Auth Endpoint
+define("EXTAUTHURL", "http://localhost:3000/api/login/external/club");
+
 //connect to MySQLServer
 $dbc = mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD);
 mysql_set_charset("utf8", $dbc);

@@ -9,7 +9,7 @@ header("Content-Type: application/json");
 header("Expires: ".gmdate("D, d M Y H:i:s \G\M\T", time() - 3600));
 
 $mode = mysql_real_escape_string($_GET['mode']);
-$token = mysql_real_escape_string($_GET['token']);
+//$token = mysql_real_escape_string($_GET['token']); we dont need it later in this script!?
 
 
 

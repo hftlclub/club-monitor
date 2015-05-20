@@ -42,9 +42,12 @@ if($mode == "login") {
 	//	'Content-Length: ' . strlen($send))
     ));
 
+	ich gehcurl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // is only needed on windows based servers?
 	
 	$output = curl_exec($ch);
 	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	echo curl_error($ch);
+	
     curl_close($ch);
 
     error_log($httpcode);

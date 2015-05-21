@@ -9,7 +9,6 @@ header("Content-Type: application/json");
 header("Expires: ".gmdate("D, d M Y H:i:s \G\M\T", time() - 3600));
 
 $mode = mysql_real_escape_string($_GET['mode']);
-//$token = mysql_real_escape_string($_GET['token']); we dont need it later in this script!?
 
 
 
@@ -45,6 +44,23 @@ if($mode == "getQueue") {
 	$out['countall'] = intval(mysql_result($sql, 0));
 }
 
+
+
+###
+### Mode: getSongInputStatus
+### Method: GET
+### Description: return true if currently song inputs can be done by the front-end users
+###
+
+if($mode == "getSongInputStatus") {
+	$out['songInputActive'] = false;
+
+	$query = "SELECT `value` FROM `options` WHERE `key` = 'karaoke_songInputActive';";
+	$sql = mysql_query($query);
+
+	$row = mysql_fetch_object($sql);
+    $out['songInputActive'] = filter_var($row->value, FILTER_VALIDATE_BOOLEAN);
+}
 
 
 ###

@@ -87,7 +87,7 @@
 
 	            </div>
 	            <div class="col-xs-12 col-md-4" id="rightColumn">
-	                <div class="center-block" style="text-align:center;">
+	                <div ng-if="!songInputDisabled" class="center-block" style="text-align:center;">
 	                    <button type="button" class="btn btn-default btn-lg" id="addNewSong" onclick="window.location.href='./input.html'">
 	                        <span class="glyphicon glyphicon-plus largeicon"></span><br />Song reservieren
 	                    </button>
@@ -96,6 +96,9 @@
                                 <h4 class="text-left" id="qrHeadline">Song per Smartphone wünschen:</h4>
                             </div>
                         </div>
+	                </div>
+                    <div ng-if="songInputDisabled" class="center-block">
+	                    <div class="alert alert-warning" role="alert"><strong>Feierabend!</strong> Der Karaoke-Moderator hat die Eingabe weiterer Songwünsche für heute leider deaktiviert. Ihr müsst ihn wohl überreden Überstunden einzulegen...</div>
 	                </div>
 	            </div>
 	        </div>

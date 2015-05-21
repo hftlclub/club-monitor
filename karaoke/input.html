@@ -33,7 +33,7 @@
                     <h1>Song reservieren</h1>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="inputFormRow" style="display: none;">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="inputSinger" class="col-sm-3 control-label"><h4>Dein Name</h4></label>
@@ -85,6 +85,19 @@
                     <div id="song-search">
                         <div id="search-results" class="list-group"></div>
                     </div>
+                </div>
+            </div>
+            <div class="row" id="inputDisabledRow" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Feierabend!</strong> 
+                        Der Karaoke-Moderator hat die Eingabe weiterer Songwünsche für heute leider deaktiviert. Ihr müsst ihn wohl überreden Überstunden einzulegen...
+                    </div>
+                    <span class="center-block" style="text-align:center;">
+                        <button type="reset" class="btn btn-default btn-lg" onclick="window.location.href='/karaoke/'">
+                            <span class="glyphicon glyphicon-th-list largeicon"></span><br />zur Liste
+                        </button>
+                    </span>
                 </div>
             </div>
         </form>
@@ -154,6 +167,24 @@
                 return true;
             }
         }
+        
+        $(checkSongInputStatus);
+        function checkSongInputStatus() {
+			$.ajax({
+				url: "json.php?mode=getSongInputStatus",
+				success: checkSongInputStatusReceived
+			});
+
+			function checkSongInputStatusReceived(data) {
+				if(data.songInputActive) {
+                    $("#inputFormRow").show();
+                    $("#inputDisabledRow").hide();
+                }else{
+                    $("#inputFormRow").hide();
+                    $("#inputDisabledRow").show();
+                }
+			};
+		}
         
         function showRequestForm() {
             $("#requestForm").css("display", "block");

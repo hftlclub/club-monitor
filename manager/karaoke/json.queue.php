@@ -27,6 +27,34 @@ if(!$token || !checkAuthenticationToken($token)){
 
 $output = array();
 
+###
+### Mode: getSongInputStatus
+### Method: GET
+### Description: return true if currently song inputs can be done by the front-end users
+###
+
+if($mode == "getSongInputStatus") {
+	$out['songInputActive'] = false;
+
+	$query = "SELECT `value` FROM `options` WHERE `key` = 'karaoke_songInputActive';";
+	$sql = mysql_query($query);
+
+	$row = mysql_fetch_object($sql);
+    $out['songInputActive'] = filter_var($row->value, FILTER_VALIDATE_BOOLEAN);
+}
+
+###
+### Mode: setSongInputStatus
+### Method: POST
+### Description: sets if currently song inputs can be done by the front-end users
+###
+
+if($mode == "setSongInputStatus") {
+    $content = json_decode(file_get_contents("php://input"));
+    $query = "UPDATE `options` SET `value` = '".mysql_real_escape_string($content->songInputActive)."' WHERE `options`.`key` = 'karaoke_songInputActive';";
+	$sql = mysql_query($query);
+}
+
 
 ###
 ### Mode: getQueue

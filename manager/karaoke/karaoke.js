@@ -52,6 +52,8 @@ function logout(data, status, headers, config) {
 		$scope.swapItem = swapItem;
 		$scope.submitItemOrder = submitItemOrder;
 		
+        $scope.toggleSongInput = toggleSongInput;
+        
 		$scope.timers = []; //timer objects for setPlayed countdown
 		
 		
@@ -68,6 +70,24 @@ function logout(data, status, headers, config) {
 		}		
 		
 		
+        //instantiate songInputStatus
+        $http.post('json.queue.php?mode=getSongInputStatus&token=' + getToken()).success(function(data){
+            if(data.songInputActive) {
+                $scope.songInputDisabled = false;
+            }else{
+                $scope.songInputDisabled = true;
+            }
+        }).error(logout);
+        
+        function toggleSongInput() {
+            if($scope.songInputDisabled) {
+                $http.post('json.queue.php?mode=setSongInputStatus&token=' + getToken(), { songInputActive: 'true' }).success(function(){$scope.songInputDisabled = false;}).error(logout);
+            }else{
+                $http.post('json.queue.php?mode=setSongInputStatus&token=' + getToken(), { songInputActive: 'false' }).success(function(){$scope.songInputDisabled = true;}).error(logout);
+            }
+            
+        }
+        
 		
 		function setPlayed(id) {
 			//init timer

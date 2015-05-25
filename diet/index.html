@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- used to start like an app with google chrome on android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+	<title>HfTL-Club - Getränkeliste</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="../common/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../common/css/bootstrap.cyborg.min.css">
+	<link rel="stylesheet" href="../common/css/style.css">
+
+    <link rel="icon" href="./common/pictures/fav.ico">
+
+	<style type="text/css">
+		#ticker-row {
+			position: fixed;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.7);
+			color: #fff;
+			padding: 10px;
+		}
+
+		/*	#ticker-row::before {
+			background: black;
+			opacity: 0.5;
+			height: 50px;
+
+		}*/
+
+		.glyphicon.header {
+			color: #22B10C;
+			padding: 0px 10px;
+		}
+
+		@media (min-width: 1000px) {
+
+			#drinks-notes p {
+				font-size: 10pt;
+			}
+		}
+
+		@media (min-width: 1900px) {
+			body {
+				font-size: 300%;
+				overflow: hidden;
+			}
+
+			h1 {
+				font-size: 60px;
+			}
+
+			#drinks-notes p {
+				font-size: 17pt;
+			}
+
+			.large-text {
+				font-size: 30pt;
+			}
+
+			.normal-text {
+				font-size: 30pt;
+			}
+
+			#ticker-row {
+			}
+			
+			.glyphicon.header {
+				padding: 0px 20px;
+			}
+		}
+	</style>
+
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<script type="text/javascript" src="../common/js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="../common/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div id="stecker"></div>
+
+		<div id="modules">
+			<div data-module="drinks">
+				<!-- Getränkekarten View -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="page-header steckerlogo">
+							<h1>HfTL-Club <small><span class="glyphicon glyphicon-glass header"></span> Getränkekarte</small></h1>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" id="catlist"></div>
+
+
+				<div id="drinks-notes">
+					<p>
+						Für unsere Gläser erheben wir 1 EUR Pfand, für Weizengläser sind es 2 EUR.<br>
+						Zusatzstoffe: <span id="additives"></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		// JS block for drink list logic
+		$(function orderLogic() {
+			var dataUrl = "json.php?mode=drinks";
+
+			$.ajax({
+				type: "get",
+				url: dataUrl,
+				dataType: "json",
+				success: processData,
+				error: function (o, c, m) { alert(m); }
+			});
+
+
+			function processData(data) {
+				//the view container
+				var $catlist = $("#catlist");
+
+				var cols = {
+					'left': {
+						'size' : 0,
+						'$el' : $('<div>').addClass('col-md-6'),
+					},
+					'right': {
+						'size' : 0,
+						'$el' : $('<div>').addClass('col-md-6'),
+					},
+				};
+
+				$catlist.append(cols.left.$el);
+				$catlist.append(cols.right.$el);
+
+				data.categories.sort(function(a, b){
+					if( a.drinks.length > b.drinks.length )
+						return -1;
+
+					if( a.drinks.length < b.drinks.length )
+						return 1;
+
+					return 0;
+
+				});
+
+				console.log(data.categories);
+
+				//go through categories
+				$.each(data.categories, function (i, cat) {
+					//initialize table
+					var $table = $("<table>")
+                    	.addClass("table");
+
+					var groups = {};
+
+					//go through drinks and make table
+					$.each(cat.drinks, function (i, drink) {
+
+						var $label = $("<span>").text(drink.name);
+						if(drink.additives != null)
+							$label.after($("<sup>").text(drink.additives.join(", ")));
+
+						if(groups[drink.group]) {
+							groups[drink.group].append(" / ").append($label);
+						}
+						else {
+							var $td = $("<td>").append($label);
+							var $tr = $("<tr>")
+								.append(
+									$td
+								).append(
+									$("<td style='width:20%; text-align:right;'>").text(drink.size)
+								)
+								.append(
+									$("<td style='width:20%; text-align:right;'>").text(parsePrice(drink.price))
+								);
+
+							$table.append($tr);
+							if(drink.group)
+								groups[drink.group] = $td;
+						}
+
+					});
+
+
+					if(cols.right.size >= cols.left.size)
+						var col = cols.left;
+					else
+						var col = cols.right;
+
+					col.size = col.size + cat.drinks.length;
+					//build the category box
+					col.$el.append(
+									$("<div>")
+										.addClass("panel panel-default panel-pizza")
+										.append(
+											$("<div>")
+												.addClass("panel-heading")
+												.text(cat.name)
+										)
+										.append($table)
+                    );
+
+
+					//build additives list for footer
+					var $add_text = "";
+
+					var len = data.additives.length;
+					$.each(data.additives, function (i, item) {
+						$add_text += item.index + " - " + item.name;
+						if(i < len - 1) {
+							$add_text += ", ";
+						}
+					});
+
+					$("#additives").text($add_text);
+
+				});
+
+				if(cols.right.size >= cols.left.size)
+					cols.left.$el.append($('#drinks-notes'));
+				else
+					cols.right.$el.append($('#drinks-notes'));
+
+			}
+
+
+			//parse float value to price string: 1.5 to 1,50 EUR
+			function parsePrice(price){
+				retval = parseFloat(price, 10).toFixed(2).toString()
+				retval = retval.replace(".", ",");
+				retval += " EUR";
+
+				return retval;
+			}
+
+
+
+		});
+
+	</script>
+
+	<script type="text/javascript">
+		// global JS block
+
+		function windowHeight () {
+			if (window.innerHeight) {
+				return window.innerHeight;
+			} else if (document.body && document.body.offsetHeight) {
+				return document.body.offsetHeight;
+			} else {
+				return 0;
+			}
+		}
+	</script>
+
+</body>
+</html>

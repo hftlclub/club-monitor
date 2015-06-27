@@ -52,7 +52,7 @@ if($mode == "drinks"){
 	if(mysql_num_rows($cat_sql)){ //only proceed if there are results
 		//go through categories
 		while($cat_row = mysql_fetch_assoc($cat_sql)){
-			$drinks_sql = mysql_query("SELECT id, name, price, size, `group` FROM drinks_drinks WHERE category = '".$cat_row['id']."';");
+			$drinks_sql = mysql_query("SELECT id, name, price, size, `group` FROM drinks_drinks WHERE category = '".$cat_row['id']."' and not inactive;");
 			
 			//only add this category if it contains any drinks
 			if(mysql_num_rows($drinks_sql)){

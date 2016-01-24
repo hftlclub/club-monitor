@@ -44,10 +44,6 @@
 							<strong>Fehler!</strong> Login fehlgeschlagen...
 						</div>
 
-            <div class="alert alert-warning" role="alert">
-							<strong>Achtung!</strong> Ab sofort benötigst du deine persönlichen Zugangsdaten (siehe E-Mail)
-						</div>
-
 						<form onSubmit="checkLogin(); return false;">
 							<label for="inputUsername">Benutzername</label>
 							<input type="text" class="form-control" id="inputUsername" placeholder="Benutzername">
@@ -70,6 +66,7 @@
 						<button type="button" class="btn btn-default" onclick="window.location.href='../index.html'">
 							<span class="glyphicon glyphicon-arrow-left"></span>
 						</button> HfTL-Club <small>Club Manager</small>
+						<button class="btn btn-warning pull-right" onclick="logout()">Logout</button>
 					</h1>
 
 				</div>
@@ -153,6 +150,11 @@
 				success: processLogin,
 				error: function (o, c, m) { throw (m); }
 			});
+		}
+
+		function logout(){
+			localStorage.removeItem('accessToken');
+			location.reload();
 		}
 
 		function processLogin(response) {

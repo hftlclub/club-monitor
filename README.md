@@ -1,7 +1,7 @@
-# Touchscreen project for HfTL Club
+# Touchscreen project for Stecker student club
 **2014 by Ferdinand Malcher, Tilmann Bach, Sven Walter, Danny Koppenhagen**
 
-This project aims to provide a user interface and manager application for [HfTL Club](http://club.hft-leipzig.de).
+This project aims to provide a user interface and manager application for the [Stecker](http://club.hft-leipzig.de) student club.
 If you have any suggestions, please feel free to contribute!
 
 ## Features

@@ -199,7 +199,10 @@
                 // API: https://developer.spotify.com/web-api/search-item/
                 // https://ws.spotify.com/search/1/album.json?q=test
                 url: "https://api.spotify.com/v1/search?q=" + search + "&type=track&market=DE",
-                success: showResults
+                success: showResults,
+		headers: {
+                    Authorization: "Bearer " + accessToken,
+                }
             });
 
         }
@@ -260,7 +263,7 @@
         $("#submitButton").click(function () {
             //send spotify song data to club-playlist
             var spotify_user = "hftlclub";
-            var playlistID = "6bLSFDJjzTfEkfMKs9Y6by";
+            var playlistID = "34DM2NLJz2aIm8U7h77WIP";
             
             var songURI = $("#hiddenUri").val();
             var requestURI = "https://api.spotify.com/v1/users/" + spotify_user + "/playlists/" + playlistID + "/tracks?uris=" + songURI;

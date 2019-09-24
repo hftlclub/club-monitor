@@ -1,0 +1,23 @@
+version: "3"
+services:
+  stecker-club-monitor:
+#    depends_on:
+#      - stecker-cdn
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: "club-monitor"
+    hostname: club-monitor
+    ports:
+      - "8082:80"
+    labels:
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:club-monitor.localhost"
+    networks:
+      - stecker
+networks:
+  stecker:
+    external: true
+
+
+  

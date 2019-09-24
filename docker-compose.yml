@@ -25,11 +25,8 @@ services:
     volumes:
        - /var/lib/steckercontent/mysql/club-monitor:/var/lib/mysql
     restart: always
-    environment:
-       MYSQL_ROOT_PASSWORD: 9W45IZLUO8SxFzK2
-       MYSQL_DATABASE: clubmonitor
-       MYSQL_USER: clubmonitor
-       MYSQL_PASSWORD: 7IFh5NSXefY0C86U
+    env_file:
+       - sqlpwd.env
 
 
 

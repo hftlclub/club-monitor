@@ -8,13 +8,31 @@ services:
       dockerfile: ./Dockerfile
     image: "club-monitor"
     hostname: club-monitor
+    links:
+      - club-monitor-db:mysql
     ports:
       - "8082:80"
+    volumes:
+      - /var/lib/steckercontent/storage/club-monitor/uploads:/var/www/html/common/uploads/
+      - /var/lib/steckercontent/storage/club-monitor/config.php:/var/www/html/common/config.php
     labels:
       traefik.enable: "true"
-      traefik.frontend.rule: "Host:club-monitor.localhost"
+      traefik.frontend.rule: "PathPrefixStrip:/club-monitor"
     networks:
       - stecker
+  club-monitor-db:
+    image: mysql:5.7
+    volumes:
+       - /var/lib/steckercontent/mysql/club-monitor:/var/lib/mysql
+    restart: always
+    environment:
+       MYSQL_ROOT_PASSWORD: 9W45IZLUO8SxFzK2
+       MYSQL_DATABASE: clubmonitor
+       MYSQL_USER: clubmonitor
+       MYSQL_PASSWORD: 7IFh5NSXefY0C86U
+
+
+
 networks:
   stecker:
     external: true

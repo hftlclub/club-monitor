@@ -26,7 +26,7 @@ if(!$mode){
 if($mode == "login") {
 	$data = json_decode( file_get_contents('php://input') );
 	
-	$send = json_encode(array(
+/*	$send = json_encode(array(
 		"username" => $data->username,
 		"password" => $data->password,
 	));
@@ -51,12 +51,19 @@ if($mode == "login") {
     curl_close($ch);
 
     error_log($httpcode);
-	
+ 	
 	$authenticated = false;
 	
 	if($httpcode == 200){
 		$authenticated = true;
-    }
+	}*/
+
+
+	////////////////////////
+	$authenticated = false;
+	if ($data->username == LOGINUSER && $data->password == LOGINPASSWORD) {
+	  $authenticated = true;
+	}
 
 	////////////////////////
 	

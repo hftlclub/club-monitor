@@ -26,7 +26,7 @@ if(!$mode){
 if($mode == "login") {
 	$data = json_decode( file_get_contents('php://input') );
 	
-/*	$send = json_encode(array(
+	$send = json_encode(array(
 		"username" => $data->username,
 		"password" => $data->password,
 	));
@@ -35,37 +35,26 @@ if($mode == "login") {
 	curl_setopt($ch, CURLOPT_HEADER, true);
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $send);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-    curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type: application/json' 
-	//	'Content-Length: ' . strlen($send))
-    ));
+		'Content-Type: application/json',
+		'Content-Length: ' . strlen($send)
+    	));
 
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // is only needed on windows based servers?
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 	
 	$output = curl_exec($ch);
 	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	echo curl_error($ch);
-	
-    curl_close($ch);
+	curl_close($ch);
 
-    error_log($httpcode);
  	
 	$authenticated = false;
-	
 	if($httpcode == 200){
 		$authenticated = true;
-	}*/
-
-
-	////////////////////////
-	$authenticated = false;
-	if ($data->username == LOGINUSER && $data->password == LOGINPASSWORD) {
-	  $authenticated = true;
 	}
 
-	////////////////////////
 	
 	if($authenticated){
     	$token = md5(myuniqid());
